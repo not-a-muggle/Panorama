@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-
+import './components/Album.js'
 class App extends React.Component {
   render(){
   return (
@@ -16,12 +16,13 @@ class App extends React.Component {
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Sign Up</a>
+              <a class="nav-link" onClick href="https://www.amazon.com/">Sign Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Log In</a>
             </li>
           </ul>
+          
         </div>
       </div>
     </nav>
@@ -121,6 +122,7 @@ class App extends React.Component {
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </div>
   );
+
 }
 }
 
