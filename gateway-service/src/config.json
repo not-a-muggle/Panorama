@@ -1,0 +1,14 @@
+{
+
+    
+    "auth-service" : {
+        "serverIP": "0.0.0.0",
+        "servicePort" : "50051",
+        "protofile" : "user.proto"
+    }, 
+    "session-service" : {
+        "serverIP" : "0.0.0.0",
+        "servicePort" : "50052",
+        "protofile" : "session.proto"
+    }
+}
