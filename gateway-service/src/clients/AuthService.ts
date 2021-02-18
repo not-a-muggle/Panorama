@@ -20,9 +20,9 @@ export default class AuthService {
                 defaults: true,
                 oneofs: true
             });
-        const sessionPkg = grpc.loadPackageDefinition(packageDefinition).sess;
+        const authPkg = grpc.loadPackageDefinition(packageDefinition).auth;
 
-        return new sessionPkg.Session(authServiceConfig["serverIP"] + ":" + authServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new authPkg.Auth(authServiceConfig["serverIP"] + ":" + authServiceConfig["servicePort"], grpc.credentials.createInsecure());
     }
 
     public static get Instance(): AuthService {
@@ -34,7 +34,7 @@ export default class AuthService {
 
     public async callBasic(username: string, password: string): Promise<{ authenticated: boolean, token: string }> {
 
-        if (this.client) {
+        if (!this.client) {
             this.client = this.createClientFromDefn();
         }
 

@@ -2,7 +2,7 @@ import express from "express";
 import AuthService from "../clients/AuthService";
 import Helper from "../util/Helper";
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 
 router.post('/login', async (req: express.Request, res: express.Response) => {
