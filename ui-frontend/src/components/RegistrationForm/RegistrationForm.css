@@ -1,0 +1,15 @@
+.loginText {
+    color: #860000ef;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.successMessage {
+    color: rgb(148, 13, 19);
+    font-weight: bolder;
+}
+
+.buttonRegister {
+    border-radius: 16px;
+    font-size: 24px;
+ }
