@@ -5,7 +5,7 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Error from './components/Error'
 import Navbar from './components/Navbar'
-import Album from './components/Album'
+import PermanentDrawerLeft from './components/PermanentDrawerLeft'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 class App extends React.Component {
@@ -17,7 +17,7 @@ class App extends React.Component {
                 <Route path="/" component={Home} exact />
                 <Route path="/SignIn" component={SignIn} />
                 <Route path="/SignUp" component={SignUp} />
-                <Route path="/Album" component={Album} />
+                <Route path="/PermanentDrawerLeft" component={PermanentDrawerLeft} />
                 <Route component={Error} />
             </Switch>
     </Router>
