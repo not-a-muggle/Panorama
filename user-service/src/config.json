@@ -1,0 +1,5 @@
+{
+    "protofile": "user.proto",
+    "serverIP": "0.0.0.0",
+    "servicePort": "50053"
+}
