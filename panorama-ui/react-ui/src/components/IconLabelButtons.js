@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import {API_BASE_URL} from '../constants/apiConstants';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -9,8 +11,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IconLabelButtons() {
-  const classes = useStyles();
+  const [selectedFile , setState] = useState(null)
 
+  const fileSelectedHandler = (event) => {
+    setState(event.target.files[0])
+  };
+
+  const fileUploadHandler = () => {
+    const fd = new FormData();
+    fd.append('image',{selectedFile});
+    axios.post(API_BASE_URL,fd)
+    .then(res => {
+      console.log(res)
+    })
+  }
+  const classes = useStyles();
   return (
     <div className = "buttons">
       <Button
@@ -30,18 +45,20 @@ export default function IconLabelButtons() {
       </Button>
       <Button
         variant="contained"
-        color="default"
-        className={classes.button}
-      >
-        Upload
-      </Button>
-      <Button
-        variant="contained"
         color="secondary"
         className={classes.button}
       >
         Download
       </Button>
+      <Button
+        onClick = {fileUploadHandler}
+        variant="contained"
+        color="default"
+        className={classes.button}
+      >
+        Upload
+      </Button>
+      <input type = "file" onChange={fileSelectedHandler}/>
       <Button
         variant="contained"
         color="primary"
