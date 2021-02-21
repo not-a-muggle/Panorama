@@ -11,8 +11,10 @@ function LearnMore() {
 <div className="masthead-content">
  <div className="container">
    <h1 className="masthead-subheading mb-0">Panorama</h1>
-   <h4 className="masthead-subheading mb-0">Preserving Memories for Life</h4>
-   <h5 className="mb-0">Panorama is a photo storage and sharing application that is cloud-based. It is a user-friendly application that provides various features, such as uploading, downloading, sharing and organizing your photos. The images would be stored in an encrypted format in such a manner that only the authenticated user could access photos. With bulk uploads and downloads, Panorama will ensure that any thought or information transmitted through photos is not missed. Your photos could be the best moments of your life or precious memories, and Panorama cloud storage will ensure that they do not get lost in the local storage of your computer. So pick your camera, record your daily drama, and Panorama will take care of the rest!</h5>
+   <h1 className= " mb-0" >Preserving Memories for Life</h1>
+   <h3 className="mb-0">Panorama is a Cloud-based Photo Sharing Application.</h3> 
+   <h3 className="mb-0">Upload, Download, Share and Organize your photos.</h3> 
+   <h3 className="mb-0">Pick your Camera, Record your Daily Drama, and Panorama will Take Care of the Rest!</h3>
  </div>
 </div>
 <div className="bg-circle-1 bg-circle"></div>
