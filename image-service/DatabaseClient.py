@@ -1,9 +1,50 @@
-from pymongo import MongoClient
-from pprint import pprint
+import sqlite3
+import os
 
-print("hello")
-# client = MongoClient('127.0.0.1', 27017)
-client = MongoClient("mongodb://127.0.0.1:27017/", connect=False)
-database = client["panorama"]
+class DatabaseClient:
+    cur = None
+    conn = None
+    def __init__(self):
+        # check if the database file exists
+        if not os.path.exists(os.getcwd() + '/user.db'):
+            self.conn = sqlite3.connect('user.db')
+            self.cur = self.conn.cursor()
+            self.initializeDatabase()
+            return
+        
+        conn = sqlite3.connect('user.db')
+        self.cur = conn.cursor()
 
-database.users.insert_one({ '1' : 'folderName'})
+    def initializeDatabase(self):
+        # create user.db and push table
+        createTableQuery = '''CREATE TABLE USERFOLDER ( 
+                                id INTEGER PRIMARY KEY, 
+                                userid TEXT NOT NULL, 
+                                folderid TEXT NOT NULL);
+                            '''
+        try:
+            self.conn.commit()
+            # self.conn.close()
+        except sqlite3.Error as e:
+            print(e)
+    
+    def insertIntoUser(self, userId, folderId):
+        insertQuery = "INSERT INTO USERFOLDER (userid, folderid) VALUES ( \""+userId+"\", \""+folderId+"\")"
+        try:
+            self.cur.execute(insertQuery)
+        except sqlite3.Error as e:
+            print("Unable to insert User " + str(e))
+
+    def fetchFolderIdForUser(self,userId):
+        selectQuery = "SELECT folderid from USERFOLDER WHERE userid=\""+userId+"\""
+        try:
+            self.cur.execute(selectQuery)
+            return self.cur.fetchone()[0]
+        except sqlite3.Error as e:
+            print("Unable to fetch folderID " + str(e))
+
+
+if __name__ == '__main__':
+    db = DatabaseClient()
+    db.insertIntoUser("1","1")
+    print(db.fetchFolderIdForUser("1"))

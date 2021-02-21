@@ -13,7 +13,7 @@ class DriveAccessor:
         """Returns object of drive
         """
         gauth = GoogleAuth()
-        gauth.LoadCredentialsFile("mycreds.txt")
+        gauth.LoadCredentialsFile("userCredentials.txt")
 
         if gauth.credentials is None:
             gauth.LocalWebserverAuth()
@@ -24,7 +24,7 @@ class DriveAccessor:
         else:
             gauth.Authorize()
         
-        gauth.SaveCredentialsFile("mycreds.txt")
+        gauth.SaveCredentialsFile("userCredentials.txt")
 
         self.drive = GoogleDrive(gauth)
 
@@ -40,7 +40,6 @@ class DriveAccessor:
         folder = self.drive.CreateFile({'title': foldername, "mimeType": "application/vnd.google-apps.folder"})
         folder.Upload()
         return folder['id']
-
 
 
     def downloadFile(self, fileId):
