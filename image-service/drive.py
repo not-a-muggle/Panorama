@@ -43,8 +43,17 @@ class DriveAccessor:
 
 
     def downloadFile(self, fileId):
+        """Return the file in string format along with the file name
+        """
         file = self.drive.CreateFile({ 'id': fileId})
-        return file.GetContentString()
+        return [file['title'], file.GetContentString()]
+
+    def listFolderFiles(self, folderId):
+        file_list = self.drive.ListFile({'q': "'" + folderId + "' in parents and trashed=false"}).GetList()
+        imageIds = []
+        for file1 in file_list:
+            imageIds.append(file1['id'])
+        return imageIds
 
 if __name__ == "__main__":
     driveClient = DriveAccessor()

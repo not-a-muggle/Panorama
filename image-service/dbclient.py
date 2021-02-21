@@ -23,15 +23,17 @@ class DatabaseClient:
                                 folderid TEXT NOT NULL);
                             '''
         try:
+            self.cur.execute(createTableQuery)
             self.conn.commit()
             # self.conn.close()
         except sqlite3.Error as e:
             print(e)
     
-    def insertIntoUser(self, userId, folderId):
+    def insertIntoUserFolder(self, userId, folderId):
         insertQuery = "INSERT INTO USERFOLDER (userid, folderid) VALUES ( \""+userId+"\", \""+folderId+"\")"
         try:
             self.cur.execute(insertQuery)
+            self.conn.commit()
         except sqlite3.Error as e:
             print("Unable to insert User " + str(e))
 
@@ -44,7 +46,11 @@ class DatabaseClient:
             print("Unable to fetch folderID " + str(e))
 
 
-if __name__ == '__main__':
-    db = DatabaseClient()
-    db.insertIntoUser("1","1")
-    print(db.fetchFolderIdForUser("1"))
+
+
+
+
+# if __name__ == '__main__':
+#     db = DatabaseClient()
+#     db.insertIntoUser("1","1")
+#     print(db.fetchFolderIdForUser("1"))
