@@ -7,6 +7,8 @@ import Error from './components/Error'
 import Navbar from './components/Navbar'
 import PermanentDrawerLeft from './components/PermanentDrawerLeft'
 import LearnMore from './components/LearnMore'
+import ForgotPassword from './components/ForgotPassword'
+import UpdatePassword from './components/UpdatePassword'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 class App extends React.Component {
@@ -20,6 +22,8 @@ class App extends React.Component {
                 <Route path="/SignUp" component={SignUp} />
                 <Route path="/PermanentDrawerLeft" component={PermanentDrawerLeft} />
                 <Route path="/LearnMore" component={LearnMore} />
+                <Route path="/ForgotPassword" component={ForgotPassword} />
+                <Route path="/UpdatePassword" component={UpdatePassword} />
                 <Route component={Error} />
             </Switch>
     </Router>

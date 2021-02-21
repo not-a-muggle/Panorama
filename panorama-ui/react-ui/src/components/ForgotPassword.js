@@ -76,7 +76,7 @@ function SignUp(props) {
                     if(response.status === 200){
                         setState(prevState => ({
                             ...prevState,
-                            'successMessage' : 'Registration successful. Redirecting to home page..'
+                            'successMessage' : 'Sending verification code..'
                         }))
                         localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
                         redirectToHome();
@@ -89,7 +89,7 @@ function SignUp(props) {
                     console.log(error);
                 });    
         } else {
-            props.showError('Please enter valid username and password')    
+            props.showError('Please enter valid email address or phone no')    
         }
         
     }
@@ -98,15 +98,15 @@ function SignUp(props) {
         props.history.push('/home');
     }
     const redirectToLogin = () => {
-        props.updateTitle('Login')
-        props.history.push('/login'); 
+        props.updateTitle('SignIn')
+        props.history.push('/SignIn'); 
     }
     const handleSubmitClick = (e) => {
         e.preventDefault();
-        if(state.password === state.confirmPassword) {
+        if(state.email === state.confirmemail) {
             sendDetailsToServer()    
         } else {
-            props.showError('Passwords do not match');
+            props.showError('Invalid email');
         }
     }
 
@@ -120,31 +120,20 @@ function SignUp(props) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Forgot Password
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="emailphone"
+                name="emailphone"
                 variant="outlined"
-                required
+                required 
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="emailphone"
+                label="Enter Email Address or Phone No"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
@@ -152,68 +141,29 @@ function SignUp(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="birthay"
-                label="Birthday"
+                id="birthday"
+                label="Enter your Birthday"
                 name="birthday"
                 autoComplete="birthday"
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="phonenumber"
-                label="Phone Number"
-                name="phonenumber"
-                autoComplete="phonenumber"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I agree to terms and conditions of use"
-              />
-            </Grid>
           </Grid>
-          <Link to="/SignIn">
+          <Link to="/UpdatePassword">
           <Button
             type="submit"
             fullWidth
+            padding = "30px 32px"
             variant="contained"
             color= "secondary"
             className={classes.submit}
           >
-            Sign Up
+            Send Code
           </Button>
           </Link>
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/SignIn" variant="body2">
-                Already have an account? Sign in
+                Remember your Password? Sign in
               </Link>
             </Grid>
           </Grid>
