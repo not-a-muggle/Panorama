@@ -43,7 +43,13 @@ export default function IconLabelButtons() {
       >
         Delete
       </Button>
-      <input type = "file" onChange={fileSelectedHandler}/>
+      <Button
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+      >
+        Download
+      </Button>
       <Button
         onClick = {fileUploadHandler}
         variant="contained"
@@ -52,13 +58,7 @@ export default function IconLabelButtons() {
       >
         Upload
       </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.button}
-      >
-        Download
-      </Button>
+      <input type = "file" onChange={fileSelectedHandler}/>
       <Button
         variant="contained"
         color="primary"
