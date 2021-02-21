@@ -97,8 +97,8 @@ function SignIn(props) {
       props.history.push('/home');
   }
   const redirectToRegister = () => {
-      props.history.push('/register'); 
-      props.updateTitle('Register');
+      props.history.push('/signup'); 
+      props.updateTitle('SignUp');
   }
 
 
@@ -154,12 +154,12 @@ function SignIn(props) {
           </Link>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to ="/ForgotPassword">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to = "/SignUp">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
