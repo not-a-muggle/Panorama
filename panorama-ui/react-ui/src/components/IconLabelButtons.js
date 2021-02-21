@@ -14,8 +14,23 @@ export default function IconLabelButtons() {
   const [selectedFile , setState] = useState(null)
 
   const fileSelectedHandler = (event) => {
-    setState(event.target.files[0])
+    const file = event.target.files[0]
+    const base64 = await convertBase64(file)
+    setState(base64)
   };
+
+  convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
 
   const fileUploadHandler = () => {
     const fd = new FormData();
