@@ -130,7 +130,7 @@ function SignUp(props) {
                 required
                 fullWidth
                 id="code"
-                label="Enter verification code"
+                label="Enter Verification Code"
                 name="code"
                 autoComplete="code"
               />
