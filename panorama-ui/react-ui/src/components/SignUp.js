@@ -152,6 +152,28 @@ function SignUp(props) {
                 variant="outlined"
                 required
                 fullWidth
+                id="birthay"
+                label="Birthday"
+                name="birthday"
+                autoComplete="birthday"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phonenumber"
+                label="Phone Number"
+                name="phonenumber"
+                autoComplete="phonenumber"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
