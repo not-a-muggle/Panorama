@@ -15,11 +15,11 @@ export default function IconLabelButtons() {
 
   const fileSelectedHandler = (event) => {
     const file = event.target.files[0]
-    const base64 = await convertBase64(file)
+    const base64 =  convertBase64(file)
     setState(base64)
   };
 
-  convertBase64 = (file) => {
+  const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file)
