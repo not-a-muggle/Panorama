@@ -9,13 +9,7 @@ router.get('/', (req, res, next) =>{                    //To get all users
     .exec()
     .then(docs => {
       console.log(docs);
-      //   if (docs.length >= 0) {
       res.status(200).json(docs);
-      //   } else {
-      //       res.status(404).json({
-      //           message: 'No entries found'
-      //       });
-      //   }
     })
     .catch(err => {
       console.log(err);
@@ -111,15 +105,3 @@ router.delete('/:userId',(req, res, next) => {
 
 
 module.exports = router;
-
-/*
-1. You do not return anything from those methods since returning more than one response is not a good idea.
-2. Also since there is just one item inside the json method it directly returns that
-3. Npm is a dependency tool from where you download all the dependencies.
-4. The npm commanded created a json folder. You should do it too
-5. We are using express framework for nodeJs
-6. We create the server in JavaScript using NodeJS
-7. .populate() can be used to get only a part of the data.
-8. The incoming data can only be parsed via a json or an url method.
-9. The multer package can take files apart from binary and json data
- */
