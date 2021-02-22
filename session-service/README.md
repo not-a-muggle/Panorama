@@ -1,4 +1,4 @@
-# Gateway Service
+# Session Service
 
 ## Functionalities
 
