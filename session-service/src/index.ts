@@ -27,7 +27,7 @@ function main() {
     var server = new grpc.Server();
     server.addService(sessProto.Session.service, { getToken: getToken, verifyToken: verifyToken });
     server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
-        console.log("Session service started");
+        console.log("Session service started on port " + config.servicePort);
         server.start();
     });
 }

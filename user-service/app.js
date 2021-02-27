@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./api/routes/user');
 
-mongoose.connect('mongodb+srv://suraj:mongopassword@cluster0.u8n6t.mongodb.net/<dbname>?retryWrites=true&w=majority');
+mongoose.connect("mongodb://localhost:27017/", { useNewUrlParser: true, useUnifiedTopology: true, });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
