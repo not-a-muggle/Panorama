@@ -1,0 +1,24 @@
+{
+    "mongoUri": "mongodb://localhost:27017/",
+    "mongoDatabase": "panorama",
+    "auth-service": {
+        "serverIP": "0.0.0.0",
+        "servicePort": "50051",
+        "protofile": "user.proto"
+    },
+    "session-service": {
+        "serverIP": "0.0.0.0",
+        "servicePort": "50052",
+        "protofile": "session.proto"
+    },
+    "image-service": {
+        "serverIP": "0.0.0.0",
+        "serverPort": "50053",
+        "protofile": "image.proto"
+    },
+    "user-service": {
+        "serverIP": "0.0.0.0",
+        "serverPort": "50054",
+        "protofile": "user.proto"
+    }
+}

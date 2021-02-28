@@ -1,6 +1,4 @@
-{
-
-    
+{    
     "auth-service" : {
         "serverIP": "0.0.0.0",
         "servicePort" : "50051",

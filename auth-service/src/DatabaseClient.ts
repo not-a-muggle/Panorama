@@ -1,5 +1,6 @@
 import * as mongoDb from "mongodb";
-import config from "./config.json";
+import path from "path";
+const config = require(path.join(__dirname, "../../config.json"));
 
 export default class DatabaseClient {
 

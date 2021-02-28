@@ -1,10 +1,7 @@
-import config from "./config.json";
-import util from "util";
-import { resolve } from "path";
-import { rejects } from "assert";
+import path from "path";
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-
+const config = require(path.join(__dirname, "../../config.json"));
 export default class SessionClient {
 
     private client: any;

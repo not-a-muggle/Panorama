@@ -1,11 +1,15 @@
 import LoginHandler from "./LoginHandler";
-import config from "./config.json";
 import IBasicResponse from "./IBasicResponse";
-var grpc = require('@grpc/grpc-js');
-var protoLoader = require('@grpc/proto-loader');
+import path from "path";
+const grpc = require('@grpc/grpc-js');
+const protoLoader = require('@grpc/proto-loader');
+
+const config = require(path.join(__dirname, "../../config.json"));
+const pJson = require(path.join(__dirname, "../package.json"));
+const serviceName = pJson["name"];
 
 const packageDefn = protoLoader.loadSync(
-    __dirname + "/definitions/" + config.protofile, {
+    __dirname + "../../proto/" + config.protofile, {
     keepCase: true,
     longs: String,
     enums: String,
@@ -28,8 +32,8 @@ async function basic(input, callback) {
 function main() {
     var server = new grpc.Server();
     server.addService(userProto.Auth.service, { basic: basic });
-    server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
-        console.log(`Auth service started on IP ${config.serverIP} Port ${config.servicePort}`);
+    server.bindAsync(config[serviceName].serverIP + ':' + config[serviceName].servicePort, grpc.ServerCredentials.createInsecure(), () => {
+        console.log(`Auth service started on IP ${config[serviceName].serverIP} Port ${config[serviceName].servicePort}`);
         server.start();
     });
 }

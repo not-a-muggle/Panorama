@@ -50,5 +50,23 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     res.send({ token: token });
 });
 
+router.post('/signup', async (req: express.Request, res: express.Response) => {
+    
+    const firstName = req.body["firstName"];
+    const lastName = req.body["lastName"];
+    const dob = req.body["dob"];
+    const phone = req.body["phone"];
+    const email = req.body["email"];
+    const password = req.body["password"];
+
+    if(!firstName || !lastName || !dob || !phone || !email || !password) {
+        console.log("data incomplete");
+        res.status(400);
+        res.send({error: "Incomplete signup data"});
+    }
+
+    
+    
+});
 
 module.exports = router;
