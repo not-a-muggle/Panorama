@@ -1,6 +1,10 @@
 import express from "express";
-import AuthService from "../clients/AuthService";
+import AuthService from "../service-clients/AuthService";
 import Helper from "../util/Helper";
+import * as definitions from "../definitions/user";
+import UserService from "../service-clients/UserService";
+import { BasicCreds } from "../definitions/auth";
+
 
 const router: express.Router = express.Router();
 
@@ -36,10 +40,10 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     }
 
 
-    const { authenticated, token } = await AuthService.Instance.callBasic(username, password);
+    const { success, token } = await AuthService.Instance.callBasic({ username: username, password: password });
 
     // auth failure
-    if (!authenticated || !token || token == "") {
+    if (!success || !token || token == "") {
         res.status(401);
         res.send('Username or password is incorrect');
     }
@@ -50,5 +54,45 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     res.send({ token: token });
 });
 
+
+router.post('/signup', async (req: express.Request, res: express.Response) => {
+
+    const user: definitions.UserWithoutPassword = {} as definitions.UserWithoutPassword;
+
+    user.firstName = req.body["firstName"];
+    user.lastName = req.body["lastName"];
+    user.birthday = req.body["birthday"];
+    user.phonenumber = req.body["phonenumber"];
+    user.email = req.body["email"];
+
+    const basicDetails: BasicCreds = { username: req.body["email"], password: req.body["password"] }
+
+    // call the user service
+    let userCreationResponse = UserService.Instance.createUser(user);
+    // call the auth service
+    let authCreationResponse = AuthService.Instance.createUser(basicDetails);
+    // in case any of these fail, fail the signup process
+
+    try {
+        const allResolved = await Promise.all([userCreationResponse, authCreationResponse]);
+        const userServiceResponse = allResolved[0];
+        const authServiceResponse = allResolved[1];
+
+        if (!userServiceResponse.success || !authServiceResponse.success) {
+            res.status(400);
+            res.send({ error: "User could not be created" });
+            console.log("User creation failed due to failure of "
+                + userServiceResponse.success ? "" : "\n-User Service "
+                    + authServiceResponse.success ? "" : "\n-Auth Service");
+        }
+
+    } catch (ex) {
+        console.log("User Creation Failed\n" + ex);
+        res.status(400)
+        res.send({ error: "User could not be created" });
+    }
+    res.status(201);
+    res.send({ success: true });
+});
 
 module.exports = router;
