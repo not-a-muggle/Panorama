@@ -1,6 +1,7 @@
 import LoginHandler from "./LoginHandler";
+import UserHandler from "./UserHandler";
 import config from "./config.json";
-import IBasicResponse from "./IBasicResponse";
+import { AuthCrudResult, AuthResult, BasicCreds } from "./definitions/auth";
 var grpc = require('@grpc/grpc-js');
 var protoLoader = require('@grpc/proto-loader');
 
@@ -13,21 +14,45 @@ const packageDefn = protoLoader.loadSync(
     oneofs: true
 });
 
-const userProto: any = grpc.loadPackageDefinition(packageDefn).auth;
+const authProto: any = grpc.loadPackageDefinition(packageDefn).auth;
 
 async function basic(input, callback) {
-    const basicAuthResponse: IBasicResponse = await LoginHandler.Instance.verifyBasicAuth(input.request.username, input.request.password);
+    console.log("Called Basic auth for " + JSON.stringify(input.request));
+    const basicAuthResponse: AuthResult = await LoginHandler.Instance.verifyBasicAuth(input.request.username, input.request.password);
     if (!basicAuthResponse.token) {
         basicAuthResponse.token = "";
     }
-    basicAuthResponse["success"] = basicAuthResponse["authenticated"]
-    delete basicAuthResponse["authenticated"];
     callback(null, basicAuthResponse);
+}
+
+async function createUser(input, callback) {
+    console.log("Called create user for " + JSON.stringify(input.request));
+    const user: BasicCreds = { username: input.request.username, password: input.request.password };
+    try {
+        const userCreationResponse: AuthCrudResult = await UserHandler.Instance.createUser(user);
+        console.log("User Creation Response -- " + JSON.stringify(userCreationResponse));
+        callback(null, userCreationResponse);
+    } catch (ex) {
+        console.log(ex);
+        callback(ex, { success: false });
+    }
+}
+
+async function updateUser(input, callback) {
+    console.log("Called update user for " + JSON.stringify(input.request));
+    const user: BasicCreds = { username: input.request.username, password: input.request.password };
+    try {
+        const usercreationResponse: AuthCrudResult = await UserHandler.Instance.updateUser(user);
+        console.log("User Update Response -- " + JSON.stringify(usercreationResponse));
+        callback(null, usercreationResponse);
+    } catch (ex) {
+        callback(ex, { success: false });
+    }
 }
 
 function main() {
     var server = new grpc.Server();
-    server.addService(userProto.Auth.service, { basic: basic });
+    server.addService(authProto.Auth.service, { basic: basic, create: createUser, modify: updateUser });
     server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
         console.log(`Auth service started on IP ${config.serverIP} Port ${config.servicePort}`);
         server.start();
