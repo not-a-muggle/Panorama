@@ -50,8 +50,9 @@ export default class AuthService {
     }
 
     public async createUser(user: BasicCreds): Promise<AuthCrudResult> {
+        console.log("Printing Input" + JSON.stringify(user));
         return new Promise<AuthCrudResult>((resolve, reject) => {
-            this.client.basic(user, (err: any, response: any) => {
+            this.client.create(user, (err: any, response: any) => {
                 if (err) {
                     reject(err);
                 }
@@ -62,7 +63,7 @@ export default class AuthService {
 
     public async modifyUser(user: BasicCreds): Promise<AuthCrudResult> {
         return new Promise<AuthCrudResult>((resolve, reject) => {
-            this.client.basic(user, (err: any, response: any) => {
+            this.client.modify(user, (err: any, response: any) => {
                 if (err) {
                     reject(err);
                 }

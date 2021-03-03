@@ -4,6 +4,11 @@ package user;
 service User {
     rpc createUser (userDetails) returns (result);
     rpc modifyUser(userDetails) returns (result);
+    rpc getUser(userInput) returns (userDetails);
+}
+
+message userInput {
+    string email = 1;
 }
 
 message userDetails{

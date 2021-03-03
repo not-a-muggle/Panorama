@@ -3,7 +3,7 @@ import AuthService from "../service-clients/AuthService";
 import Helper from "../util/Helper";
 import * as definitions from "../definitions/user";
 import UserService from "../service-clients/UserService";
-import { BasicCreds } from "../definitions/auth";
+import { AuthCrudResult, BasicCreds } from "../definitions/auth";
 
 
 const router: express.Router = express.Router();
@@ -67,32 +67,25 @@ router.post('/signup', async (req: express.Request, res: express.Response) => {
 
     const basicDetails: BasicCreds = { username: req.body["email"], password: req.body["password"] }
 
-    // call the user service
-    let userCreationResponse = UserService.Instance.createUser(user);
-    // call the auth service
-    let authCreationResponse = AuthService.Instance.createUser(basicDetails);
-    // in case any of these fail, fail the signup process
-
     try {
-        const allResolved = await Promise.all([userCreationResponse, authCreationResponse]);
-        const userServiceResponse = allResolved[0];
-        const authServiceResponse = allResolved[1];
-
-        if (!userServiceResponse.success || !authServiceResponse.success) {
-            res.status(400);
-            res.send({ error: "User could not be created" });
+        const userCreationResponse = await UserService.Instance.createUser(user);
+        const authCreationResponse: AuthCrudResult = await AuthService.Instance.createUser(basicDetails);
+        console.log(authCreationResponse.success);
+        console.log(userCreationResponse.success);
+        if (!userCreationResponse.success || !authCreationResponse.success) {
             console.log("User creation failed due to failure of "
-                + userServiceResponse.success ? "" : "\n-User Service "
-                    + authServiceResponse.success ? "" : "\n-Auth Service");
+                + userCreationResponse.success ? "" : "\n-User Service "
+                    + authCreationResponse.success ? "" : "\n-Auth Service");
+
+            return res.sendStatus(400)//.send({ error: "User could not be created" });
         }
 
+        return res.sendStatus(201)//.send({ success: true });
     } catch (ex) {
         console.log("User Creation Failed\n" + ex);
-        res.status(400)
-        res.send({ error: "User could not be created" });
+        return res.sendStatus(400)//.send({ error: "User could not be created" });
     }
-    res.status(201);
-    res.send({ success: true });
+
 });
 
 module.exports = router;

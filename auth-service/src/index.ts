@@ -17,6 +17,7 @@ const packageDefn = protoLoader.loadSync(
 const authProto: any = grpc.loadPackageDefinition(packageDefn).auth;
 
 async function basic(input, callback) {
+    console.log("Called Basic auth for " + JSON.stringify(input.request));
     const basicAuthResponse: AuthResult = await LoginHandler.Instance.verifyBasicAuth(input.request.username, input.request.password);
     if (!basicAuthResponse.token) {
         basicAuthResponse.token = "";
@@ -25,19 +26,24 @@ async function basic(input, callback) {
 }
 
 async function createUser(input, callback) {
+    console.log("Called create user for " + JSON.stringify(input.request));
     const user: BasicCreds = { username: input.request.username, password: input.request.password };
     try {
-        const usercreationResponse: AuthCrudResult = await UserHandler.Instance.createUser(user);
-        callback(null, usercreationResponse);
+        const userCreationResponse: AuthCrudResult = await UserHandler.Instance.createUser(user);
+        console.log("User Creation Response -- " + JSON.stringify(userCreationResponse));
+        callback(null, userCreationResponse);
     } catch (ex) {
+        console.log(ex);
         callback(ex, { success: false });
     }
 }
 
 async function updateUser(input, callback) {
+    console.log("Called update user for " + JSON.stringify(input.request));
     const user: BasicCreds = { username: input.request.username, password: input.request.password };
     try {
         const usercreationResponse: AuthCrudResult = await UserHandler.Instance.updateUser(user);
+        console.log("User Update Response -- " + JSON.stringify(usercreationResponse));
         callback(null, usercreationResponse);
     } catch (ex) {
         callback(ex, { success: false });
