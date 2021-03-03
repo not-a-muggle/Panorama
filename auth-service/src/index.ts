@@ -14,7 +14,7 @@ const packageDefn = protoLoader.loadSync(
     oneofs: true
 });
 
-const userProto: any = grpc.loadPackageDefinition(packageDefn).auth;
+const authProto: any = grpc.loadPackageDefinition(packageDefn).auth;
 
 async function basic(input, callback) {
     const basicAuthResponse: AuthResult = await LoginHandler.Instance.verifyBasicAuth(input.request.username, input.request.password);
@@ -46,7 +46,7 @@ async function updateUser(input, callback) {
 
 function main() {
     var server = new grpc.Server();
-    server.addService(userProto.Auth.service, { basic: basic, create: createUser, modify: updateUser });
+    server.addService(authProto.Auth.service, { basic: basic, create: createUser, modify: updateUser });
     server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
         console.log(`Auth service started on IP ${config.serverIP} Port ${config.servicePort}`);
         server.start();

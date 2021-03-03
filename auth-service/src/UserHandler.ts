@@ -19,7 +19,7 @@ export default class UserHandler {
         }
 
         try {
-            await DatabaseClient.Instance.upsertOne("user", user, user);
+            await DatabaseClient.Instance.upsertOne("auth", user, user);
             return { success: true };
         } catch (ex) {
             console.log("Unable to create user\n", ex);
@@ -33,7 +33,7 @@ export default class UserHandler {
             return { success: false };
         }
         try {
-            await DatabaseClient.Instance.upsertOne("user", { username: user.username }, user);
+            await DatabaseClient.Instance.upsertOne("auth", { username: user.username }, user);
             return { success: true };
         } catch (ex) {
             console.log("Unable to create user\n", ex);
