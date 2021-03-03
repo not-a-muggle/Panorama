@@ -1,7 +1,5 @@
-import { Session } from "inspector";
 import DatabaseClient from "./DatabaseClient";
-import IBasicRequest from "./IBasicRequest";
-import IBasicResponse from "./IBasicResponse";
+import { AuthResult, BasicCreds} from "./definitions/auth";
 import SessionClient from "./SessionClient";
 
 
@@ -17,25 +15,25 @@ export default class LoginHandler {
         return this._instance;
     }
 
-    public async verifyBasicAuth(username: string, password: string): Promise<IBasicResponse> {
-        const credentials: IBasicRequest = { username: username, password: password }
-        const queryResult = await DatabaseClient.Instance.executeQuery("user", credentials);
+    public async verifyBasicAuth(username: string, password: string): Promise<AuthResult> {
+        const credentials: BasicCreds = { username: username, password: password }
+        const queryResult = await DatabaseClient.Instance.findOne("user", credentials);
 
         // if authenticated with the database, call the session service to get Token
         if (queryResult == null) {
             // call session service and get the token
             console.log(`user ${username} not found`);
-            return { authenticated: false }
+            return { success: false }
         }
 
         console.log("user found");
 
         try {
             const token = await SessionClient.Instance.fetchSessionToken(username);
-            return { authenticated: true, token: token };
+            return { success: true, token: token };
         } catch (err) {
             console.log("Unable to fetch token from session service\n" + err);
-            return { authenticated: false }
+            return { success: false }
         }
     }
 
