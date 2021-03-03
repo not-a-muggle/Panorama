@@ -4,9 +4,8 @@ package auth;
 
 service Auth {
     rpc basic (basicCreds) returns (authResult);
-    
-    rpc create (basicCreds) return (createResult);
-    rpc modify (basicCreds) return (createResult)
+    rpc create (basicCreds) returns (createResult);
+    rpc modify (basicCreds) returns (createResult)
 }
 
 
