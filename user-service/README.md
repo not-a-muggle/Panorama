@@ -1,4 +1,4 @@
-# Session Service
+# User Service
 
 ## Functionalities
 
