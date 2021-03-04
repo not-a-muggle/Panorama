@@ -36,4 +36,4 @@ After this all you need to do is start the gRPC server. A script is provided for
 
 ## Implementation Details
 
-The service is responsible for three functions; creating a user, modifying a user and getting the user info. The service does not store the password for the user, instead which is stored in the `auth-service`.
+The service is responsible for three functions; creating a user, modifying a user and getting the user info. The service does not store the password for the user, instead which is stored in the `auth-service`. The details of the user are stored in `user` which is a collection in MongoDB 
