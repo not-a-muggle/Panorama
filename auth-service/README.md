@@ -21,7 +21,6 @@ After this all you need to do is start the gRPC server. A script is provided for
 > npm run start
 ## Implementation Status
 The service is implemented using gRPC to expose the functionalities. The implementation of the login using basic authentication is done. The service will be extended to provide OAuth based sign-in capabilities for Google, GitHub and IU later.
-The sign-up is still pending and will be completed soon.
 The auth-service is dependent on the `session-service` to retrieve the token for the login functionality.
 We need to make sure that the auth and the session service are running on different ports.
 The service also needs an instance of mongoDB running on the system.
