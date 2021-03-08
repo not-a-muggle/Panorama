@@ -8,7 +8,10 @@
     "start": "node out/index.js",
     "precompile": "node ./node_modules/shx/lib/cli.js rm -rf out/",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
-    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\""
+    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\"",
+    "prebuildimage": "docker login --username $DOCKER_USERNAME --password $DOCKER_PASS",
+    "buildimage": "docker image build . -t gateway-service:latest && docker tag gateway-service:latest $DOCKER_USERNAME/gateway-service:latest",
+    "postbuildimage": "docker push $DOCKER_USERNAME/gateway-service:latest"
   },
   "keywords": [],
   "author": "",
