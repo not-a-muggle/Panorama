@@ -7,7 +7,8 @@ jobs:
       - image: circleci/node:buster
     steps:
       - checkout
-      - run: cd auth-service
+      - run: cd ./auth-service/
+      - run: ls
       - run: npm install
       - run: npm run compile
 
