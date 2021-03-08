@@ -8,7 +8,10 @@
     "start": "node out/index.js",
     "precompile": "node ./node_modules/shx/lib/cli.js rm -rf out/",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
-    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\""
+    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\"",
+    "prebuildimage": "docker login --username $DOCKER_USERNAME --password $DOCKER_PASS",
+    "buildimage": "docker image build . -t auth-service:latest && docker tag auth-service:latest $DOCKER_USERNAME/auth-service:latest",
+    "postbuildimage" : "docker push $DOCKER_USERNAME/auth-service:latest"
   },
   "author": "Vishesh Dembla",
   "license": "ISC",
