@@ -21,8 +21,9 @@ sudo docker images
 c) Run the container
 sudo docker run -p 8000:80 react-ui:v1
 
-d) Verify running container
+d) Verify running container using below command
 sudo docker ps
 
 e) Verify the running container in the browser
 http://localhost:8000/
+
