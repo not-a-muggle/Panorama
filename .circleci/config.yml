@@ -1,14 +1,14 @@
 version: 2.1
-
 orbs:
   node: circleci/node@3.0.0
-  jobs:
-    build:
-      docker: 
-        - image: circleci/node:buster
-      steps:
-        - checkout
-        - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+jobs:
+  build:
+    docker: 
+      - image: circleci/node:buster
+    steps:
+      - checkout
+      - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+
 
 workflows:
   build:
