@@ -6,7 +6,7 @@ jobs:
     docker: 
       - image: circleci/node:buster
     steps:
-      - checkout
+      - run: git checkout dev
       - run: cd auth-service
       - run: npm install
       - run: npm run compile
