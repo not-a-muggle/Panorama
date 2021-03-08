@@ -3,12 +3,12 @@ orbs:
   node: circleci/node@3.0.0
 jobs:
   build:
-    docker: 
+    docker:
       - image: circleci/node:buster
     steps:
+      - setup_remote_docker
       - checkout
       - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
-
 
 workflows:
   build:
