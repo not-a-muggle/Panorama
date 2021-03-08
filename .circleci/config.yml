@@ -3,6 +3,10 @@ orbs:
   node: circleci/node@3.0.0
 jobs:
   build:
+    filters:
+      branches:
+        only:
+          - auth-service-ci
     docker:
       - image: circleci/node:buster
     steps:
