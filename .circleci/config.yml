@@ -9,7 +9,7 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+      - run: cd ./session-service/ && npm install && npm run compile && npm run buildimage
 
 workflows:
   build:
@@ -18,4 +18,4 @@ workflows:
           filters:
             branches:
               only:
-                - auth-service-ci
+                - session-service-ci
