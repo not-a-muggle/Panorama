@@ -8,9 +8,15 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd image-service/ && docker image build . -t image-service:latest && docker tag image-service:latest $DOCKER_USERNAME/image-service:latest
+      - run: docker push $DOCKER_USERNAME/image-service:latest
 
 workflows:
   build:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - image-service-ci
