@@ -44,6 +44,16 @@ jobs:
       - run: cd image-service/ && docker image build . -t image-service:latest && docker tag image-service:latest $DOCKER_USERNAME/image-service:latest
       - run: docker push $DOCKER_USERNAME/image-service:latest
 
+  build-react-ui:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd react-ui/ && docker image build . -t react-ui:latest && docker tag react-ui:latest $DOCKER_USERNAME/react-ui:latest
+      - run: docker push $DOCKER_USERNAME/react-ui:latest
+
 workflows:
   build:
     jobs:
@@ -52,3 +62,4 @@ workflows:
       - build-user-service
       - build-gateway-service
       - build-image-service
+      - build-react-ui
