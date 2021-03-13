@@ -9,12 +9,12 @@ class DatabaseClient:
     def __init__(self):
         # check if the database file exists
         if not os.path.exists(os.getcwd() + '/user.db'):
-            self.conn = sqlite3.connect('user.db')
+            self.conn = sqlite3.connect('user.db',  check_same_thread=False)
             self.cur = self.conn.cursor()
             self.initializeDatabase()
             return
 
-        self.conn = sqlite3.connect('user.db')
+        self.conn = sqlite3.connect('user.db',  check_same_thread=False)
         self.cur = self.conn.cursor()
 
     def initializeDatabase(self):

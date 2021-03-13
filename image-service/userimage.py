@@ -78,18 +78,18 @@ class UserImageAccessor:
         return image
 
 
-userimg = UserImageAccessor()
+# userimg = UserImageAccessor()
 
-images = userimg.getImages("vdembla@iu.edu")
+# images = userimg.getImages("vdembla@iu.edu")
 
-for image in images:
-    if image is not None:
-        print(image["name"])
+# for image in images:
+#     if image is not None:
+#         print(image["name"])
 
-print(len(images[0]["data"]))
+# print(len(images[0]["data"]))
 
-train_img_path = os.path.join(os.path.dirname(
-    os.path.realpath(__file__)), "train.jpg")
+# train_img_path = os.path.join(os.path.dirname(
+#     os.path.realpath(__file__)), "train.jpg")
 
 
 # fileId = ""
