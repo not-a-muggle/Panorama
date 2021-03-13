@@ -10,23 +10,34 @@ import base64
 
 
 class DriveAPI(object):
-    """TokenHandler fetches token from Google Service"""
+    """DriveAPI for accessing Google Drive"""
 
     SCOPES = ['https://www.googleapis.com/auth/drive.file']
-
-    service = None
-    creds = None
 
     def __init__(self):
 
         self.creds = self.fetchCredentials()
         self.service = self.initService(self.creds)
 
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(DriveAPI, cls).__new__(cls)
+            # Put any initialization here.
+        return cls._instance
+
     def fetchCredentials(self):
         # if pickle file exists, read from the pickle file
         creds = None
-        if os.path.exists('token.pickle'):
-            with open('token.pickle', 'rb') as token:
+        credintials_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "credentials.json")
+
+        pickle_path = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "token.pickle")
+
+        if os.path.exists(pickle_path):
+            with open(pickle_path, 'rb') as token:
                 creds = pickle.load(token)
 
         if not creds or not creds.valid:
@@ -37,11 +48,11 @@ class DriveAPI(object):
 
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'credentials.json', scopes=self.SCOPES)
+                    credintials_path, scopes=self.SCOPES)
 
                 creds = flow.run_local_server(port=0)
 
-            with open('token.pickle', 'wb') as token:
+            with open(pickle_path, 'wb') as token:
                 pickle.dump(creds, token)
 
         return creds
@@ -53,7 +64,7 @@ class DriveAPI(object):
         """takes file content in string as input and stores it into a file with name filename in the folder for the user"""
 
         # encode string to bytes
-        if type(filecontent) == 'string':
+        if type(filecontent) == str:
             filecontent = str.encode(filecontent)
 
         if userFolderId != None:
@@ -107,36 +118,40 @@ class DriveAPI(object):
         except Exception as e:
             return None
 
+    def getFileMetadata(self, fileId):
+        try:
+            metadata = self.service.files().get(fileId=fileId).execute()
+            return metadata
+        except Exception as e:
+            raise Exception(e)
+
     def listFolderFiles(self, folderId):
-        response = self.service.files().list(q="'"+folderId +"'" + " in parents",
+        response = self.service.files().list(q="'"+folderId + "'" + " in parents",
                                              spaces='drive',
                                              fields='nextPageToken, files(id, name)').execute()
         items = response.get('files', [])
         return items
 
-    # def listFolderFiles(self, folderId):
-    #     file_list = self.drive.ListFile({'q': "'" + folderId + "' in parents and trashed=false"}).GetList()
-    #     imageIds = []
-    #     for file1 in file_list:
-    #         imageIds.append(file1['id'])
-    #     return imageIds
 
+# driveAPI = DriveAPI()
+# fileID = "1Gp6ki6DsKGsQNvcGnktAQIybwQT-5tKT"
 
-driveAPI = DriveAPI()
-# fileID = "1ql25WJl1tpeSHdpT6JXcE5vwXqgoQtOJ"
+# print(driveAPI.getFileMetadata(fileID, "name"))
 # folderId = driveAPI.createFolder('test-panorama')
 # driveAPI.createFile(userFolderId="1pFt8gqOxUjGycfCrdsKaez-IVSEyPs5M", filename='hello.txt', filecontent=str.encode('helloworld'))
 
 # ----- Encode a file
-
+# fileID = None
 # with open("../train.jpg", "rb") as image_file:
-#     encoded_str = base64.b64encode(image_file.read())
-#     print(encoded_str)
-#     data = image_file.read()
-#     fileID = driveAPI.createFile(userFolderId="1pFt8gqOxUjGycfCrdsKaez-IVSEyPs5M",
-#                     filename='train.txt', filecontent=encoded_str, mimeType='text/plain')
+# encoded_str = base64.b64encode(image_file.read())
+# print(encoded_str)
+# data = image_file.read()
+# fileID = driveAPI.createFile(userFolderId="1pFt8gqOxUjGycfCrdsKaez-IVSEyPs5M",
+#                 filename='train.txt', filecontent=encoded_str, mimeType='text/plain')
 
-print(driveAPI.listFolderFiles(folderId="1pFt8gqOxUjGycfCrdsKaez-IVSEyPs5M"))
+# print(driveAPI.getFileMetadata(fileID,["name"]))
+
+# print(driveAPI.listFolderFiles(folderId="1pFt8gqOxUjGycfCrdsKaez-IVSEyPs5M"))
 
 
 # ---- Decode a file
