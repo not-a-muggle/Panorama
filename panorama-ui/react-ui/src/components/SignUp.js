@@ -16,6 +16,10 @@ import axios from 'axios';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
+const api = axios.create({
+  baseURL: 'http://localhost:3000'
+})
+
 
 function Copyright() {
   return (
@@ -52,9 +56,12 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp(props) {
     const [state , setState] = useState({
+        firstname: "",
+        lastname: "",
+        birthday: "",
+        phonenumber: "",
         email : "",
         password : "",
-        confirmPassword: "",
         successMessage: null
     })
     const handleChange = (e) => {
@@ -66,20 +73,25 @@ function SignUp(props) {
     }
     const sendDetailsToServer = () => {
         if(state.email.length && state.password.length) {
-            props.showError(null);
             const payload={
+                "firstname": state.firstname,
+                "lastname": state.lastname,
+                "birthday": state.birthday,
+                "phonenumber": state.phonenumber,
                 "email":state.email,
                 "password":state.password,
             }
-            axios.post(API_BASE_URL+'/user/register', payload)
+            api.post('/', payload)
                 .then(function (response) {
-                    if(response.status === 200){
+                    if(response.status === 201){
+                      props.showError(null);
+                      console.log("yo");
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
                         }))
                         localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                        redirectToHome();
+                        redirectToLogin();
                         props.showError(null)
                     } else{
                         props.showError("Some error ocurred");
@@ -98,16 +110,13 @@ function SignUp(props) {
         props.history.push('/home');
     }
     const redirectToLogin = () => {
-        props.updateTitle('Login')
-        props.history.push('/login'); 
+        props.updateTitle('SignIn')
+        props.history.push('/SignIn'); 
     }
     const handleSubmitClick = (e) => {
         e.preventDefault();
-        if(state.password === state.confirmPassword) {
-            sendDetailsToServer()    
-        } else {
-            props.showError('Passwords do not match');
-        }
+        sendDetailsToServer()    
+
     }
 
   const classes = useStyles();
@@ -131,8 +140,10 @@ function SignUp(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="firstname"
                 label="First Name"
+                value={state.firstname}
+                onChange={handleChange}
                 autoFocus
               />
             </Grid>
@@ -141,9 +152,11 @@ function SignUp(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
+                id="lastname"
                 label="Last Name"
                 name="lastName"
+                value={state.lastname}
+                onChange={handleChange}
                 autoComplete="lname"
               />
             </Grid>
@@ -152,9 +165,11 @@ function SignUp(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="birthay"
+                id="birthday"
                 label="Birthday"
                 name="birthday"
+                value={state.birthday}
+                onChange={handleChange}
                 autoComplete="birthday"
               />
             </Grid>
@@ -166,6 +181,8 @@ function SignUp(props) {
                 id="phonenumber"
                 label="Phone Number"
                 name="phonenumber"
+                value={state.phonenumber}
+                onChange={handleChange}
                 autoComplete="phonenumber"
               />
             </Grid>
@@ -176,6 +193,8 @@ function SignUp(props) {
                 fullWidth
                 id="email"
                 label="Email Address"
+                value={state.email}
+                onChange={handleChange}
                 name="email"
                 autoComplete="email"
               />
@@ -189,6 +208,8 @@ function SignUp(props) {
                 label="Password"
                 type="password"
                 id="password"
+                value={state.password}
+                onChange={handleChange}
                 autoComplete="current-password"
               />
             </Grid>
@@ -199,8 +220,7 @@ function SignUp(props) {
               />
             </Grid>
           </Grid>
-          <Link to="/SignIn">
-          <Button
+          <Button onClick= {handleSubmitClick}
             type="submit"
             fullWidth
             variant="contained"
@@ -209,7 +229,6 @@ function SignUp(props) {
           >
             Sign Up
           </Button>
-          </Link>
           <Grid container justify="flex-end">
             <Grid item>
               <Link to="/SignIn" variant="body2">
