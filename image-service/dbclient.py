@@ -29,6 +29,7 @@ class DatabaseClient:
         except sqlite3.Error as e:
             print(e)
     
+    """ should be called on signup or if no folderID found on fetch"""
     def insertIntoUserFolder(self, userId, folderId):
         insertQuery = "INSERT INTO USERFOLDER (userid, folderid) VALUES ( \""+userId+"\", \""+folderId+"\")"
         try:
@@ -44,10 +45,6 @@ class DatabaseClient:
             return self.cur.fetchone()[0]
         except sqlite3.Error as e:
             print("Unable to fetch folderID " + str(e))
-
-
-
-
 
 
 # if __name__ == '__main__':

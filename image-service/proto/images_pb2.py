@@ -11,8 +11,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-
-
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='images.proto',
   package='img',
@@ -21,8 +19,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   create_key=_descriptor._internal_create_key,
   serialized_pb=b'\n\x0cimages.proto\x12\x03img\"0\n\rImageLocation\x12\x0e\n\x06userId\x18\x01 \x01(\t\x12\x0f\n\x07imageId\x18\x02 \x01(\t\"\x1a\n\x05Image\x12\x11\n\timageData\x18\x01 \x01(\t2g\n\x0cImageService\x12*\n\x08getImage\x12\x12.img.ImageLocation\x1a\n.img.Image\x12+\n\tgetImages\x12\x12.img.ImageLocation\x1a\n.img.Imageb\x06proto3'
 )
-
-
 
 
 _IMAGELOCATION = _descriptor.Descriptor(
