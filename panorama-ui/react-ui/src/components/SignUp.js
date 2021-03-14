@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
+import Navbar from "../components/Navbar"
 
 const api = axios.create({
   baseURL: 'http://localhost:3000/signup'
@@ -120,6 +121,7 @@ function SignUp(props) {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Navbar />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
