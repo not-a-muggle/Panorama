@@ -66,11 +66,14 @@ function SignIn(props) {
 
   const handleSubmitClick = (e) => {
       e.preventDefault();
-      const payload={
-          "email":state.email,
-          "password":state.password,
+      const headers={
+          email:state.email,
+          password:state.password,
       }
-      axios.post(API_BASE_URL+'/user/login', payload)
+      var basicAuth = 'Basic ' + state.email + ':' + state.password;
+      axios.post('http://localhost:3000/signin', {}, {
+        headers: { 'Authorization': + basicAuth }
+      })
           .then(function (response) {
               if(response.status === 200){
                   setState(prevState => ({
@@ -78,7 +81,7 @@ function SignIn(props) {
                       'successMessage' : 'Login successful. Redirecting to home page..'
                   }))
                   localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                  redirectToHome();
+                  redirectToRegister();
                   props.showError(null)
               }
               else if(response.code === 204){
@@ -97,8 +100,7 @@ function SignIn(props) {
       props.history.push('/home');
   }
   const redirectToRegister = () => {
-      props.history.push('/signup'); 
-      props.updateTitle('SignUp');
+    props.history.push('/PermanentDrawerLeft');
   }
 
 
@@ -124,6 +126,8 @@ function SignIn(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
+            onChange={handleChange}
+            value={state.email}
             autoFocus
           />
           <TextField
@@ -136,13 +140,14 @@ function SignIn(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
+            value={state.password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Link to ="/PermanentDrawerLeft">
-          <Button
+          <Button onClick= {handleSubmitClick}
             type="submit"
             fullWidth
             variant="contained"
@@ -151,7 +156,6 @@ function SignIn(props) {
           >
             Sign In
           </Button>
-          </Link>
           <Grid container>
             <Grid item xs>
               <Link to ="/ForgotPassword">

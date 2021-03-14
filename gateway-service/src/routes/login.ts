@@ -9,9 +9,8 @@ import { AuthCrudResult, BasicCreds } from "../definitions/auth";
 const router: express.Router = express.Router();
 
 
-router.post('/login', async (req: express.Request, res: express.Response) => {
+router.post('/signin', async (req: express.Request, res: express.Response) => {
     // call the auth service with the required details 
-
     // check the header for basic auth first
     const authHeader: string = req.headers["authorization"] as string;
     if (!authHeader) {
@@ -33,7 +32,6 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
     const colonPos = creds.lastIndexOf(':');
     const username = creds.substring(0, colonPos);
     const password = creds.substring(colonPos + 1, creds.length)
-
     if (!username || !password) {
         res.status(400);
         res.send("Username or password not found in the basic auth request");
