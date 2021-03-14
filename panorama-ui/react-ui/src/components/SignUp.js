@@ -17,7 +17,7 @@ import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'http://localhost:3000/signup'
 })
 
 
@@ -74,18 +74,16 @@ function SignUp(props) {
     const sendDetailsToServer = () => {
         if(state.email.length && state.password.length) {
             const payload={
-                "firstname": state.firstname,
-                "lastname": state.lastname,
-                "birthday": state.birthday,
-                "phonenumber": state.phonenumber,
-                "email":state.email,
-                "password":state.password,
+                firstName: state.firstname,
+                lastName: state.lastname,
+                birthday: state.birthday,
+                phonenumber: state.phonenumber,
+                email:state.email,
+                password:state.password,
             }
-            api.post('/', payload)
+            axios.post('http://localhost:3000/signup', payload)
                 .then(function (response) {
                     if(response.status === 201){
-                      props.showError(null);
-                      console.log("yo");
                         setState(prevState => ({
                             ...prevState,
                             'successMessage' : 'Registration successful. Redirecting to home page..'
@@ -110,7 +108,6 @@ function SignUp(props) {
         props.history.push('/home');
     }
     const redirectToLogin = () => {
-        props.updateTitle('SignIn')
         props.history.push('/SignIn'); 
     }
     const handleSubmitClick = (e) => {
