@@ -128,7 +128,7 @@ class DriveAPI(object):
     def listFolderFiles(self, folderId):
         response = self.service.files().list(q="'"+folderId + "'" + " in parents",
                                              spaces='drive',
-                                             fields='nextPageToken, files(id, name)').execute()
+                                             fields='nextPageToken, files(id, name,createdTime, modifiedTime)').execute()
         items = response.get('files', [])
         return items
 

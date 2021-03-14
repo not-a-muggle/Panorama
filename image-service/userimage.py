@@ -24,8 +24,8 @@ class UserImageAccessor:
                 folderId, imageName, imageData, 'text/plain')
             return fileId
         except Exception as e:
-            return None
             print(e)
+            return None
 
     def storeImages(self, userId, allImages):
         """Store list of images for the user to Google Drive
@@ -40,8 +40,8 @@ class UserImageAccessor:
                 fileIds.append(fileId)
         return fileIds
 
-    def getImages(self, userId, startIdx=0, endIdx=10):
-        """Returns at max 10 images
+    def getImages(self, userId, startIdx=0, endIdx=50):
+        """Returns the image metadata of images
         """
 
         count = endIdx - startIdx
@@ -69,6 +69,34 @@ class UserImageAccessor:
             imagesData.append(self.getImage(imageId))
         return imagesData
 
+    def getImagesMetadata(self, userId, startIdx=0, endIdx=50):
+        """Returns the image metadata of images
+        """
+        # Sample list response
+        # [ 
+        #   {
+        #       'id': '1Q0j02EmtcCaB42MNPwbt0Jpx-62qjLpd', 
+        #       'name': 'image.jpg', 
+        #       'createdTime': '2021-03-14T16:38:47.431Z', 
+        #       'modifiedTime': '2021-03-14T16:38:47.431Z'
+        #   }
+        # ]
+
+
+        # not implemented yet -- count functionality
+        # count = endIdx - startIdx
+        # if count < 0:
+        #     return []
+
+        # get folder Id from userId
+        try:
+            folderId = self.database.fetchFolderIdForUser(userId)            
+            imageListData = self.driveclient.listFolderFiles(folderId)
+            return imageListData
+        except Exception as e:
+            raise e
+
+
     def getImage(self, fileId):
         """returns a dict with file name and file data
         """
@@ -77,9 +105,9 @@ class UserImageAccessor:
         image = {"name": fileName, "data": fileData}
         return image
 
-
-# userimg = UserImageAccessor()
-
+userimg = UserImageAccessor()
+data = userimg.getImagesMetadata("vdembla@iu.edu")
+print(data)
 # images = userimg.getImages("vdembla@iu.edu")
 
 # for image in images:

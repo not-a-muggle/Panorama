@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0cimages.proto\x12\x03img\"0\n\rImageLocation\x12\x0e\n\x06userId\x18\x01 \x01(\t\x12\x0f\n\x07imageId\x18\x02 \x01(\t\"=\n\x05Image\x12\x11\n\timageData\x18\x01 \x01(\t\x12\x11\n\timageName\x18\x02 \x01(\t\x12\x0e\n\x06userId\x18\x03 \x01(\t\"\x1d\n\x0bStoreResult\x12\x0e\n\x06stored\x18\x01 \x01(\x08\x32\xc8\x01\n\x0cImageService\x12*\n\x08getImage\x12\x12.img.ImageLocation\x1a\n.img.Image\x12/\n\tgetImages\x12\x12.img.ImageLocation\x1a\n.img.Image(\x01\x30\x01\x12*\n\nstoreImage\x12\n.img.Image\x1a\x10.img.StoreResult\x12/\n\x0bstoreImages\x12\n.img.Image\x1a\x10.img.StoreResult(\x01\x30\x01\x62\x06proto3'
+  serialized_pb=b'\n\x0cimages.proto\x12\x03img\"0\n\rImageLocation\x12\x0e\n\x06userId\x18\x01 \x01(\t\x12\x0f\n\x07imageId\x18\x02 \x01(\t\"=\n\x05Image\x12\x11\n\timageData\x18\x01 \x01(\t\x12\x11\n\timageName\x18\x02 \x01(\t\x12\x0e\n\x06userId\x18\x03 \x01(\t\"N\n\rImageMetadata\x12\x11\n\timageName\x18\x01 \x01(\t\x12\x19\n\x11imageCreationDate\x18\x02 \x01(\t\x12\x0f\n\x07imageId\x18\x03 \x01(\t\"D\n\x10ImageListRequest\x12\x0e\n\x06userId\x18\x01 \x01(\t\x12\x10\n\x08startIdx\x18\x02 \x01(\x05\x12\x0e\n\x06\x65ndIdx\x18\x03 \x01(\x05\"\x1d\n\x0bStoreResult\x12\x0e\n\x06stored\x18\x01 \x01(\x08\x32\x8a\x02\n\x0cImageService\x12*\n\x08getImage\x12\x12.img.ImageLocation\x1a\n.img.Image\x12/\n\tgetImages\x12\x12.img.ImageLocation\x1a\n.img.Image(\x01\x30\x01\x12@\n\x11getImagesMetadata\x12\x15.img.ImageListRequest\x1a\x12.img.ImageMetadata0\x01\x12*\n\nstoreImage\x12\n.img.Image\x1a\x10.img.StoreResult\x12/\n\x0bstoreImages\x12\n.img.Image\x1a\x10.img.StoreResult(\x01\x30\x01\x62\x06proto3'
 )
 
 
@@ -110,6 +110,98 @@ _IMAGE = _descriptor.Descriptor(
 )
 
 
+_IMAGEMETADATA = _descriptor.Descriptor(
+  name='ImageMetadata',
+  full_name='img.ImageMetadata',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='imageName', full_name='img.ImageMetadata.imageName', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='imageCreationDate', full_name='img.ImageMetadata.imageCreationDate', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='imageId', full_name='img.ImageMetadata.imageId', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=134,
+  serialized_end=212,
+)
+
+
+_IMAGELISTREQUEST = _descriptor.Descriptor(
+  name='ImageListRequest',
+  full_name='img.ImageListRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='userId', full_name='img.ImageListRequest.userId', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='startIdx', full_name='img.ImageListRequest.startIdx', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='endIdx', full_name='img.ImageListRequest.endIdx', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=214,
+  serialized_end=282,
+)
+
+
 _STORERESULT = _descriptor.Descriptor(
   name='StoreResult',
   full_name='img.StoreResult',
@@ -137,12 +229,14 @@ _STORERESULT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=134,
-  serialized_end=163,
+  serialized_start=284,
+  serialized_end=313,
 )
 
 DESCRIPTOR.message_types_by_name['ImageLocation'] = _IMAGELOCATION
 DESCRIPTOR.message_types_by_name['Image'] = _IMAGE
+DESCRIPTOR.message_types_by_name['ImageMetadata'] = _IMAGEMETADATA
+DESCRIPTOR.message_types_by_name['ImageListRequest'] = _IMAGELISTREQUEST
 DESCRIPTOR.message_types_by_name['StoreResult'] = _STORERESULT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -160,6 +254,20 @@ Image = _reflection.GeneratedProtocolMessageType('Image', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Image)
 
+ImageMetadata = _reflection.GeneratedProtocolMessageType('ImageMetadata', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGEMETADATA,
+  '__module__' : 'images_pb2'
+  # @@protoc_insertion_point(class_scope:img.ImageMetadata)
+  })
+_sym_db.RegisterMessage(ImageMetadata)
+
+ImageListRequest = _reflection.GeneratedProtocolMessageType('ImageListRequest', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGELISTREQUEST,
+  '__module__' : 'images_pb2'
+  # @@protoc_insertion_point(class_scope:img.ImageListRequest)
+  })
+_sym_db.RegisterMessage(ImageListRequest)
+
 StoreResult = _reflection.GeneratedProtocolMessageType('StoreResult', (_message.Message,), {
   'DESCRIPTOR' : _STORERESULT,
   '__module__' : 'images_pb2'
@@ -176,8 +284,8 @@ _IMAGESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=166,
-  serialized_end=366,
+  serialized_start=316,
+  serialized_end=582,
   methods=[
   _descriptor.MethodDescriptor(
     name='getImage',
@@ -200,9 +308,19 @@ _IMAGESERVICE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='getImagesMetadata',
+    full_name='img.ImageService.getImagesMetadata',
+    index=2,
+    containing_service=None,
+    input_type=_IMAGELISTREQUEST,
+    output_type=_IMAGEMETADATA,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='storeImage',
     full_name='img.ImageService.storeImage',
-    index=2,
+    index=3,
     containing_service=None,
     input_type=_IMAGE,
     output_type=_STORERESULT,
@@ -212,7 +330,7 @@ _IMAGESERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='storeImages',
     full_name='img.ImageService.storeImages',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=_IMAGE,
     output_type=_STORERESULT,

@@ -8,25 +8,25 @@ channel = grpc.insecure_channel("127.0.0.1:50054",  options=[('grpc.enable_http_
 
 
 stub = images_pb2_grpc.ImageServiceStub(channel)
-imageLocation = images_pb2.ImageLocation(
-    userId="vdembla@iu.edu", imageId="1Gp6ki6DsKGsQNvcGnktAQIybwQT-5tKT")
+# imageLocation = images_pb2.ImageLocation(
+#     userId="vdembla@iu.edu", imageId="1Gp6ki6DsKGsQNvcGnktAQIybwQT-5tKT")
 
-imageLocation2 = images_pb2.ImageLocation(
-    userId="vdembla@iu.edu", imageId="1LgvzG9zAKPVVXlbFNfAS2Efo7qYovwK7")
+# imageLocation2 = images_pb2.ImageLocation(
+#     userId="vdembla@iu.edu", imageId="1LgvzG9zAKPVVXlbFNfAS2Efo7qYovwK7")
 
-imageLocation3 = images_pb2.ImageLocation(
-    userId="vdembla@iu.edu", imageId="1MOO4nJmBlpi8bJrTP7MG0PXTT2X0Ie_q")
+# imageLocation3 = images_pb2.ImageLocation(
+#     userId="vdembla@iu.edu", imageId="1MOO4nJmBlpi8bJrTP7MG0PXTT2X0Ie_q")
 
-imageLocations = [imageLocation, imageLocation2, imageLocation3]
+# imageLocations = [imageLocation, imageLocation2, imageLocation3]
 
-# result = stub.getImage(imageLocation)
+# # result = stub.getImage(imageLocation)
 
 results = []
-for result in stub.getImages(iter(imageLocations)):
-    results.append(result)
+# for result in stub.getImages(iter(imageLocations)):
+#     results.append(result)
 
 
-for result in stub.storeImages(iter(results)):
-    print(result.stored)    
+for result in stub.getImagesMetadata(images_pb2.ImageListRequest(userId="vdembla@iu.edu", startIdx=0, endIdx=100)):
+    print(result.imageName, result.imageId, result.imageCreationDate)    
 channel.close()
 # print(result)
