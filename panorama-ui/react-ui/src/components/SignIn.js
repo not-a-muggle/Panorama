@@ -70,9 +70,9 @@ function SignIn(props) {
           email:state.email,
           password:state.password,
       }
-      var basicAuth = 'Basic ' + state.email + ':' + state.password;
+      var basicAuth = 'Basic ' + new Buffer(state.email + ':' + state.password).toString('base64');
       axios.post('http://localhost:3000/signin', {}, {
-        headers: { 'Authorization': + basicAuth }
+        headers: { 'Authorization': basicAuth }
       })
           .then(function (response) {
               if(response.status === 200){
@@ -94,10 +94,6 @@ function SignIn(props) {
           .catch(function (error) {
               console.log(error);
           });
-  }
-  const redirectToHome = () => {
-      props.updateTitle('Home')
-      props.history.push('/home');
   }
   const redirectToRegister = () => {
     props.history.push('/PermanentDrawerLeft');

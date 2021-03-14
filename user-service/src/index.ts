@@ -17,7 +17,7 @@ const packageDefn = protoLoader.loadSync(
 const userProto: any = grpc.loadPackageDefinition(packageDefn).user;
 
 async function createUser(input, callback) {
-
+    console.log(JSON.stringify(input))
     const userDetails: UserWithoutPassword = {} as UserWithoutPassword;
     userDetails.email = input.request.email;
     userDetails.firstName = input.request.firstName;
