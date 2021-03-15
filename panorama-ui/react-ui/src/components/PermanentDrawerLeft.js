@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import IconLabelButtons from './IconLabelButtons';
 import './components.css'
 import scenery from './scenery.jpeg';
+import ImageList from './ImageList.js'
 
 const drawerWidth = 240;
 
@@ -90,47 +91,7 @@ export default function PermanentDrawerLeft() {
           ))}
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-            <Grid container spacing = {2}>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-              <Grid item xs={3}>
-              <img src={scenery} alt="Scenery" />;
-              </Grid>
-            </Grid>
-      </main>
+     <ImageList></ImageList>
     </div>
   );
 }

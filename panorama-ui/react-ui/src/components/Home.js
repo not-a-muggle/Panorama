@@ -1,8 +1,10 @@
 import React from 'react';
+import Navbar from '../components/Navbar'
 
 function Home() {
     return(
  <div className="Home">
+   <Navbar />
 <noscript>You need to enable JavaScript to run this app.</noscript>
 <div id="root"></div>
 
