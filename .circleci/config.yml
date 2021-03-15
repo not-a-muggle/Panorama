@@ -57,9 +57,17 @@ jobs:
 workflows:
   build:
     jobs:
+<<<<<<< HEAD
+      - build:
+          filters:
+            branches:
+              only:
+                - image-service-ci
+=======
       - build-auth-service
       - build-session-service
       - build-user-service
       - build-gateway-service
       - build-image-service
       - build-react-ui
+>>>>>>> dev
