@@ -10,12 +10,12 @@ import LearnMore from './components/LearnMore'
 import ForgotPassword from './components/ForgotPassword'
 import UpdatePassword from './components/UpdatePassword'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-
+import ImageList from './components/ImageList'
+import ImagePage from './components/ImagePage'
 class App extends React.Component {
   render(){
   return (
     <Router>
-      <Navbar />
             <Switch>
                 <Route path="/" component={Home} exact />
                 <Route path="/SignIn" component={SignIn} />
@@ -24,6 +24,8 @@ class App extends React.Component {
                 <Route path="/LearnMore" component={LearnMore} />
                 <Route path="/ForgotPassword" component={ForgotPassword} />
                 <Route path="/UpdatePassword" component={UpdatePassword} />
+                <Route path="/ImageList" component={ImageList} />
+                <Route path="/Image/:id" component={ImagePage} />
                 <Route component={Error} />
             </Switch>
     </Router>
