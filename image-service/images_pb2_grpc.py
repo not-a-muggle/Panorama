@@ -102,11 +102,12 @@ class ImageServiceServicer(object):
                 userId = request.userId
                 imageName = request.imageName
                 imageData = request.imageData
-
+                
                 fileId = self.userImageAccessor.storeImage(userId, imageName, imageData)
                 stored = fileId != None
+                print("File Stored = ", fileId)
                 yield images__pb2.StoreResult(stored=stored)
-
+        return
 
 def add_ImageServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {

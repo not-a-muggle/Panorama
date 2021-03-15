@@ -132,6 +132,7 @@ public final class LogServiceGrpc {
     }
 
     /**
+     *
      */
     public void fetchActivites(SessionLog.SessionInfo request,
                                io.grpc.stub.StreamObserver<SessionLog.Activity> responseObserver) {
