@@ -16,6 +16,7 @@ export default function IconLabelButtons() {
   const fileSelectedHandler = (event) => {
     const file = event.target.files[0]
     const base64 =  convertBase64(file)
+    console.log(base64);
     setState(base64)
   };
 

@@ -38,7 +38,7 @@ const rows = [
 
 export default function ImageList() {
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: 1000, width: '100%' }}>
             <DataGrid rows={rows} columns={columns} pageSize={25} />
         </div>
     );
