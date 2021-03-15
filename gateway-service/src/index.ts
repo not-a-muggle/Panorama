@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 
 
 const loginRouter = require("./routes/login");
-
+const imageRouter = require("./routes/image");
 const app = express();
 
 
@@ -17,7 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet())
 app.use(cors({ origin: '*' , credentials : true, methods: 'GET,PUT,POST,OPTIONS' }));
 
-app.use('/', loginRouter)
+app.use('/', loginRouter);
+app.use('/', imageRouter);
 
 app.use(morgan("combined"));
 
