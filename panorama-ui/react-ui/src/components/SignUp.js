@@ -100,7 +100,7 @@ function SignUp(props) {
                     console.log(error);
                 });    
         } else {
-            props.showError('Please enter valid username and password')    
+            props.showError('Please enter valid username and password');   
         }
         
     }
