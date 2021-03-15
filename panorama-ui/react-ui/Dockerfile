@@ -1,4 +1,4 @@
-# Stage 1
+# Stage 1 - test
 
 FROM node:10-alpine as build-step
 RUN mkdir /app
@@ -8,7 +8,7 @@ RUN npm install
 COPY . /app
 RUN npm run build
 
-# Stage 2
+# Stage 2 - prod
 
 FROM nginx:1.17.1-alpine
 COPY --from=build-step /app/build /usr/share/nginx/html
