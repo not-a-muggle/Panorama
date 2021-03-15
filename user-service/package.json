@@ -8,7 +8,10 @@
     "start": "node out/index.js",
     "precompile": "node ./node_modules/shx/lib/cli.js rm -rf out/",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
-    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\""
+    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\"",
+    "prebuildimage": "docker login --username $DOCKER_USERNAME --password $DOCKER_PASS",
+    "buildimage": "docker image build . -t user-service:latest && docker tag user-service:latest $DOCKER_USERNAME/user-service:latest",
+    "postbuildimage": "docker push $DOCKER_USERNAME/user-service:latest"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +19,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.2.9",
     "@grpc/proto-loader": "^0.5.6",
+    "cors": "^2.8.5",
     "mongodb": "^3.6.4"
   },
   "devDependencies": {
