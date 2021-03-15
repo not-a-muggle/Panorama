@@ -16,6 +16,7 @@ import axios from 'axios';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import Navbar from "../components/Navbar"
+import Cookies from 'universal-cookie';
 
 function Copyright() {
   return (
@@ -66,10 +67,6 @@ function SignIn(props) {
 
   const handleSubmitClick = (e) => {
       e.preventDefault();
-      const headers={
-          email:state.email,
-          password:state.password,
-      }
       var basicAuth = 'Basic ' + new Buffer(state.email + ':' + state.password).toString('base64');
       axios.post('http://localhost:3000/signin', {}, {
         headers: { 'Authorization': basicAuth }
@@ -81,6 +78,8 @@ function SignIn(props) {
                       'successMessage' : 'Login successful. Redirecting to home page..'
                   }))
                   localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
+                  const cookies = new Cookies();
+                  cookies.set('username',state.email, { path: '/'});
                   redirectToRegister();
                   props.showError(null)
               }

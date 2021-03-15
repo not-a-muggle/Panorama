@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import {API_BASE_URL} from '../constants/apiConstants';
 import axios from 'axios';
+import Cookies from 'universal-cookie'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -11,13 +12,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IconLabelButtons() {
-  const [selectedFile , setState] = useState(null)
+  const [selectedFile , setState] = useState({username : "",files : [], fileNames: []})
 
-  const fileSelectedHandler = (event) => {
-    const file = event.target.files[0]
-    const base64 =  convertBase64(file)
-    console.log(base64);
-    setState(base64)
+  const fileSelectedHandler = async (event) => {
+    const file = event.target.files
+    const cookies = new Cookies();
+    const name = cookies.get('username');
+    console.log(name);
+    const base64 = []
+    const fileImageNames = []
+    for(const eachFile of file) {
+      base64.push(await convertBase64(eachFile))
+      fileImageNames.push(eachFile.name)
+    }
+    const stateObject = {
+      username: name,
+      files: base64,
+      fileNames: fileImageNames 
+    }
+    console.log(stateObject)
+    setState(prevState => ({
+      ...prevState,
+      username:name,
+      files: base64,
+      fileNames: fileImageNames
+  }))
+    console.log(selectedFile)
   };
 
   const convertBase64 = (file) => {
@@ -74,7 +94,7 @@ export default function IconLabelButtons() {
       >
         Upload
       </Button>
-      <input type = "file" onChange={fileSelectedHandler}/>
+      <input type = "file" multiple onChange={fileSelectedHandler}/>
       <Button
         variant="contained"
         color="primary"
