@@ -38,6 +38,7 @@ class UserImageAccessor:
             fileId = self.storeImage(userId, imageName, imageData)
             if fileId is not None:
                 fileIds.append(fileId)
+                print("File added to drive with id ", fileId)
         return fileIds
 
     def getImages(self, userId, startIdx=0, endIdx=50):
@@ -105,9 +106,9 @@ class UserImageAccessor:
         image = {"name": fileName, "data": fileData}
         return image
 
-userimg = UserImageAccessor()
-data = userimg.getImagesMetadata("vdembla@iu.edu")
-print(data)
+# userimg = UserImageAccessor()
+# data = userimg.getImagesMetadata("vdembla@iu.edu")
+# print(data)
 # images = userimg.getImages("vdembla@iu.edu")
 
 # for image in images:

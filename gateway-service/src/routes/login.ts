@@ -40,7 +40,7 @@ router.post('/signin', async (req: express.Request, res: express.Response) => {
 
     const creds = Helper.decodeB64(b64Creds);
 
-    console.log("creds "+creds);
+    console.log("creds " + creds);
 
     const colonPos = creds.lastIndexOf(':');
     const username = creds.substring(0, colonPos);
@@ -67,7 +67,7 @@ router.post('/signin', async (req: express.Request, res: express.Response) => {
     // authentication successful
     // send back the token
     res.status(200);
-    res.send({ token: token });
+    res.send({ token: token, username: username });
     return;
 });
 
