@@ -1,4 +1,4 @@
-# Stage 1 - dev
+# Stage 1 - development
 
 FROM node:10-alpine as build-step
 RUN mkdir /app
@@ -8,7 +8,7 @@ RUN npm install
 COPY . /app
 RUN npm run build
 
-# Stage 2 - prod
+# Stage 2 - production
 
 FROM nginx:1.17.1-alpine
 COPY --from=build-step /app/build /usr/share/nginx/html
