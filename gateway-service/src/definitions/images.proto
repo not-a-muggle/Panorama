@@ -1,0 +1,37 @@
+syntax = "proto3";
+package img;
+
+service ImageService {
+    rpc getImage(ImageLocation) returns (Image);
+    rpc getImages(stream ImageLocation) returns (stream Image);
+    rpc getImagesMetadata(ImageListRequest) returns (stream ImageMetadata);
+    rpc storeImage(Image) returns (StoreResult);
+    rpc storeImages(stream Image) returns (stream StoreResult);
+}
+
+message ImageLocation {
+    string userId = 1;
+    string imageId = 2;
+}
+
+message Image {
+    string imageData = 1;
+    string imageName = 2;
+    string userId = 3;
+}
+
+message ImageMetadata {
+    string imageName = 1;
+    string imageCreationDate = 2;
+    string imageId = 3;
+}
+
+message ImageListRequest {
+    string userId = 1;
+    int32 startIdx = 2;
+    int32 endIdx = 3;
+}
+
+message StoreResult {
+    bool stored = 1;
+}
