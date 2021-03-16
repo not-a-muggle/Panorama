@@ -30,7 +30,9 @@ export default class DatabaseClient {
         const database = this.client.db(config.mongoDatabase);
         const collection = database.collection(collectionName)
         try {
+            console.log("query " + JSON.stringify(query));
             const result = await collection.findOne(query);
+            console.log("resutl " + JSON.stringify(result));
             return result as object;
         } catch (err) {
             console.log("Error while executing query on collections\n" + err);

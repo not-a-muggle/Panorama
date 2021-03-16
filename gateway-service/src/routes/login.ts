@@ -4,39 +4,53 @@ import Helper from "../util/Helper";
 import * as definitions from "../definitions/user";
 import UserService from "../service-clients/UserService";
 import { AuthCrudResult, BasicCreds } from "../definitions/auth";
+import { LogResult } from "../definitions/session-log";
+import SessionLogService from "../service-clients/SessionLogService";
 
 
 const router: express.Router = express.Router();
 
 
-router.post('/login', async (req: express.Request, res: express.Response) => {
+router.post('/signin', async (req: express.Request, res: express.Response) => {
     // call the auth service with the required details 
-
     // check the header for basic auth first
-    const authHeader: string = req.headers["authorization"] as string;
+    // console.log("Hello Headers" + JSON.stringify(req));
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+
+    const authHeader: string = req.header("Authorization") as string;
+    console.log("auth:" + authHeader);
     if (!authHeader) {
-        res.status(400);
-        res.send("Authorization header not found");
+        res.sendStatus(400);
+        console.log("Authorization header not found");
+        return;
     }
 
     const isBasic = authHeader.startsWith("Basic");
 
     if (!isBasic) {
-        res.status(400);
-        res.send("Only basic authorization supported right now for login. Basic auth not found.");
+        res.sendStatus(400);
+        console.log("Only basic authorization supported right now for login. Basic auth not found.");
+        return;
     }
+
 
     const b64Creds = authHeader.substring(6, authHeader.length);
 
     const creds = Helper.decodeB64(b64Creds);
 
+    console.log("creds " + creds);
+
     const colonPos = creds.lastIndexOf(':');
     const username = creds.substring(0, colonPos);
     const password = creds.substring(colonPos + 1, creds.length)
-
     if (!username || !password) {
-        res.status(400);
-        res.send("Username or password not found in the basic auth request");
+        res.sendStatus(400);
+        console.log("Username or password not found in the basic auth request");
+        return;
     }
 
 
@@ -44,14 +58,34 @@ router.post('/login', async (req: express.Request, res: express.Response) => {
 
     // auth failure
     if (!success || !token || token == "") {
-        res.status(401);
-        res.send('Username or password is incorrect');
+        res.sendStatus(401);
+        console.log('Username or password is incorrect');
+        return;
     }
 
     // authentication successful
     // send back the token
-    res.status(200)
-    res.send({ token: token });
+
+    try {
+        const logResult: LogResult = await SessionLogService.Instance.logActivity(
+            {
+                userId: username,
+                sessionId: token,
+                activityDesc: `${username} logged in`, time: Date.now().toString()
+            });
+
+        if (logResult.logged) {
+            console.log("logged to session log service");
+        }
+        else {
+            console.log("logging failed by the log service");
+        }
+    } catch (ex) {
+        console.log("Could not log data to session log service\n",ex);
+    }
+    res.status(200);
+    res.send({ token: token, username: username });
+    return;
 });
 
 
@@ -66,6 +100,12 @@ router.post('/signup', async (req: express.Request, res: express.Response) => {
     user.email = req.body["email"];
 
     const basicDetails: BasicCreds = { username: req.body["email"], password: req.body["password"] }
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
     try {
         const userCreationResponse = await UserService.Instance.createUser(user);
