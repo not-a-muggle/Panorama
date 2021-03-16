@@ -5,7 +5,7 @@ import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
 import Error from './components/Error'
 import Navbar from './components/Navbar'
-import PermanentDrawerLeft from './components/PermanentDrawerLeft'
+import Images from './components/Images'
 import LearnMore from './components/LearnMore'
 import ForgotPassword from './components/ForgotPassword'
 import UpdatePassword from './components/UpdatePassword'
@@ -20,7 +20,7 @@ class App extends React.Component {
                 <Route path="/" component={Home} exact />
                 <Route path="/SignIn" component={SignIn} />
                 <Route path="/SignUp" component={SignUp} />
-                <Route path="/PermanentDrawerLeft" component={PermanentDrawerLeft} />
+                <Route path="/images" component={Images} />
                 <Route path="/LearnMore" component={LearnMore} />
                 <Route path="/ForgotPassword" component={ForgotPassword} />
                 <Route path="/UpdatePassword" component={UpdatePassword} />
