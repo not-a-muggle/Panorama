@@ -30,6 +30,6 @@ workflows:
           - aws-ecr/build-and-push-image   
     - run-task:
         requires:
-          - aws.ecs/deploy-service-update
+          - aws-ecs/deploy-service-update
 
 
