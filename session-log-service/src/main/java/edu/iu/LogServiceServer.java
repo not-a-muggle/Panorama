@@ -15,7 +15,7 @@ public class LogServiceServer extends LogServiceGrpc.LogServiceImplBase {
 
         databaseClient.insertActivity(userId, sessionId, activityDesc, time);
         SessionLog.LogResult logResult = SessionLog.LogResult.newBuilder().setLogged(true).build();
-
+        System.out.println("Logged activity for user " + userId + " corresponding to session " + sessionId);
         responseObserver.onNext(logResult);
         responseObserver.onCompleted();
     }
@@ -28,7 +28,7 @@ public class LogServiceServer extends LogServiceGrpc.LogServiceImplBase {
 
         DatabaseClient databaseClient = DatabaseClient.getInstance();
         SessionLog.Activity[] result = databaseClient.fetchActivities(userId, sessionId);
-        if(result == null) {
+        if (result == null) {
             return;
         }
         for (SessionLog.Activity activity : result) {

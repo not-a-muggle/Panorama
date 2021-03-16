@@ -4,6 +4,8 @@ import Helper from "../util/Helper";
 import * as definitions from "../definitions/user";
 import UserService from "../service-clients/UserService";
 import { AuthCrudResult, BasicCreds } from "../definitions/auth";
+import { LogResult } from "../definitions/session-log";
+import SessionLogService from "../service-clients/SessionLogService";
 
 
 const router: express.Router = express.Router();
@@ -45,9 +47,6 @@ router.post('/signin', async (req: express.Request, res: express.Response) => {
     const colonPos = creds.lastIndexOf(':');
     const username = creds.substring(0, colonPos);
     const password = creds.substring(colonPos + 1, creds.length)
-    console.log("username and password below")
-    console.log(username)
-    console.log(password)
     if (!username || !password) {
         res.sendStatus(400);
         console.log("Username or password not found in the basic auth request");
@@ -66,6 +65,24 @@ router.post('/signin', async (req: express.Request, res: express.Response) => {
 
     // authentication successful
     // send back the token
+
+    try {
+        const logResult: LogResult = await SessionLogService.Instance.logActivity(
+            {
+                userId: username,
+                sessionId: token,
+                activityDesc: `${username} logged in`, time: Date.now().toString()
+            });
+
+        if (logResult.logged) {
+            console.log("logged to session log service");
+        }
+        else {
+            console.log("logging failed by the log service");
+        }
+    } catch (ex) {
+        console.log("Could not log data to session log service\n",ex);
+    }
     res.status(200);
     res.send({ token: token, username: username });
     return;

@@ -1,8 +1,10 @@
 import express from "express";
 import { time } from "node:console";
 import { Image, ImageLocation, ImageStoreRequest, StoreResult } from "../definitions/images";
+import { LogResult } from "../definitions/session-log";
 import ImageService from "../service-clients/ImageService";
 import SessionService from "../service-clients/SessionService";
+import SessionLogService from "../service-clients/SessionLogService";
 import Helper from "../util/Helper";
 
 
@@ -31,6 +33,8 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
     const username = req.body["username"];
     const imageStoreRequest: ImageStoreRequest[] = req.body["images"];
 
+    let token;
+
 
     // check if the user has a valid session
     try {
@@ -45,7 +49,7 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
         }
 
 
-        const token = authHeader.substring(7, authHeader.length);
+        token = authHeader.substring(7, authHeader.length);
 
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
         // const isVerified = { verified: true };
@@ -80,9 +84,11 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
 
 
     // once the image is stored, call the session log service
+    const imageNames = [];
     const images: Image[] = [];
     for (const imgStore of imageStoreRequest) {
         images.push({ imageData: imgStore.imageData, imageName: imgStore.imageName, userId: username })
+        imageNames.push(imgStore.imageName);
     }
 
     if (images.length == 0) {
@@ -111,6 +117,23 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
         console.log("Could not store images due to the following error " + ex);
     }
 
+    try {
+        const logResult: LogResult = await SessionLogService.Instance.logActivity(
+            {
+                userId: username,
+                sessionId: token,
+                activityDesc: `Storing Images ${JSON.stringify(imageNames)}`, time: Date.now().toString()
+            });
+
+        if (logResult.logged) { console.log("logged to session log service"); }
+        else {
+            console.log("logging failed by the log service");
+        }
+
+    } catch (ex) {
+        console.log("Could not log data to session log service\n",ex);
+    }
+
 });
 
 
@@ -126,7 +149,7 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
 
     const username = req.query["username"] as string;
     const imageId: string = req.query["imageId"] as string;
-
+    let token: string;
     // check if the user has a valid session
     try {
 
@@ -140,7 +163,7 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
         }
 
 
-        const token = authHeader.substring(7, authHeader.length);
+        token = authHeader.substring(7, authHeader.length);
 
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
         // const isVerified = { verified: true };
@@ -176,16 +199,35 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
+    let response;
     try {
-        const response = await ImageService.Instance.getImage(imageLocation);
-        res.status(200);
-        res.send(response);
-        return;
+        response = await ImageService.Instance.getImage(imageLocation);
+
     } catch (ex) {
         res.sendStatus(404);
         console.log("error occured while fetching the image \n" + ex);
         return;
     }
+
+    try {
+        const logResult: LogResult = await SessionLogService.Instance.logActivity(
+            {
+                userId: username,
+                sessionId: token,
+                activityDesc: `Get Image with Image ID ${imageId}`, time: Date.now().toString()
+            });
+
+        if (logResult.logged) { console.log("logged to session log service"); }
+        else {
+            console.log("logging failed by the log service");
+        }
+
+    } catch (ex) {
+        console.log("Could not log data to session log service\n",ex);
+    }
+    res.status(200);
+    res.send(response);
+    return;
 
 });
 
@@ -194,6 +236,7 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
     const username = req.query["username"] as string;
     // console.log(username);
     // check if the user has a valid session
+    let token: string;
     try {
 
         const authHeader: string = req.header("Authorization") as string;
@@ -205,9 +248,10 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
             return;
         }
 
-        const token = authHeader.substring(7, authHeader.length);
+        token = authHeader.substring(7, authHeader.length);
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
         // const isVerified = { verified: true };
+
 
         if (!isVerified.verified) {
             res.sendStatus(401);
@@ -234,17 +278,39 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
-
+    let response;
     try {
-        const response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100 });
-        res.status(200);
-        res.send(response);
-        return;
+        response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100 });
+
+
+
+
     } catch (ex) {
         res.sendStatus(404);
         console.log("error occured while fetching the image list \n" + ex);
         return;
     }
+
+    try {
+        const logResult: LogResult = await SessionLogService.Instance.logActivity(
+            {
+                userId: username,
+                sessionId: token,
+                activityDesc: "Get List of All Images", time: Date.now().toString()
+            });
+
+        if (logResult.logged) { console.log("logged to session log service"); }
+        else {
+            console.log("logging failed by the log service");
+        }
+
+    } catch (ex) {
+        console.log("Could not log data to session log service\n",ex);
+    }
+
+    res.status(200);
+    res.send(response);
+    return;
 
 });
 

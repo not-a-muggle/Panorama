@@ -18,5 +18,10 @@
         "serverIP": "0.0.0.0",
         "servicePort": "50054",
         "protofile": "images.proto"
+    },
+    "session-log-service": {
+        "serverIP": "0.0.0.0",
+        "servicePort": "50055",
+        "protofile": "session-log.proto"
     }
 }
