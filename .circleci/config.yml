@@ -23,12 +23,13 @@ workflows:
         dockerfile: "panorama-ui/react-ui/Dockerfile"
         path: .
     - aws-ecs/deploy-service-update:
-        cluster-name: 'ReactAppTestCluster'
-        container-image-name-updates: 'container=reactui-service,tag=${CIRCLE_SHA1}'
-        family: 'reactui-service'
+        cluster-name: "ReactAppTestCluster"
+        container-image-name-updates: "container=reactui-service,tag=${CIRCLE_SHA1}"
+        family: "reactui-service"
         requires:
           - aws-ecr/build-and-push-image   
     - run-task:
-     
+        requires:
+          - aws.ecr/deploy-service-update
 
 
