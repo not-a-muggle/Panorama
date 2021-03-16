@@ -3,17 +3,6 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.15.3
   aws-ecs: circleci/aws-ecs@2.0.0
 
-jobs:
-  run-task:
-    docker:
-      - image: 'ReactAppContainer822652550772.dkr.ecr.us-east-1.amazonaws.com/panorama-ecr:latest'
-    steps:
-      - aws-ecs/run-task:
-          awsvpc: false
-          cluster: 'ReactAppTestCluster'
-          launch-type: EC2
-          task-definition: 'reactapp'
-
 workflows:
   build-and-deploy:
     jobs:
@@ -22,14 +11,5 @@ workflows:
         tag: "${CIRCLE_SHA1}"
         dockerfile: "panorama-ui/react-ui/Dockerfile"
         path: .
-    - aws-ecs/deploy-service-update:
-        cluster-name: "ReactAppTestCluster"
-        container-image-name-updates: "container=reactui-service,tag=${CIRCLE_SHA1}"
-        family: "reactui-service"
-        requires:
-          - aws-ecr/build-and-push-image   
-    - run-task:
-        requires:
-          - aws-ecs/deploy-service-update
 
 
