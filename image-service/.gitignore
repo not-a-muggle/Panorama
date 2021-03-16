@@ -8,7 +8,7 @@ __pycache__/
 
 
 user.db
-
+project_env/*
 # Distribution / packaging
 .Python
 build/
