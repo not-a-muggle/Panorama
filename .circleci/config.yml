@@ -16,8 +16,8 @@ jobs:
 workflows:
   build:
     jobs:
-    - build_docker
-    - aws-ecr/build-and-push-image
+    - build
+    - aws-ecr/build-and-push-image:
         repo: "panorama-ecr"
         tag: "latest, v0.1.${CIRCLE_BUILD_NUM}"
         dockerfile: "panorama-ui/react-ui/Dockerfile"
