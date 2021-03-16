@@ -3,7 +3,7 @@
 FROM node:10-alpine as build-step
 RUN mkdir /app
 WORKDIR /app
-ADD . /app
+COPY panorama-ui/react-ui/. /app
 RUN npm install
 #RUN npm install
 RUN npm run build
