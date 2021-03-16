@@ -34,7 +34,17 @@ export default class WebTokenManager {
 
     public verifyToken(username: string, token: string): boolean {
         const secret = process.env.SECRET || config.secret;
-        const decrypted: UserDetails = jsonwebtoken.verify(token, secret) as UserDetails;
-        return decrypted.username == username;
+        console.log(token);
+        console.log("USERNAME:" + JSON.stringify(username));
+        try {
+            const decrypted: UserDetails = jsonwebtoken.verify(token, secret) as UserDetails;
+            console.log("DECRYPTED:" + JSON.stringify(decrypted));
+            
+            return decrypted.username == username;
+        } catch (ex) {
+            console.log(ex);
+        }
+
+
     }
 }
