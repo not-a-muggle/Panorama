@@ -1,22 +1,10 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
   aws-ecr: circleci/aws-ecr@6.15.3
-jobs:
-  build:
-    docker:
-      - image: circleci/node:buster
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
-      - run: cd panorama-ui/react-ui/ && docker image build . -t reactui:latest && docker tag reactui:latest $DOCKER_USERNAME/reactui:latest
-      - run: docker push $DOCKER_USERNAME/reactui:latest
 
 workflows:
-  build:
+  build-and-deploy:
     jobs:
-    - build
     - aws-ecr/build-and-push-image:
         repo: "panorama-ecr"
         tag: "latest, v0.1.${CIRCLE_BUILD_NUM}"
