@@ -17,7 +17,7 @@ export default class LoginHandler {
 
     public async verifyBasicAuth(username: string, password: string): Promise<AuthResult> {
         const credentials: BasicCreds = { username: username, password: password }
-        const queryResult = await DatabaseClient.Instance.findOne("auth", credentials);
+        const queryResult = await DatabaseClient.Instance.findOne("login", credentials);
 
         // if authenticated with the database, call the session service to get Token
         if (queryResult == null) {

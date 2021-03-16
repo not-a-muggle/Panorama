@@ -50,7 +50,7 @@ export default class AuthService {
     }
 
     public async createUser(user: BasicCreds): Promise<AuthCrudResult> {
-        console.log("Printing Input" + JSON.stringify(user));
+        // console.log("Printing Input" + JSON.stringify(user));
         return new Promise<AuthCrudResult>((resolve, reject) => {
             this.client.create(user, (err: any, response: any) => {
                 if (err) {

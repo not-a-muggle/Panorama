@@ -8,7 +8,10 @@
     "start": "node out/index.js",
     "precompile": "node ./node_modules/shx/lib/cli.js rm -rf out/",
     "compile": "node ./node_modules/typescript/bin/tsc -p .",
-    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\""
+    "postcompile": "node ./node_modules/cpx/bin/index.js \"./src/**/*.{proto,json}\" \"./out/\"",
+    "prebuildimage": "docker login --username $DOCKER_USERNAME --password $DOCKER_PASS",
+    "buildimage": "docker image build . -t session-service:latest && docker tag session-service:latest $DOCKER_USERNAME/session-service:latest",
+    "postbuildimage": "docker push $DOCKER_USERNAME/session-service:latest"
   },
   "keywords": [],
   "author": "Vishesh Dembla",

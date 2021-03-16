@@ -1,11 +1,11 @@
-import React, {useState}  from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,15 +13,15 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
+import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
-
+import Navbar from "../components/Navbar";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Panorama
       </Link>{' '}
       {new Date().getFullYear()}
@@ -51,61 +51,61 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignIn(props) {
-  const [state , setState] = useState({
-      email : "",
-      password : "",
-      successMessage: null
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    successMessage: null
   })
   const handleChange = (e) => {
-      const {id , value} = e.target   
-      setState(prevState => ({
-          ...prevState,
-          [id] : value
-      }))
+    const { id, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [id]: value
+    }))
   }
 
   const handleSubmitClick = (e) => {
-      e.preventDefault();
-      const payload={
-          "email":state.email,
-          "password":state.password,
-      }
-      axios.post(API_BASE_URL+'/user/login', payload)
-          .then(function (response) {
-              if(response.status === 200){
-                  setState(prevState => ({
-                      ...prevState,
-                      'successMessage' : 'Login successful. Redirecting to home page..'
-                  }))
-                  localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                  redirectToHome();
-                  props.showError(null)
-              }
-              else if(response.code === 204){
-                  props.showError("Username and password do not match");
-              }
-              else{
-                  props.showError("Username does not exists");
-              }
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
+    e.preventDefault();
+    var basicAuth = 'Basic ' + new Buffer(state.email + ':' + state.password).toString('base64');
+    axios.post('http://localhost:3000/signin', {}, {
+      headers: { 'Authorization': basicAuth }
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          setState(prevState => ({
+            ...prevState,
+            'successMessage': 'Login successful. Redirecting to home page..'
+          }))
+          localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+          localStorage.setItem("username", response.data.username);
+          console.log(`username set to ${response.data.username}`)
+
+          redirectToImages();
+
+        }
+        else if (response.code === 204) {
+          props.showError("Username and password do not match");
+        }
+        else {
+          props.showError("Username does not exists");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
-  const redirectToHome = () => {
-      props.updateTitle('Home')
-      props.history.push('/home');
-  }
-  const redirectToRegister = () => {
-      props.history.push('/signup'); 
-      props.updateTitle('SignUp');
+
+
+  const redirectToImages = () => {
+    props.history.push('/Images');
   }
 
 
   const classes = useStyles();
-  
+
   return (
     <Container component="main" maxWidth="xs">
+      <Navbar />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -124,6 +124,8 @@ function SignIn(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
+            onChange={handleChange}
+            value={state.email}
             autoFocus
           />
           <TextField
@@ -136,13 +138,14 @@ function SignIn(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
+            value={state.password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Link to ="/PermanentDrawerLeft">
-          <Button
+          <Button onClick={handleSubmitClick}
             type="submit"
             fullWidth
             variant="contained"
@@ -151,15 +154,14 @@ function SignIn(props) {
           >
             Sign In
           </Button>
-          </Link>
           <Grid container>
             <Grid item xs>
-              <Link to ="/ForgotPassword">
+              <Link to="/ForgotPassword">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link to = "/SignUp">
+              <Link to="/SignUp">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
