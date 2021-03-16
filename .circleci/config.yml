@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@3.0.0
   aws-ecr: circle/aws-ecr@6.15.0
 jobs:
-  build:
+  build_docker:
     docker:
       - image: circleci/node:buster
     steps:
@@ -16,17 +16,19 @@ jobs:
 workflows:
   build:
     jobs:
-     - build:
-     - aws-ecr/build-and-push-image:
+      build_docker:
+        filters:
+          branches:
+            only:
+              - react-ui-cd
+
+      aws-ecr/build-and-push-image:
         repo: panorama-ecr
         tag: "latest, v0.1.${CIRCLE_BUILD_NUM}"
         dockerfile: "panorama-ui/react-ui/Dockerfile"
         path: .
         requires:
-          - build
+          - build_docker
      
-          filters:
-            branches:
-              only:
-                - react-ui-cd
+
 
