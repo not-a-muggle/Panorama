@@ -9,8 +9,8 @@ jobs:
       - setup_remote_docker
       - checkout
       - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
-      - run: cd panorama-ui/react-ui/ && docker image build . -t reactui:latest && docker tag reactui:latest $DOCKER_USERNAME/reactui:latest
-      - run: docker push $DOCKER_USERNAME/reactui:latest
+      - run: cd image-service/ && docker image build . -t image-service:latest && docker tag image-service:latest $DOCKER_USERNAME/image-service:latest
+      - run: docker push $DOCKER_USERNAME/image-service:latest
 
 workflows:
   build:
@@ -19,4 +19,4 @@ workflows:
           filters:
             branches:
               only:
-                - react-ui-ci
+                - image-service-ci
