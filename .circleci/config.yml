@@ -23,7 +23,7 @@ workflows:
         dockerfile: "panorama-ui/react-ui/Dockerfile"
         path: .
         requires:
-          - build_docker
+          - build
      
 
 
