@@ -5,7 +5,6 @@ RUN mkdir /app
 WORKDIR /app
 COPY panorama-ui/react-ui/. /app
 RUN npm install
-#RUN npm install
 RUN npm run build
 
 # Stage 2 - production
