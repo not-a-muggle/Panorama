@@ -10,8 +10,7 @@ workflows:
         tag: "latest, v0.1.${CIRCLE_BUILD_NUM}"
         dockerfile: "panorama-ui/react-ui/Dockerfile"
         path: .
-        requires:
-          - build
+        
      
 
 
