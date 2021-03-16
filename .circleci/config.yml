@@ -9,7 +9,7 @@ jobs:
       - setup_remote_docker
       - checkout
       - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
-      - run: cd panorama-ui/react-ui/ && docker image build . -t react-ui:latest && docker tag reactui:latest $DOCKER_USERNAME/react-ui:latest
+      - run: cd panorama-ui/react-ui/ && docker image build . -t react-ui:latest && docker tag react-ui:latest $DOCKER_USERNAME/react-ui:latest
       - run: docker push $DOCKER_USERNAME/react-ui:latest
 
 workflows:
