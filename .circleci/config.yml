@@ -6,7 +6,7 @@ orbs:
 jobs:
   run-task:
     docker:
-      - image: ''
+      - image: 'ReactAppContainer822652550772.dkr.ecr.us-east-1.amazonaws.com/panorama-ecr:latest'
     steps:
       - aws-ecs/run-task:
           awsvpc: false
