@@ -48,6 +48,7 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
         const token = authHeader.substring(7, authHeader.length);
 
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
+        // const isVerified = { verified: true };
         if (!isVerified.verified) {
             res.sendStatus(401);
             console.log("JWT token verification failed");
@@ -123,8 +124,8 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
     }
     */
 
-    const username = req.body["username"];
-    const imageId: string = req.body["imageId"];
+    const username = req.query["username"] as string;
+    const imageId: string = req.query["imageId"] as string;
 
     // check if the user has a valid session
     try {
@@ -142,6 +143,7 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
         const token = authHeader.substring(7, authHeader.length);
 
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
+        // const isVerified = { verified: true };
 
         if (!isVerified.verified) {
             res.sendStatus(401);
@@ -155,8 +157,6 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
         console.log("JWT token verification failed");
         return;
     }
-
-
 
 
     const imageLocation: ImageLocation = {
@@ -191,8 +191,8 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
 
 
 router.get('/imageList', async (req: express.Request, res: express.Response) => {
-    const username = req.body["username"];
-
+    const username = req.query["username"] as string;
+    // console.log(username);
     // check if the user has a valid session
     try {
 
@@ -207,6 +207,7 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
 
         const token = authHeader.substring(7, authHeader.length);
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
+        // const isVerified = { verified: true };
 
         if (!isVerified.verified) {
             res.sendStatus(401);
@@ -221,7 +222,7 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
         return;
     }
 
-    
+
     if (!username) {
         res.sendStatus(400);
         console.log("Insufficient information in the request body");
@@ -234,12 +235,12 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
 
-    try{
-        const response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100});
+    try {
+        const response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100 });
         res.status(200);
         res.send(response);
         return;
-    } catch(ex) {
+    } catch (ex) {
         res.sendStatus(404);
         console.log("error occured while fetching the image list \n" + ex);
         return;

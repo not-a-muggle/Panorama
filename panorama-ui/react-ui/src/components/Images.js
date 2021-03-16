@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
+    // width: `calc(100% - ${drawerWidth}px)`,
+    width: '100%',
     marginLeft: drawerWidth,
     backgroundColor: theme.palette.error.dark,
   },
@@ -57,7 +58,7 @@ export default function PermanentDrawerLeft() {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" color = "red" className={classes.appBar}>
+      <AppBar  color = "red" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" noWrap>
             PANORAMA
@@ -65,7 +66,11 @@ export default function PermanentDrawerLeft() {
           <IconLabelButtons/>
         </Toolbar>
       </AppBar>
-      <Drawer
+
+      
+      {
+      // Album Drawer
+      /* <Drawer
         className={classes.drawer}
         variant="permanent"
         classes={{
@@ -90,8 +95,10 @@ export default function PermanentDrawerLeft() {
             </ListItem>
           ))}
         </List>
-      </Drawer>
-     <ImageList></ImageList>
+      </Drawer> */}
+     <ImageList>
+       
+     </ImageList>
     </div>
   );
 }
