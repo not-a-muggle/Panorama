@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+  aws-ecr: circle/aws-ecr@6.15.0
 jobs:
   build:
     docker:
@@ -15,8 +16,17 @@ jobs:
 workflows:
   build:
     jobs:
-      - build:
+     - build:
           filters:
             branches:
               only:
                 - react-ui-ci
+
+    - aws-ecr/build-and-push-image
+        repo: "panorama-ecr"
+        tag: "latest, v0.1.${CIRCLE_BUILD_NUM}"
+        dockerfile: "panorama-ui/react-ui/Dockerfile"
+        path: .
+        requires:
+          - build
+
