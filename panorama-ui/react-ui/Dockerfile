@@ -1,4 +1,4 @@
-# Stage 1 - test
+# Stage 1 - dev
 
 FROM node:10-alpine as build-step
 RUN mkdir /app
