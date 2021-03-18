@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway-service
+  name: image-service
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50055
-    port: 50055
-    nodePort: 8200 
+  - targetPort: 50060
+    port: 50060
+    nodePort: 8300 
  selector:
   app: app
   tier: backend
@@ -29,13 +29,13 @@ spec:
 
     spec:
       containers:
-      - name: backend-gatewayservice
+      - name: backend-imageservice
         imagePullPolicy: Always
-        image: panoramaiubads/gateway-service
+        image: panoramaiubads/image-service
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 50055
+        - containerPort: 50060
       restartPolicy: Always
