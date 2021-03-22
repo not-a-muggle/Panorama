@@ -1,15 +1,20 @@
 version: 2.1
-orbs:
-  node: circleci/node@3.0.0
+
 jobs:
   build:
 
     docker:
-      - image: circleci/node:buster
+      - image: circleci/openjdk:11-jdk
+      - image: circleci/
+
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd ./session-log-service/ && docker image build . -t session-log-service:latest && docker tag session-log-service:latest $DOCKER_USERNAME/session-log-service:latest
+      - run: docker push $DOCKER_USERNAME/image-service:latest
+      
+      
 
 workflows:
   build:
@@ -18,4 +23,4 @@ workflows:
           filters:
             branches:
               only:
-                - auth-service-ci
+                - session-log-service-ci
