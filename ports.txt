@@ -1,0 +1,9 @@
+Container ports 
+
+panorama-ui -> 80
+auth-service -> 50050
+gateway-service -> 50055
+image-service -> 50060
+session-log-service -> 50065
+session-service -> 50070
+user-service -> 50075

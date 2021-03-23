@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+ type: LoadBalancer
+ ports:
+  - targetPort: 50055
+    port: 50055
+    nodePort: 8200 
+ selector:
+  app: app
+  tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+        tier: backend
+
+    spec:
+      containers:
+      - name: backend-gatewayservice
+        imagePullPolicy: Always
+        image: panoramaiubads/gateway-service
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 50055
+      restartPolicy: Always

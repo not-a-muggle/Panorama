@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: session-log-service
+spec:
+ type: LoadBalancer
+ ports:
+  - targetPort: 50065
+    port: 50065
+    nodePort: 8400 
+ selector:
+  app: app
+  tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+        tier: backend
+
+    spec:
+      containers:
+      - name: backend-sessionlog
+        imagePullPolicy: Always
+        image: panoramaiubads/session-log-service
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 50065
+      restartPolicy: Always
