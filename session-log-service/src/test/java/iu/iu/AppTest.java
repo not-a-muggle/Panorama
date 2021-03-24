@@ -13,7 +13,7 @@ import edu.SessionLog;
 public class AppTest 
 {
     @Test
-    public void shouldAnswerWithTrue()
+    public void sessionStoreAndRetrieveTest()
     {
         String userId = "1234";
         String sessionId = "Session123";
