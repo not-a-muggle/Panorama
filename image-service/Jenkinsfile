@@ -1,0 +1,35 @@
+node {
+    def app
+    def dockerRegistry = 'panoramaiubads/image-service'
+    def registryCredential = 'docker-hub-credentials'
+    def jenkinsAppDir = 'image-service'
+    def remote = '149.165.157.145'
+    
+    stage('Cloning git repository') {
+        /* Checking out to the repository */
+        checkout scm
+    }
+
+    stage('Install dependencies') {
+        /* Application dependencies installation*/
+		sh 'cd ${jenkinsAppDir}'
+        sh 'npm install'
+	}
+
+    stage('Build and push image') {
+        /* Build the docker image */
+        app = docker.build(dockerRegistry, "${jenkinsAppDir}")
+        docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
+        app.push("latest")
+        }
+    }
+
+    stage('Clean up disk space') {
+        /* Removing unused images to clean up disk space */
+        sh "docker rmi ${dockerRegistry}:latest"
+        sh "docker rmi registry.hub.docker.com/${dockerRegistry}:latest"
+        sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
+        sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
+    }    
+    
+}
