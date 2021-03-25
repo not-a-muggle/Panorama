@@ -17,7 +17,7 @@ node {
 
     stage('Build and push image') {
         /* Build the docker image */
-        app = docker.build(dockerRegistry)
+        app = docker.build(dockerRegistry,'${jenkinsAppDir}')
     }
 
     stage(' Push image to registry'){
