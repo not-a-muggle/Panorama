@@ -28,7 +28,7 @@ node {
 
     stage('Deploy on Kubernetes'){
         script {
-          kubernetesDeploy(configs: "panorama-ui/react-ui/panorama-ui.yaml", kubeConfig: [path: '~/.kube/config'] )
+          kubernetesDeploy(configs: "panorama-ui/react-ui/panorama-ui.yaml", kubeConfig: [path: '/var/lib/jenkins/.kube/config'] )
         }
       
     }
