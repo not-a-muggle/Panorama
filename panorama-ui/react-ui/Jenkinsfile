@@ -37,3 +37,4 @@ node {
             sshPut remote: sshagent, from: '${jenkinsAppDir/panorama-ui.yaml}', into: '/home/ubuntu'
         }     
     }
+}
