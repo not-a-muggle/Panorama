@@ -1,36 +1,41 @@
-pipeline {
-environment {
-registry = "panoramaiubads/react-ui"
-registryCredential = 'docker-hub-credentials'
-dockerImage = ''
-}
-agent any
-stages {
-stage('Cloning our Git') {
-steps {
-git 'https://github.com/airavata-courses/Panorama.git'
-}
-}
-stage('Building our image') {
-steps{
-script {
-dockerImage = docker.build registry + ":$BUILD_NUMBER"
-}
-}
-}
-stage('Deploy our image') {
-steps{
-script {
-docker.withRegistry( '', registryCredential ) {
-dockerImage.push()
-}
-}
-}
-}
-stage('Cleaning up') {
-steps{
-sh "docker rmi $registry:$BUILD_NUMBER"
-}
-}
-}
+node {
+    def app
+    def registry = 'panoramaiubads/react-ui'
+    def registryCredential = 'docker-hub-credentials'
+
+    stage('Cloning git repository') {
+        /* Checking out to the repository */
+        checkout scm
+    }
+
+    stage('Remove nested directory') {
+        /* Removing the nested sub directory */
+        sh "cp -a ./react-ui/. ."
+        sh "rm -rf ./react-ui"
+    }
+
+    stage('Install npm packages') {
+        /* Application dependencies installation*/
+		sh 'npm install'
+	}
+
+    stage('Building image') {
+        /* Build the docker image */
+        app = docker.build(registry)
+	} 
+
+    stage('Pushing image') {
+        /* Pushing image to docker hub */
+        docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+            app.push("latest")
+        }
+	}
+
+    stage('Deleting local image') {
+        /* Removing locally built images to clear up space */
+        sh "docker rmi ${registry}:latest"
+        sh "docker rmi registry.hub.docker.com/${registry}:latest"
+        sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
+        sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
+    }
 }
