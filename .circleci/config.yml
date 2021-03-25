@@ -8,8 +8,9 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd image-service/ && pip3 install -r requirements.txt
       - run: cd image-service/ &&  python3 -m unittest test
+      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
       - run: cd image-service/ && docker image build . -t image-service:latest && docker tag image-service:latest $DOCKER_USERNAME/image-service:latest
       - run: docker push $DOCKER_USERNAME/image-service:latest
 
