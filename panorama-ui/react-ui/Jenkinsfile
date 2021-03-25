@@ -37,7 +37,7 @@ node {
     stage('Deploy on kubernetes'){
         /* Deploy on Kubernetes cluster*/
         sshagent(["jenkins-kubernetes-id"]){
-            sshPut remote: sshagent, from: '${jenkinsAppDir/panorama-ui.yaml}', into: '/home/ubuntu'
+            sshPut remote: ubuntu@149.165.157.145 , from: '${jenkinsAppDir/panorama-ui.yaml}', into: '/home/ubuntu'
         }     
     }
 }
