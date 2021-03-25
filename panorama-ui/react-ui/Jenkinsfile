@@ -18,10 +18,12 @@ node {
     stage('Build and push image') {
         /* Build the docker image */
         app = docker.build(dockerRegistry, "${jenkinsAppDir}")
+    }
+
+    stage(' Push image to registry'){
         docker.withRegistry('https://registry.hub.docker.com', registryCredential )
         app.push("latest")
-
-	} 
+    } 
 
     stage('Clean up disk space') {
         /* Removing unused images to clean up disk space */
