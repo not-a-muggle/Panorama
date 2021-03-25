@@ -8,15 +8,10 @@ node {
         checkout scm
     }
 
-    stage('Remove nested directory') {
-        /* Removing the nested sub directory */
-        sh "cp -a ./react-ui/. ."
-        sh "rm -rf ./react-ui"
-    }
-
     stage('Install npm packages') {
         /* Application dependencies installation*/
-		sh 'npm install'
+		sh 'cd ./panorama-ui/react-ui/'
+        sh 'npm install'
 	}
 
     stage('Building image') {
