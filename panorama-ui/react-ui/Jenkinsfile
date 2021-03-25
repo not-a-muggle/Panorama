@@ -27,7 +27,8 @@ node {
 	}
     
     stage('Kubernetes deploy'){
-        sh 'ssh '
+        sh 'chmod +x ./panorama-ui/react-ui/deploy.sh'
+        sh './panorama-ui/react-ui/deploy.sh'
     }
 
 
