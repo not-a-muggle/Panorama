@@ -14,23 +14,27 @@ node {
         sh 'npm install'
 	}
 
-    stage('Building image') {
+    stage('Build image') {
         /* Build the docker image */
         app = docker.build(registry,"./panorama-ui/react-ui")
 	} 
 
-    stage('Pushing image') {
+    stage('Push image') {
         /* Pushing image to docker hub */
         docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
             app.push("latest")
         }
 	}
 
-    stage('Deleting local image') {
+    stage('Clean old image') {
         /* Removing locally built images to clear up space */
         sh "docker rmi ${registry}:latest"
         sh "docker rmi registry.hub.docker.com/${registry}:latest"
         sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
         sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
+    }
+
+    stage('Deploy on Kubernetes'){
+        kubernetesDeploy configs: 'panorama-ui/react-ui/panorama-ui.yaml', ssh: [sshCredentialsId: 'ssh_id_kube', sshServer: '149.165.157.145']
     }
 }
