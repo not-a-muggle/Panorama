@@ -8,7 +8,7 @@ node {
         checkout scm
     }
 
-    stage('Install npm packages') {
+    stage('Install dependencies') {
         /* Application dependencies installation*/
 		sh 'cd ./panorama-ui/react-ui/'
         sh 'npm install'
