@@ -4,7 +4,7 @@ import config from "./config.json";
 export default class DatabaseClient {
 
     private static _instance: DatabaseClient = undefined;
-    private client: mongoDb.MongoClient;
+    client: mongoDb.MongoClient;
 
     private constructor() {
         this.client = new mongoDb.MongoClient(config.mongoUri + config.mongoDatabase, { useUnifiedTopology: true, useNewUrlParser: true });
