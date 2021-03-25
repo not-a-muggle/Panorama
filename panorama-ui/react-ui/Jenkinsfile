@@ -16,7 +16,7 @@ node {
 
     stage('Building image') {
         /* Build the docker image */
-        app = docker.build("registry","./panorama-ui/react-ui")
+        app = docker.build(registry,"./panorama-ui/react-ui")
 	} 
 
     stage('Pushing image') {
