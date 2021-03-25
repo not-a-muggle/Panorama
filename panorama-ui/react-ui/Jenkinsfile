@@ -25,13 +25,11 @@ node {
             app.push("latest")
         }
 	}
-
-    stage('Deploy on Kubernetes'){
-        script {
-          kubernetesDeploy(configs: "panorama-ui/react-ui/panorama-ui.yaml", kubeConfig: [path: '/var/lib/jenkins/.kube/config'] )
-        }
-      
+    
+    stage('Kubernetes deploy'){
+        sh 'ssh '
     }
+
 
     stage('Clean old image') {
         /* Removing locally built images to clear up space */
