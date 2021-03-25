@@ -3,7 +3,7 @@ node {
     def dockerRegistry = 'panoramaiubads/react-ui'
     def registryCredential = 'docker-hub-credentials'
     def jenkinsAppDir = 'panorama-ui/react-ui'
-
+    def remote = '149.165.157.145'
     stage('Cloning git repository') {
         /* Checking out to the repository */
         checkout scm
@@ -30,5 +30,10 @@ node {
         sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
         sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
     }    
-  
+    
+    stage('Deploy on kubernetes'){
+        /* Deploy on Kubernetes cluster*/
+        sshagent(["jenkins-kubernetes-id"]){
+            sshPut remote: sshagent, from: '${jenkinsAppDir/panorama-ui.yaml}', into: '/home/ubuntu'
+        }     
     }
