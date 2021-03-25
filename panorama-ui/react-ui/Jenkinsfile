@@ -35,7 +35,10 @@ node {
     }
 
     stage('Deploy on Kubernetes'){
-
-        app = kubernetesDeploy configs: 'panorama-ui/react-ui/panorama-ui.yaml', ssh: [sshCredentialsId: 'ssh_id_kube', sshServer: '149.165.157.145']
+        steps {
+        script {
+          kubernetesDeploy(configs: "panorama-ui/react-ui/panorama-ui.yaml", ssh: [sshCredentialsId: 'ssh_id_kube', sshServer: '149.165.157.145'])
+        }
+      }
     }
 }
