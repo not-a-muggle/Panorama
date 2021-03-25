@@ -9,7 +9,11 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd ./gateway-service/ && npm install && npm run compile && npm run buildimage
+      - run: cd ./gateway-service/ && npm install
+      - run: cd ./gateway-service/ && npm run test
+      - run: cd ./gateway-service/ && npm run compile
+      - run: cd ./gateway-service/ && npm run buildimage
+
 
 workflows:
   build:
