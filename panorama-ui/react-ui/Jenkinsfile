@@ -21,8 +21,9 @@ node {
     }
 
     stage(' Push image to registry'){
-        docker.withRegistry('https://registry.hub.docker.com', registryCredential )
+        docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
         app.push("latest")
+    }
     } 
 
     stage('Clean up disk space') {
