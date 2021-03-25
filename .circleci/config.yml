@@ -9,7 +9,10 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: cd ./session-service/ && npm install && npm run compile && npm run buildimage
+      - run: cd ./session-service/ && npm install
+      - run: cd ./session-service/ && npm run test
+      - run: cd ./session-service/ && npm run compile
+      - run: cd ./session-service/ && npm run buildimage
 
 workflows:
   build:
