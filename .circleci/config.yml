@@ -11,7 +11,7 @@ jobs:
       - setup_remote_docker
       - checkout
       - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
-      - run: ./mvnw clean install
+      - run: mvn clean install
       - run: cd ./session-log-service/ && docker image build . -t session-log-service:latest && docker tag session-log-service:latest $DOCKER_USERNAME/session-log-service:latest
       - run: docker push $DOCKER_USERNAME/session-log-service:latest
 
