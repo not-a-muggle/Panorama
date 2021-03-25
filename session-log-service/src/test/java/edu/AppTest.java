@@ -1,20 +1,14 @@
-package iu.iu;
+package edu;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import edu.DatabaseClient;
 import edu.SessionLog;
 
 
-
-
-public class AppTest 
-{
+public class AppTest {
     @Test
-    public void sessionStoreAndRetrieveTest()
-    {
+    public void sessionStoreAndRetrieveTest() {
         String userId = "1234";
         String sessionId = "Session123";
         String activityDesc = "Activity";
@@ -25,7 +19,7 @@ public class AppTest
         SessionLog.Activity activities[] = databaseClient.fetchActivities(userId, sessionId);
         String fetchedActivity = activities[0].getActivityDesc();
         String fetchedTime = activities[0].getTime();
-        assertEquals(activityDesc, fetchedActivity );
+        assertEquals(activityDesc, fetchedActivity);
         assertEquals(time, fetchedTime);
     }
 }
