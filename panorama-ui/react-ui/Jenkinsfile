@@ -60,38 +60,6 @@ pipeline{
             }
         }    
 
-        stage('Kubernetes Cluster App Deployment'){
-            steps{
-                sshPublisher(
-                    publishers: [
-                        sshPublisherDesc(
-                            configName: 'ssh_kubemaster', 
-                            transfers: [
-                                sshTransfer(
-                                    cleanRemote: false, 
-                                    excludes: '', 
-                                    execCommand: "touch /home/ubuntu/deploy/test.txt", 
-                                    execTimeout: 120000, 
-                                    flatten: false, 
-                                    makeEmptyDirs: false, 
-                                    noDefaultExcludes: false, 
-                                    patternSeparator: '[, ]+', 
-                                    remoteDirectory: 'deploy', 
-                                    remoteDirectorySDF: false, 
-                                    removePrefix: "", 
-                                    sourceFiles: "panorama-ui.yaml"
-                                )
-                            ], 
-                            usePromotionTimestamp: false, 
-                            useWorkspaceInPromotion: false, 
-                            verbose: false
-                                )
-                        ]
-                )        
-            }
-            
-        }
-
         stage('SSH transfer') {
             script {
                 sshPublisher(
