@@ -1,8 +1,3 @@
-def dockerRegistry = 'panoramaiubads/react-ui'
-def registryCredential = 'docker-hub-credentials'
-def jenkinsAppDir = 'panorama-ui/react-ui'
-def remote = '149.165.157.145'
-
 pipeline{
     agent any
     environment {
@@ -11,6 +6,9 @@ pipeline{
         dockerImage = ''
         file_name = 'panorama-ui.yaml'
         remote_dir_path = ''
+        appName = 'react-ui'
+        jenkinsAppDir = 'panorama-ui/react-ui'
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml'
     }
     stages{
         stage('Cloning git repository') {
@@ -26,7 +24,7 @@ pipeline{
             steps{
                 sh 'cd ${jenkinsAppDir}'
                 sh 'npm install'
-                echo "Succesfully installed npm packages"
+                echo "Successfully installed npm packages"
             }
 		    
 	    }
@@ -37,7 +35,7 @@ pipeline{
                 script{
                     dockerImage = docker.build(registry, "${jenkinsAppDir}")
                 }
-                
+                echo "Successfully built docker images"
             }
         }
 
@@ -48,7 +46,9 @@ pipeline{
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
                     dockerImage.push("latest")
                     }
+                    
                 }
+                echo "Successfully pushed image to docker hub"
             }    
         
         }
@@ -60,7 +60,7 @@ pipeline{
             }
         }    
 
-        stage('SSH transfer') {
+        stage('Kubernetes cluster deployment') {
             steps{
                 script{
                     sshPublisher(
@@ -71,10 +71,11 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd /home/ubuntu/deploy; wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml; kubectl apply -f ${file_name} "    
+                                        execCommand: "cd /home/ubuntu/deploy; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name} "    
                                     )
                             ])
                     ])
+                
                 }
             }
         }
