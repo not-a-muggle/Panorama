@@ -61,7 +61,7 @@ pipeline{
 
         stage('Kubernetes Cluster App Deployment'){
             steps{
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'jenkins-kubernetes-id', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu/deploy', remoteDirectorySDF: false, removePrefix: "", sourceFiles: "${jenkinsAppDir}/panorama-ui.yaml")], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])        
+                sshPublisher(publishers: [sshPublisherDesc(configName: "${env.SSH_CONFIG_NAME}", transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu/deploy', remoteDirectorySDF: false, removePrefix: "", sourceFiles: "${jenkinsAppDir}/panorama-ui.yaml")], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])        
             }
             
         }
