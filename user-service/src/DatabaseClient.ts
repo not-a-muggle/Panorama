@@ -7,7 +7,7 @@ export default class DatabaseClient {
     client: mongoDb.MongoClient;
 
     private constructor() {
-        const uri = process.env.Mongo_uri ? process.env.Mongo_uri : config.mongoUri;
+        const uri = process.env.Mongo_uri_user ? process.env.Mongo_uri_user : config.mongoUri;
         this.client = new mongoDb.MongoClient(uri + config.mongoDatabase, { useUnifiedTopology: true, useNewUrlParser: true });
     }
 
