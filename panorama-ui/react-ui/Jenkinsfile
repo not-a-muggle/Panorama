@@ -1,39 +1,42 @@
 pipeline{
-    node {
-        def app
-        def dockerRegistry = 'panoramaiubads/react-ui'
-        def registryCredential = 'docker-hub-credentials'
-        def jenkinsAppDir = 'panorama-ui/react-ui'
-        def remote = '149.165.157.145'
+    agent none
+        node {
+            def app
+            def dockerRegistry = 'panoramaiubads/react-ui'
+            def registryCredential = 'docker-hub-credentials'
+            def jenkinsAppDir = 'panorama-ui/react-ui'
+            def remote = '149.165.157.145'
 
-        stage('Cloning git repository') {
-        /* Checking out to the repository */
-            checkout scm
-            echo "Successfully cloned git repository"
-        }
+        stages{
+            stage('Cloning git repository') {
+            /* Checking out to the repository */
+                checkout scm
+                echo "Successfully cloned git repository"
+            }
 
-        stage('Install dependencies') {
-        /* Application dependencies installation*/
-		    sh 'cd ${jenkinsAppDir}'
-            sh 'npm install'
-            echo "Succesfully installed npm packages"
-	    }
+            stage('Install dependencies') {
+            /* Application dependencies installation*/
+		        sh 'cd ${jenkinsAppDir}'
+                sh 'npm install'
+                echo "Succesfully installed npm packages"
+	        }
 
-        stage('Build and push image') {
-        /* Build the docker image */
-            app = docker.build(dockerRegistry, "${jenkinsAppDir}")
-            docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
-            app.push("latest")
-        }
-        }
+            stage('Build and push image') {
+            /* Build the docker image */
+                app = docker.build(dockerRegistry, "${jenkinsAppDir}")
+                docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
+                app.push("latest")
+                }
+            }
 
-        stage('Clean up disk space') {
-        /* Removing unused images to clean up disk space */
-            sh "docker system prune -af --volumes" 
-        }    
+            stage('Clean up disk space') {
+            /* Removing unused images to clean up disk space */
+                sh "docker system prune -af --volumes" 
+            }    
 
-        stage('Kubernetes Cluster App Deployment'){
-            sshPublisher(publishers: [sshPublisherDesc(configName: 'jenkins-kubernetes-id', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu/deploy', remoteDirectorySDF: false, removePrefix: "", sourceFiles: "${jenkinsAppDir}/panorama-ui.yaml")], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-        }
-    }   
+            stage('Kubernetes Cluster App Deployment'){
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'jenkins-kubernetes-id', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/home/ubuntu/deploy', remoteDirectorySDF: false, removePrefix: "", sourceFiles: "${jenkinsAppDir}/panorama-ui.yaml")], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }   
+        }   
 }
