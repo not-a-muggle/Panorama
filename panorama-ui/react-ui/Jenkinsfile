@@ -102,8 +102,8 @@ pipeline{
                             verbose: true,
                             transfers: [
                                 sshTransfer(
-                                    execCommand: "wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml"    
-                                    execCommand: "kubectl apply -f ${file_name}"
+                                    execCommand: "sh wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml"    
+                                    execCommand: "sh kubectl apply -f ${file_name}"
                                 )
                         ])
                 ])
