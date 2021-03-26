@@ -9,6 +9,8 @@ pipeline{
         registry = 'panoramaiubads/react-ui'
         registryCredential = 'docker-hub-credentials'
         dockerImage = ''
+        file_name = 'panorama-ui.yaml'
+        remote_dir_path = ''
     }
     stages{
         stage('Cloning git repository') {
@@ -60,9 +62,52 @@ pipeline{
 
         stage('Kubernetes Cluster App Deployment'){
             steps{
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'ssh_kubemaster', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: "touch /home/ubuntu/deploy/test.txt", execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: 'deploy', remoteDirectorySDF: false, removePrefix: "", sourceFiles: "panorama-ui.yaml")], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])        
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ssh_kubemaster', 
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false, 
+                                    excludes: '', 
+                                    execCommand: "touch /home/ubuntu/deploy/test.txt", 
+                                    execTimeout: 120000, 
+                                    flatten: false, 
+                                    makeEmptyDirs: false, 
+                                    noDefaultExcludes: false, 
+                                    patternSeparator: '[, ]+', 
+                                    remoteDirectory: 'deploy', 
+                                    remoteDirectorySDF: false, 
+                                    removePrefix: "", 
+                                    sourceFiles: "panorama-ui.yaml"
+                                )
+                            ], 
+                            usePromotionTimestamp: false, 
+                            useWorkspaceInPromotion: false, 
+                            verbose: false
+                                )
+                        ]
+                )        
             }
             
+        }
+
+        stage('SSH transfer') {
+            script {
+                sshPublisher(
+                    continueOnError: false, failOnError: true,
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'ssh_kubemaster',
+                            verbose: true,
+                            transfers: [
+                                sshTransfer(
+                                    execCommand: "wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml"    
+                                    execCommand: "kubectl apply -f ${file_name}"
+                                )
+                        ])
+                ])
+            }
         }
     }   
            
