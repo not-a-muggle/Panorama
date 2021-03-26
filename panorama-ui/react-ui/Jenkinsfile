@@ -34,7 +34,7 @@ pipeline{
             steps{
                 script{
                     sh 'cd ${jenkinsAppDir}'
-                    dockerImage = docker.build registry+ ":latest"
+                    dockerImage = docker.build(registry, "${jenkinsAppDir}")
                 }
                 
             }
