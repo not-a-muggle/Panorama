@@ -1,4 +1,3 @@
-def app
 def dockerRegistry = 'panoramaiubads/react-ui'
 def registryCredential = 'docker-hub-credentials'
 def jenkinsAppDir = 'panorama-ui/react-ui'
@@ -6,6 +5,11 @@ def remote = '149.165.157.145'
 
 pipeline{
     agent none
+    environment {
+        registry = 'panoramaiubads/react-ui'
+        registryCredential = 'docker-hub-credentials'
+        dockerImage = ''
+    }
     stages{
         stage('Cloning git repository') {
         /* Checking out to the repository */
@@ -25,14 +29,27 @@ pipeline{
 		    
 	    }
 
-        stage('Build and push image') {
+        stage('Build Docker Image') {
         /* Build the docker image */
             steps{
-                app = docker.build(dockerRegistry, "${jenkinsAppDir}")
-                docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
-                app.push("latest")
+                script{
+                    sh 'cd ${jenkinsAppDir}'
+                    dockerImage = docker.build registry+ ":$BUILD_NUMBER"
                 }
+                
             }
+        }
+
+        stage('Push Image to Dockerhub'){
+        /* Push image to dockerhub */
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
+                    dockerImage.push("latest")
+                    }
+                }
+            }    
+        
         }
 
         stage('Clean up disk space') {
