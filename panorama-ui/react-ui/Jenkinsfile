@@ -4,7 +4,7 @@ def jenkinsAppDir = 'panorama-ui/react-ui'
 def remote = '149.165.157.145'
 
 pipeline{
-    agent none
+    agent any
     environment {
         registry = 'panoramaiubads/react-ui'
         registryCredential = 'docker-hub-credentials'
