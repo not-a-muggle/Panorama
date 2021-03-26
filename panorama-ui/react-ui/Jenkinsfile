@@ -61,19 +61,21 @@ pipeline{
         }    
 
         stage('SSH transfer') {
-            script {
-                sshPublisher(
-                    continueOnError: false, failOnError: true,
-                    publishers: [
-                        sshPublisherDesc(
-                            configName: 'ssh_kubemaster',
-                            verbose: true,
-                            transfers: [
-                                sshTransfer(
-                                    execCommand: "cd /home/ubuntu/deploy; wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml; kubectl apply -f ${file_name} "    
-                                )
-                        ])
-                ])
+            steps{
+                script{
+                    sshPublisher(
+                        continueOnError: false, failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ssh_kubemaster',
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: "cd /home/ubuntu/deploy; wget https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml; kubectl apply -f ${file_name} "    
+                                    )
+                            ])
+                    ])
+                }
             }
         }
     }   
