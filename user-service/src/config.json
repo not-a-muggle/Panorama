@@ -1,5 +1,5 @@
 {
-    "mongoUri": "mongodb://localhost:27017/",
+    "mongoUri": "mongodb+srv://cluster0.1pzuq.mongodb.net/panorama",
     "mongoDatabase": "panorama",
     "serverIP" : "0.0.0.0",
     "servicePort" : "50053",
