@@ -47,7 +47,7 @@ public class DatabaseClient {
         FindIterable<Document> cursor = sessionLogCollection.find(searchQuery);
 
         Iterator<Document> iterator = cursor.iterator();
-        ArrayList<SessionLog.Activity> activities = new ArrayList<>();
+        ArrayList<SessionLog.Activity> activities = new ArrayList<edu.SessionLog.Activity>();
 
         while (iterator.hasNext()) {
             Document doc = iterator.next();
@@ -60,9 +60,14 @@ public class DatabaseClient {
                     setSessionId(sessionId).
                     setUserId(userId).build();
 
-            activities.add(activity);
+            activities.add((SessionLog.Activity) activity);
         }
-        return (SessionLog.Activity[]) activities.toArray();
+        SessionLog.Activity[] activityArray = new edu.SessionLog.Activity[activities.size()];
+
+        for(int i = 0; i < activities.size(); i++) {
+            activityArray[i] = activities.get(i);
+        }
+        return activityArray;
     }
 
     private MongoClient connect() {
@@ -71,3 +76,4 @@ public class DatabaseClient {
     }
 
 }
+

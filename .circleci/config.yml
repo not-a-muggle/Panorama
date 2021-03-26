@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs:
+   maven: circleci/maven@0.0.12
 jobs:
   build:
 
@@ -10,18 +11,20 @@ jobs:
       - setup_remote_docker
       - checkout
       - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd ./session-log-service/ && mvn clean install
       - run: cd ./session-log-service/ && docker image build . -t session-log-service:latest && docker tag session-log-service:latest $DOCKER_USERNAME/session-log-service:latest
       - run: docker push $DOCKER_USERNAME/session-log-service:latest
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results/junit
+
+      # - run:
+      #     name: Save test results
+      #     command: |
+      #       mkdir -p ~/test-results/junit/
+      #       find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+      #     when: always
+      # - store_test_results:
+      #     path: ~/test-results
+      # - store_artifacts:
+      #     path: ~/test-results/junit
       
       
 
