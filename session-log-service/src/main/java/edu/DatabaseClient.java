@@ -73,7 +73,7 @@ public class DatabaseClient {
     }
 
     private MongoClient connect() {
-        String mongoUri =  Constant.DB_URI;
+        String mongoUri =  System.getenv("MONGO_URI_SYSTEM") != null ? System.getenv("MONGO_URI_SYSTEM") : Constant.DB_URI;
         //MongoClientURI uri = new MongoClientURI(mongoUri);
         MongoClient mongoClient = MongoClients.create(mongoUri);
         return mongoClient;
