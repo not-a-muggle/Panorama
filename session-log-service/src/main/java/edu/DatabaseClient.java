@@ -71,7 +71,9 @@ public class DatabaseClient {
     }
 
     private MongoClient connect() {
-        return new MongoClient("localhost", 27017);
+        String mongoUri = System.getenv("MONGO_URI_SYSTEM") != null ? System.getenv("MONGO_URI_SYSTEM") : Constant.DB_URI;
+        return new MongoClient(mongoUri);
     }
 
 }
+
