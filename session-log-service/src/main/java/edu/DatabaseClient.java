@@ -1,12 +1,13 @@
 package edu;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import com.mongodb.client.MongoClients;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,9 +73,10 @@ public class DatabaseClient {
     }
 
     private MongoClient connect() {
-        String mongoUri = System.getenv("MONGO_URI_SYSTEM") != null ? System.getenv("MONGO_URI_SYSTEM") : Constant.DB_URI;
-        MongoClientURI uri = new MongoClientURI(mongoUri);
-        return new MongoClient(uri);
+        String mongoUri =  Constant.DB_URI;
+        //MongoClientURI uri = new MongoClientURI(mongoUri);
+        MongoClient mongoClient = MongoClients.create(mongoUri);
+        return mongoClient;
     }
 
 }
