@@ -11,7 +11,7 @@ pipeline{
         githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/panorama-ui/react-ui/panorama-ui.yaml'
     }
     stages{
-        stage('Cloning git repository') {
+        stage('Clone Git Repo') {
         /* Checking out to the repository */
             steps{
                 checkout scm
@@ -53,14 +53,14 @@ pipeline{
         
         }
 
-        stage('Clean up disk space') {
+        stage('Clean Up Disk Space') {
         /* Removing unused images to clean up disk space */
             steps{
                 sh "docker system prune -af --volumes" 
             }
         }    
 
-        stage('Kubernetes cluster deployment') {
+        stage('Kubernetes Cluster Deployment') {
             steps{
                 script{
                     sshPublisher(
