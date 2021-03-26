@@ -8,7 +8,7 @@ pipeline{
         remote_dir_path = ''
         appName = 'image-service'
         jenkinsAppDir = 'image-service'
-        githuburl = ' '
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/image-service/image-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
     }
     stages{
