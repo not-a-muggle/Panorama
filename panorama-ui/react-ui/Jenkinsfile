@@ -33,7 +33,6 @@ pipeline{
         /* Build the docker image */
             steps{
                 script{
-                    sh 'cd ${jenkinsAppDir}'
                     dockerImage = docker.build(registry, "${jenkinsAppDir}")
                 }
                 
