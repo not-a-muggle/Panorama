@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 50075
     port: 50075
-    nodePort: 8600 
+    nodePort: 30600 
  selector:
   app: app
   tier: backend
@@ -33,9 +33,6 @@ spec:
         imagePullPolicy: Always
         image: panoramaiubads/user-service
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
         - containerPort: 50075
       restartPolicy: Always

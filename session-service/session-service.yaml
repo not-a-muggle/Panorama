@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 50070
     port: 50070
-    nodePort: 8500 
+    nodePort: 30500 
  selector:
   app: app
   tier: backend
