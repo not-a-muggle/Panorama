@@ -1,5 +1,5 @@
 FROM node:14.16.0-buster
-EXPOSE 50051
+EXPOSE 50052
 WORKDIR /session-service
 COPY . . 
 RUN npm install

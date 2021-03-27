@@ -1,5 +1,5 @@
 FROM node:14.16.0-buster
-EXPOSE 50055
+EXPOSE 3000
 WORKDIR /gateway-service
 COPY . . 
 RUN npm install
