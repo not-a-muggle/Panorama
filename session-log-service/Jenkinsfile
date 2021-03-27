@@ -1,35 +1,85 @@
-node {
-    def app
-    def dockerRegistry = 'panoramaiubads/session-log-service'
-    def registryCredential = 'docker-hub-credentials'
-    def jenkinsAppDir = 'session-log-service'
-    def remote = '149.165.157.145'
-    
-    stage('Cloning git repository') {
+pipeline{
+    agent any
+    environment {
+        registry = 'panoramaiubads/session-log-service'
+        registryCredential = 'docker-hub-credentials'
+        dockerImage = ''
+        file_name = 'session-log-service.yaml'
+        remote_dir_path = ''
+        appName = 'session-log-service'
+        jenkinsAppDir = 'session-log-service'
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/session-log-service/session-log-service.yaml'
+        kubeDir = '/home/ubuntu/deploy'
+    }
+    stages{
+        stage('Clone Git Repo') {
         /* Checking out to the repository */
-        checkout scm
-    }
-
-    stage('Install dependencies') {
-        /* Application dependencies installation*/
-		sh 'cd ${jenkinsAppDir}'
-        sh 'npm install'
-	}
-
-    stage('Build and push image') {
-        /* Build the docker image */
-        app = docker.build(dockerRegistry, "${jenkinsAppDir}")
-        docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
-        app.push("latest")
+            steps{
+                checkout scm
+                echo "Successfully cloned git repository"
+            }
         }
-    }
 
-    stage('Clean up disk space') {
+        stage('Install dependencies') {
+        /* Application dependencies installation*/
+            steps{
+                sh 'cd ${jenkinsAppDir}'
+                sh 'npm install'
+                echo "Successfully installed npm packages"
+            }
+		    
+	    }
+
+        stage('Build Docker Image') {
+        /* Build the docker image */
+            steps{
+                script{
+                    dockerImage = docker.build(registry, "${jenkinsAppDir}")
+                }
+                echo "Successfully built docker images"
+            }
+        }
+
+        stage('Push Image to Dockerhub'){
+        /* Push image to dockerhub */
+            steps{
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential ){
+                    dockerImage.push("latest")
+                    }
+                    
+                }
+                echo "Successfully pushed image to docker hub"
+            }    
+        
+        }
+
+        stage('Clean Up Disk Space') {
         /* Removing unused images to clean up disk space */
-        sh "docker rmi ${dockerRegistry}:latest"
-        sh "docker rmi registry.hub.docker.com/${dockerRegistry}:latest"
-        sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
-        sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
-    }    
-    
+            steps{
+                sh "docker system prune -af --volumes" 
+            }
+        }    
+
+        stage('Kubernetes Cluster Deployment') {
+            steps{
+                script{
+                    sshPublisher(
+                        continueOnError: false, failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ssh_kubemaster',
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name} "    
+                                    )
+                            ])
+                    ])
+                
+                }
+            }
+        }
+    }   
+           
 }
