@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Button from '@material-ui/core/Button';
 
 export default function () {
   let { id } = useParams();
@@ -17,6 +18,16 @@ export default function () {
         setImageName(res.data.imageName);
       })
   }, []);
-  return (<div><img src={imageData} /><a href={imageData} download={imageName}>Download</a></div>);
+
+
+  return (<table><tr><div ><img src={imageData} /></div></tr><td><a href={imageData} download={imageName}>          <Button
+    type="submit"
+    fullWidth
+    variant="contained"
+    color="secondary"
+
+  >
+    Download
+  </Button></a></td></table>);
 
 }
