@@ -2,7 +2,39 @@ version: 2.1
 orbs:
   node: circleci/node@3.0.0
 jobs:
-  build:
+  build-auth-service:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: cd ./auth-service/ && npm install && npm run compile && npm run buildimage
+
+  build-user-service:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: cd ./user-service/ && npm install && npm run compile && npm run buildimage
+
+  build-session-service:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: cd ./session-service/ && npm install && npm run compile && npm run buildimage
+
+  build-gateway-service:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: cd ./gateway-service/ && npm install && npm run compile && npm run buildimage
+
+  build-image-service:
     docker:
       - image: circleci/node:buster
     steps:
@@ -12,11 +44,21 @@ jobs:
       - run: cd panorama-ui/react-ui/ && docker image build . -t react-ui:latest && docker tag react-ui:latest $DOCKER_USERNAME/react-ui:latest
       - run: docker push $DOCKER_USERNAME/react-ui:latest
 
+  build-react-ui:
+    docker:
+      - image: circleci/node:buster
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: docker login --username $DOCKER_USERNAME --password $DOCKER_PASS
+      - run: cd panorama-ui/react-ui/ && docker image build . -t react-ui:latest && docker tag react-ui:latest $DOCKER_USERNAME/react-ui:latest
+      - run: docker push $DOCKER_USERNAME/react-ui:latest
 workflows:
   build:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - react-ui-ci
+      - build-auth-service
+      - build-session-service
+      - build-user-service
+      - build-gateway-service
+      - build-image-service
+      - build-react-ui
