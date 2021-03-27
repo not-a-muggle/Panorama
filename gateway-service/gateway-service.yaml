@@ -38,4 +38,15 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 3000
+        env:
+         - name: gateway_auth
+           value: "http://auth-service:50051"
+         - name: gateway_image
+           value: "http://image-service:50054"
+         - name: gateway_session_log
+           value: "http://session-log-service:50055"
+         - name: gateway_session
+           value: "http://session-service:50052"
+         - name: gateway_user
+           value: "http://user-service:50053"
       restartPolicy: Always
