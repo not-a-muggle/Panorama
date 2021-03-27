@@ -32,10 +32,9 @@ spec:
       - name: backend-sessionlog
         imagePullPolicy: Always
         image: panoramaiubads/session-log-service
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
         - containerPort: 50055
+        env:
+         - name: MONGO_URI_SYSTEM
+           value: "mongodb+srv://User3:Password3@cluster0.0qdgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
       restartPolicy: Always
