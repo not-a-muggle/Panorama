@@ -1,5 +1,5 @@
 FROM node:14.16.0-buster
-EXPOSE 8100
+EXPOSE 50050
 WORKDIR /auth-service
 COPY . . 
 RUN npm install

@@ -4,10 +4,11 @@ import config from "./config.json";
 export default class DatabaseClient {
 
     private static _instance: DatabaseClient = undefined;
-    private client: mongoDb.MongoClient;
+    client: mongoDb.MongoClient;
 
     private constructor() {
-        this.client = new mongoDb.MongoClient(config.mongoUri + config.mongoDatabase, { useUnifiedTopology: true, useNewUrlParser: true });
+        const uri = process.env.Mongo_uri_auth ? process.env.Mongo_uri_auth : config.mongoUri;
+        this.client = new mongoDb.MongoClient(uri + config.mongoDatabase, { useUnifiedTopology: true, useNewUrlParser: true });
     }
 
     public static get Instance(): DatabaseClient {

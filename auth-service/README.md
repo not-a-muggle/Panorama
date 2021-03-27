@@ -1,4 +1,7 @@
+
 # Auth Service
+DEMO
+
 ## Functionalities
 Auth Service is used for `login` and `signup` of user. For every successful login, it will return a valid JWT token to the `gateway-service` that will be used across every request the user makes for accessing the application.
 When a new user is created, the user is added to the database.
