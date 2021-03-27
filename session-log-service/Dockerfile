@@ -1,7 +1,7 @@
 FROM openjdk:11
 FROM maven AS build
 
-EXPOSE 50065
+EXPOSE 50055
 WORKDIR /session-log-service
 
 COPY . .
