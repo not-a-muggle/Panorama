@@ -1,4 +1,4 @@
-package edu.iu;
+package edu;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

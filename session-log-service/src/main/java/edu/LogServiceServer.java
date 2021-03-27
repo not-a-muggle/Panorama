@@ -1,4 +1,4 @@
-package edu.iu;
+package edu;
 
 import javax.xml.crypto.Data;
 
