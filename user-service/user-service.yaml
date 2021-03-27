@@ -5,8 +5,8 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50075
-    port: 50075
+  - targetPort: 50053
+    port: 50053
     nodePort: 30600 
  selector:
   app: app
@@ -34,5 +34,5 @@ spec:
         image: panoramaiubads/user-service
         resources:
         ports:
-        - containerPort: 50075
+        - containerPort: 50053
       restartPolicy: Always
