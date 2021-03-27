@@ -9,7 +9,7 @@ spec:
     port: 50055
     nodePort: 30400 
  selector:
-  app: app
+  app: session-log-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: session-log-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: session-log-service
         tier: backend
 
     spec:

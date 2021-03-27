@@ -9,7 +9,7 @@ spec:
     port: 50053
     nodePort: 30600 
  selector:
-  app: app
+  app: user-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: user-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: user-service
         tier: backend
 
     spec:

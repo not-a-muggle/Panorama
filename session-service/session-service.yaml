@@ -9,7 +9,7 @@ spec:
     port: 50052
     nodePort: 30500 
  selector:
-  app: app
+  app: session-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: session-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: session-service
         tier: backend
 
     spec:

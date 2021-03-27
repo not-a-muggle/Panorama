@@ -9,7 +9,7 @@ spec:
     port: 50054
     nodePort: 30300 
  selector:
-  app: app
+  app: image-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: image-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: image-service
         tier: backend
 
     spec:

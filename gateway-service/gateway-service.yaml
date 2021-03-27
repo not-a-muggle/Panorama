@@ -9,7 +9,7 @@ spec:
     port: 3000
     nodePort: 30200 
  selector:
-  app: app
+  app: gateway-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: gateway-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: gateway-service
         tier: backend
 
     spec:

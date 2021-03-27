@@ -19,7 +19,8 @@ spec:
         name: react-ui
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 80  
+      
       restartPolicy: Always
 ---
 apiVersion: v1
