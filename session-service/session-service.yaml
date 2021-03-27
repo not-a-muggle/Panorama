@@ -5,8 +5,8 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50070
-    port: 50070
+  - targetPort: 50052
+    port: 50052
     nodePort: 30500 
  selector:
   app: app
@@ -37,5 +37,5 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 50070
+        - containerPort: 50052
       restartPolicy: Always
