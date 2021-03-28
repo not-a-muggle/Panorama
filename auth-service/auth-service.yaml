@@ -14,7 +14,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: auth-service
 spec:
   selector:
     matchLabels:
@@ -27,7 +27,7 @@ spec:
 
     spec:
       containers:
-      - name: backend-authservice
+      - name: auth-service
         imagePullPolicy: Always
         image: panoramaiubads/auth-service
         ports:
