@@ -29,7 +29,14 @@ pipeline{
             }
 		    
 	    }
-
+        
+        stage('Test App') {
+        /* Testing the application */
+		    steps{
+                sh 'npm test'
+            }
+	    }
+        
         stage('Build Docker Image') {
         /* Build the docker image */
             steps{
