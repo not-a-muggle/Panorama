@@ -15,6 +15,10 @@ export default class AuthService {
 
     private createClientFromDefn(): any {
         const authServiceConfig = config["auth-service"]
+
+        const serverIP = process.env.authServerIP || authServiceConfig.serverIP;
+        const servicePort = process.env.authServicePort || authServiceConfig.servicePort;
+        
         const defnPath = path.join(path.join(__dirname, "../definitions/" + authServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
             defnPath,
@@ -27,7 +31,7 @@ export default class AuthService {
             });
         const authPkg = grpc.loadPackageDefinition(packageDefinition).auth;
 
-        return new authPkg.Auth(authServiceConfig["serverIP"] + ":" + authServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new authPkg.Auth(serverIP + ":" +servicePort, grpc.credentials.createInsecure());
     }
 
     public static get Instance(): AuthService {

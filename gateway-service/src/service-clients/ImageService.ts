@@ -24,6 +24,11 @@ export default class ImageService {
 
     private createClientFromDefn(): any {
         const imageServiceConfig = config["image-service"]
+
+
+        const serverIP = process.env.imageServerIP || imageServiceConfig.serverIP;
+        const servicePort = process.env.imageServicePort || imageServiceConfig.servicePort;
+
         const defnPath = path.join(path.join(__dirname, "../definitions/" + imageServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
             defnPath,
@@ -36,7 +41,7 @@ export default class ImageService {
             });
         const imgPkg = grpc.loadPackageDefinition(packageDefinition).img;
 
-        return new imgPkg.ImageService(imageServiceConfig["serverIP"] + ":" + imageServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new imgPkg.ImageService(serverIP + ":" + servicePort, grpc.credentials.createInsecure());
     }
 
 

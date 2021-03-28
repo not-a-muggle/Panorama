@@ -39,6 +39,10 @@ export default class UserService {
 
     private createClientFromDefn(): any {
         const userServiceConfig = config["user-service"]
+
+        const serverIP = process.env.userServerIP || userServiceConfig.serverIP;
+        const servicePort = process.env.userServicePort || userServiceConfig.servicePort;
+
         const defnPath = path.join(path.join(__dirname, "../definitions/" + userServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
             defnPath,
@@ -51,7 +55,7 @@ export default class UserService {
             });
         const userPkg = grpc.loadPackageDefinition(packageDefinition).user;
 
-        return new userPkg.User(userServiceConfig["serverIP"] + ":" + userServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new userPkg.User(serverIP + ":" + servicePort, grpc.credentials.createInsecure());
     }
 
     public static get Instance(): UserService {

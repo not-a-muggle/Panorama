@@ -16,6 +16,10 @@ export default class SessionLogService {
 
     private createClientFromDefn(): any {
         const sessionServiceConfig = config["session-log-service"]
+
+        const serverIP = process.env.sessionLogServerIP || sessionServiceConfig.serverIP;
+        const servicePort = process.env.sessionLogServicePort || sessionServiceConfig.servicePort;
+
         const defnPath = path.join(path.join(__dirname, "../definitions/" + sessionServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
             defnPath,
@@ -28,7 +32,7 @@ export default class SessionLogService {
             });
         const sessPkg = grpc.loadPackageDefinition(packageDefinition).sess;
 
-        return new sessPkg.LogService(sessionServiceConfig["serverIP"] + ":" + sessionServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new sessPkg.LogService(serverIP + ":" + servicePort, grpc.credentials.createInsecure());
     }
 
     public static get Instance(): SessionLogService {

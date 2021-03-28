@@ -15,6 +15,10 @@ export default class SessionService {
 
     private createClientFromDefn(): any {
         const sessionServiceConfig = config["session-service"]
+
+        const serverIP = process.env.sessionServerIP || sessionServiceConfig.serverIP;
+        const servicePort = process.env.sessionServicePort || sessionServiceConfig.servicePort;
+
         const defnPath = path.join(path.join(__dirname, "../definitions/" + sessionServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
             defnPath,
@@ -27,7 +31,7 @@ export default class SessionService {
             });
         const sessPkg = grpc.loadPackageDefinition(packageDefinition).sess;
 
-        return new sessPkg.Session(sessionServiceConfig["serverIP"] + ":" + sessionServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new sessPkg.Session(serverIP + ":" + servicePort, grpc.credentials.createInsecure());
     }
 
     public static get Instance(): SessionService {
