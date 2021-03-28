@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 50054
     port: 50054
-    nodePort: 30300 
+    nodePort: 30900 
  selector:
   app: image-service
   tier: backend
