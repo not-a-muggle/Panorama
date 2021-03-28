@@ -10,7 +10,6 @@ spec:
     nodePort: 30100 
  selector:
   app: auth-service
-  tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,7 +24,6 @@ spec:
     metadata:
       labels:
         app: auth-service
-        tier: backend
 
     spec:
       containers:
