@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: session-log-service
+spec:
+ type: LoadBalancer
+ ports:
+  - targetPort: 50055
+    port: 50055
+    nodePort: 30400 
+ selector:
+  app: session-log-service
+  tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: session-log-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: session-log-service
+        tier: backend
+
+    spec:
+      containers:
+      - name: backend-sessionlog
+        imagePullPolicy: Always
+        image: panoramaiubads/session-log-service
+        ports:
+        - containerPort: 50055
+        env:
+         - name: MONGO_URI_SYSTEM
+           value: "mongodb+srv://User3:Password3@cluster0.0qdgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+      restartPolicy: Always

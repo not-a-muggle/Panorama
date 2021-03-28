@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+ type: LoadBalancer
+ ports:
+  - targetPort: 3000
+    port: 3000
+    nodePort: 30200 
+ selector:
+  app: gateway-service
+  tier: backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: gateway-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+        tier: backend
+
+    spec:
+      containers:
+      - name: backend-gatewayservice
+        imagePullPolicy: Always
+        image: panoramaiubads/gateway-service
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 3000
+        env:
+         - name: auth-service
+           value: "http://auth-service:50051"
+         - name: image-service
+           value: "http://image-service:50054"
+         - name: session-log-service
+           value: "http://session-log-service:50055"
+         - name: session-service
+           value: "http://session-service:50052"
+         - name: user-service
+           value: "http://user-service:50053"
+      restartPolicy: Always

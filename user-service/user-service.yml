@@ -5,11 +5,11 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50075
-    port: 50075
-    nodePort: 30400 
+  - targetPort: 50053
+    port: 50053
+    nodePort: 30600 
  selector:
-  app: app
+  app: user-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: user-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: user-service
         tier: backend
 
     spec:
@@ -33,9 +33,9 @@ spec:
         imagePullPolicy: Always
         image: panoramaiubads/user-service
         resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
-        - containerPort: 50075
+        - containerPort: 50053
+        env:
+         - name: Mongo_uri_user
+           value: "mongodb+srv://User2:Password2@cluster0.1pzuq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
       restartPolicy: Always

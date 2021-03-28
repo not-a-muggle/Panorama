@@ -5,11 +5,11 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50060
-    port: 50060
-    nodePort: 30200 
+  - targetPort: 50054
+    port: 50054
+    nodePort: 30300 
  selector:
-  app: app
+  app: image-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: image-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: image-service
         tier: backend
 
     spec:
@@ -33,5 +33,5 @@ spec:
         imagePullPolicy: Always
         image: panoramaiubads/image-service
         ports:
-        - containerPort: 50060
+        - containerPort: 50054
       restartPolicy: Always
