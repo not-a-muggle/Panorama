@@ -51,10 +51,12 @@ async function updateUser(input, callback) {
 }
 
 function main() {
+    const serverIP = process.env.authServerIP ? process.env.authServerIP : config.serverIP;
+    const servicePort = process.env.authServicePort ? process.env.authServicePort : config.servicePort;
     var server = new grpc.Server();
     server.addService(authProto.Auth.service, { basic: basic, create: createUser, modify: updateUser });
-    server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
-        console.log(`Auth service started on IP ${config.serverIP} Port ${config.servicePort}`);
+    server.bindAsync(serverIP + ':' + servicePort, grpc.ServerCredentials.createInsecure(), () => {
+        console.log(`Auth service started on IP ${serverIP} Port ${servicePort}`);
         server.start();
     });
 }

@@ -21,6 +21,9 @@ export default class SessionClient {
 
     private createClientFromDefn(): any {
         const sessionServiceConfig = config["session-service"]
+        const serverIP = process.env.sessionServerIP ? process.env.sessionServerIP : sessionServiceConfig["serverIP"];
+        const servicePort = process.env.sessionServicePort ? process.env.sessionServicePort : sessionServiceConfig["servicePort"];
+
         const packageDefinition = protoLoader.loadSync(
             __dirname + "/definitions/" + sessionServiceConfig["protofile"],
             {
@@ -32,7 +35,7 @@ export default class SessionClient {
             });
         const sessionPkg = grpc.loadPackageDefinition(packageDefinition).sess;
 
-        return new sessionPkg.Session(sessionServiceConfig["serverIP"] + ":" + sessionServiceConfig["servicePort"], grpc.credentials.createInsecure());
+        return new sessionPkg.Session(serverIP + ":" + servicePort, grpc.credentials.createInsecure());
     }
 
     /**
@@ -41,13 +44,13 @@ export default class SessionClient {
      */
     public fetchSessionToken(username: string): Promise<string> {
 
-        if(!this.client) {
+        if (!this.client) {
             this.client = this.createClientFromDefn();
         }
 
         return new Promise<string>((resolve, reject) => {
-            this.client.getToken({username: username}, (err, response) => {
-                if(err) {
+            this.client.getToken({ username: username }, (err, response) => {
+                if (err) {
                     reject(err);
                 }
                 resolve(response.token);
