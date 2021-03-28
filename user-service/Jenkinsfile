@@ -25,6 +25,7 @@ pipeline{
             steps{
                 sh 'cd ${jenkinsAppDir}'
                 sh 'npm install'
+                sh 'cd ${jenkinsAppDir}'
                 sh 'npm run test'
                 echo "Successfully installed and tested npm packages"
             }
