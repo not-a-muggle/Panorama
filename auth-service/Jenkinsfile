@@ -8,7 +8,7 @@ pipeline{
         remote_dir_path = ''
         appName = 'auth-service'
         jenkinsAppDir = 'auth-service'
-        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/auth-service/auth-service.yaml'
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/auth-service/auth-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
     }
     stages{

@@ -8,7 +8,7 @@ pipeline{
         remote_dir_path = ''
         appName = 'session-log-service'
         jenkinsAppDir = 'session-log-service'
-        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/session-log-service/session-log-service.yaml'
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/session-log-service/session-log-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
     }
     stages{
@@ -33,7 +33,7 @@ pipeline{
                 sh 'mvn test'
             }    
     	}  
-        
+
         stage('Build Docker Image') {
         /* Build the docker image */
             steps{
