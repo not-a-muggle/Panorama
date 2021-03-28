@@ -20,17 +20,17 @@ pipeline{
             }
         }
 
-        stage('Build repository') {
+        stage('Build dependencies') {
         /* Installing application dependencies */
 		    steps{    
-                sh 'mvn -X clean install'
+                sh 'sudo apt install maven'
             }
         }
 
 	    stage('Test repository') {
         /* Testing the application */
 		    steps{
-                sh 'mvn test'
+                sh 'mvn -X clean install'
             }    
     	}  
 
