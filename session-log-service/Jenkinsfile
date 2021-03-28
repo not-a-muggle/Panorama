@@ -23,7 +23,7 @@ pipeline{
         stage('Build dependencies') {
         /* Installing application dependencies */
 		    steps{    
-                sh 'sudo apt install maven'
+                sh 'sudo apt install -y maven'
                 sh 'mvn -Dmaven.test.failure.ignore=true install'
             }
         }
