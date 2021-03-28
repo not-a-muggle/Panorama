@@ -24,16 +24,10 @@ pipeline{
         /* Installing application dependencies */
 		    steps{    
                 sh 'sudo apt install -y maven'
-                sh 'mvn install'
+                sh 'cd ${jenkinsAppDir}'
+                sh 'mvn clean install'
             }
         }
-
-	    stage('Test repository') {
-        /* Testing the application */
-		    steps{
-                sh 'mvn test'
-            }    
-    	}  
 
         stage('Build Docker Image') {
         /* Build the docker image */
