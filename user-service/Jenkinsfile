@@ -20,21 +20,15 @@ pipeline{
             }
         }
 
-        stage('Install dependencies') {
+        stage('Install dependencies and test') {
         /* Application dependencies installation*/
             steps{
                 sh 'cd ${jenkinsAppDir}'
                 sh 'npm install'
-                echo "Successfully installed npm packages"
+                sh 'npm run test'
+                echo "Successfully installed and tested npm packages"
             }
 		    
-	    }
-
-        stage('Test App') {
-        /* Testing the application */
-		    steps{
-                sh 'npm run test'
-            }
 	    }
 
         stage('Build Docker Image') {
