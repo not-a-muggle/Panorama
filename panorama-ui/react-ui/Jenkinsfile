@@ -23,7 +23,7 @@ pipeline{
         stage('Install dependencies') {
         /* Application dependencies installation*/
             steps{
-                sh 'cd ${jenkinsAppDir} && npm install'
+                sh 'cd ${jenkinsAppDir}/ && npm install'
                 echo "Successfully installed npm packages"
             }
 		    
@@ -32,8 +32,8 @@ pipeline{
         stage('Test App') {
         /* Testing the application */
 		    steps{
-                sh 'cd ${jenkinsAppDir} && npm run test'
-                echo "Successfully installed npm packages"
+                sh 'cd ${jenkinsAppDir}/ && npm run test'
+                echo "Successfully tested npm packages"
             }
 	    }
 
