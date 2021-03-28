@@ -31,7 +31,7 @@ pipeline{
 	    stage('Test repository') {
         /* Testing the application */
             steps{
-                sh 'python3 -m pytest -v'
+                sh 'python3 -m test -v'
             }
         }
 
