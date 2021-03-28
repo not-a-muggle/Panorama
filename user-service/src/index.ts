@@ -61,7 +61,7 @@ async function getUser(input, callback) {
 
 function main() {
     const server = new grpc.Server();
-    const serverIP = process.env.userServerIP || config.serverIP;
+    const serverIP = config.serverIP;
     const servicePort = process.env.userServicePort || config.servicePort;
 
     server.addService(userProto.User.service, { createUser: createUser, modifyUser: modifyUser, getUser: getUser });
