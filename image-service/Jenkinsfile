@@ -31,7 +31,7 @@ pipeline{
 	    stage('Test repository') {
         /* Testing the application */
             steps{
-                sh 'cd ${jenkinsAppDir}/ && sudo python3 -m pytest -v'
+                sh 'cd ${jenkinsAppDir}/ && python3 -m pytest -v'
             }
         }
 
