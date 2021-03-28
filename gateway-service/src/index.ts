@@ -22,7 +22,7 @@ app.use('/', imageRouter);
 
 app.use(morgan("combined"));
 
-const port = process.env.gatewayPort || 3000;
+const port = process.env.gatewayServicePort || 3000;
 app.listen(port, () => {
     console.log("listening on port " + port);
 })
