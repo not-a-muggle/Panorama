@@ -61,9 +61,12 @@ async function getUser(input, callback) {
 
 function main() {
     const server = new grpc.Server();
+    const serverIP = process.env.userServerIP || config.serverIP;
+    const servicePort = process.env.userServicePort || config.servicePort;
+
     server.addService(userProto.User.service, { createUser: createUser, modifyUser: modifyUser, getUser: getUser });
-    server.bindAsync(config.serverIP + ':' + config.servicePort, grpc.ServerCredentials.createInsecure(), () => {
-        console.log(`User service started on IP ${config.serverIP} Port ${config.servicePort}`);
+    server.bindAsync(serverIP + ':' + servicePort, grpc.ServerCredentials.createInsecure(), () => {
+        console.log(`User service started on IP ${serverIP} Port ${servicePort}`);
         server.start();
     });
 }
