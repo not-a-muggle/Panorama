@@ -39,14 +39,14 @@ spec:
         ports:
         - containerPort: 3000
         env:
-         - name: gateway_auth
+         - name: auth-service
            value: "http://auth-service:50051"
-         - name: gateway_image
+         - name: image-service
            value: "http://image-service:50054"
-         - name: gateway_session_log
+         - name: session-log-service
            value: "http://session-log-service:50055"
-         - name: gateway_session
+         - name: session-service
            value: "http://session-service:50052"
-         - name: gateway_user
+         - name: user-service
            value: "http://user-service:50053"
       restartPolicy: Always
