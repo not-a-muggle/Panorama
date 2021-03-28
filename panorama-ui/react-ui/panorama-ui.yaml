@@ -20,6 +20,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        env:
+         - name: ui_gateway
+           value: http://gateway-service:3000
+      
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -33,6 +37,6 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-    nodePort: 30000
+    nodePort: 30100
   selector:
     app: react-ui

@@ -5,11 +5,11 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 8100
-    port: 8100
-    nodePort: 30100
+  - targetPort: 50051
+    port: 50051
+    nodePort: 30100 
  selector:
-  app: app
+  app: auth-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: auth-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: auth-service
         tier: backend
 
     spec:
@@ -32,10 +32,9 @@ spec:
       - name: backend-authservice
         imagePullPolicy: Always
         image: panoramaiubads/auth-service
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
-        - containerPort: 30100
+        - containerPort: 50051
+        env:
+         - name: Mongo_uri_auth
+           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
       restartPolicy: Always

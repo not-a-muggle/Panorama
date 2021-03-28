@@ -5,11 +5,11 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50070
-    port: 50070
-    nodePort: 30300 
+  - targetPort: 50052
+    port: 50052
+    nodePort: 30500 
  selector:
-  app: app
+  app: session-service
   tier: backend
 ---
 apiVersion: apps/v1
@@ -19,12 +19,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: app
+      app: session-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
+        app: session-service
         tier: backend
 
     spec:
@@ -37,5 +37,5 @@ spec:
             cpu: 100m
             memory: 100Mi
         ports:
-        - containerPort: 50070
+        - containerPort: 50052
       restartPolicy: Always
