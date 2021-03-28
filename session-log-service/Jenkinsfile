@@ -24,8 +24,7 @@ pipeline{
         /* Installing application dependencies */
 		    steps{    
                 sh 'sudo apt install -y maven'
-                sh 'cd ${jenkinsAppDir}'
-                sh 'mvn clean install'
+                sh 'cd ${jenkinsAppDir}/ && mvn clean install'
             }
         }
 
