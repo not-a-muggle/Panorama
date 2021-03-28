@@ -20,23 +20,23 @@ pipeline{
             }
         }
 
-        stage('Install dependencies') {
-        /* Application dependencies installation*/
-            steps{
-                sh 'cd ${jenkinsAppDir}'
-                sh 'npm install'
-                echo "Successfully installed npm packages"
-            }
-		    
-	    }
-        
-        stage('Test App') {
-        /* Testing the application */
+
+        stage('Build repository') {
+        /* Installing application dependencies */
 		    steps{
-                sh 'npm test'
+                sh 'cd ${jenkinsAppDir}'
+                sh 'pip3 install -r requirements.txt'
             }
-	    }
-        
+        }
+
+	    stage('Test repository') {
+        /* Testing the application */
+            steps{
+                sh 'python3 -m pytest -v'
+            }
+        }
+
+
         stage('Build Docker Image') {
         /* Build the docker image */
             steps{
