@@ -10,12 +10,11 @@ spec:
     nodePort: 30200 
  selector:
   app: gateway-service
-  tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: gateway-service
 spec:
   selector:
     matchLabels:
@@ -25,7 +24,6 @@ spec:
     metadata:
       labels:
         app: gateway-service
-        tier: backend
 
     spec:
       containers:

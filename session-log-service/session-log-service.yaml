@@ -10,7 +10,6 @@ spec:
     nodePort: 30400 
  selector:
   app: session-log-service
-  tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,11 +24,10 @@ spec:
     metadata:
       labels:
         app: session-log-service
-        tier: backend
 
     spec:
       containers:
-      - name: backend-sessionlog
+      - name: session-log-service
         imagePullPolicy: Always
         image: panoramaiubads/session-log-service
         ports:

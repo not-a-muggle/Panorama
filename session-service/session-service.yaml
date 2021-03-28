@@ -15,7 +15,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: session-service
 spec:
   selector:
     matchLabels:
@@ -25,11 +25,10 @@ spec:
     metadata:
       labels:
         app: session-service
-        tier: backend
 
     spec:
       containers:
-      - name: backend-session
+      - name: session-service
         imagePullPolicy: Always
         image: panoramaiubads/session-service
         resources:

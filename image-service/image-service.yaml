@@ -10,12 +10,11 @@ spec:
     nodePort: 30300 
  selector:
   app: image-service
-  tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: image-service
 spec:
   selector:
     matchLabels:
@@ -29,7 +28,7 @@ spec:
 
     spec:
       containers:
-      - name: backend-imageservice
+      - name: image-service
         imagePullPolicy: Always
         image: panoramaiubads/image-service
         ports:

@@ -10,12 +10,11 @@ spec:
     nodePort: 30600 
  selector:
   app: user-service
-  tier: backend
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: user-service
 spec:
   selector:
     matchLabels:
@@ -25,11 +24,10 @@ spec:
     metadata:
       labels:
         app: user-service
-        tier: backend
 
     spec:
       containers:
-      - name: backend-session
+      - name: user-service
         imagePullPolicy: Always
         image: panoramaiubads/user-service
         resources:
