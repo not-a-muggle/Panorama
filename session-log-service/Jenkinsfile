@@ -23,14 +23,14 @@ pipeline{
         stage('Build dependencies') {
         /* Installing application dependencies */
 		    steps{    
-                sh 'sudo apt install maven'
+                sh 'mvn -Dmaven.test.failure.ignore=true install'
             }
         }
 
 	    stage('Test repository') {
         /* Testing the application */
 		    steps{
-                sh 'mvn -X clean install'
+                sh 'mvn test'
             }    
     	}  
 
