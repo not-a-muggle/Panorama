@@ -24,8 +24,7 @@ pipeline{
         stage('Build repository') {
         /* Installing application dependencies */
 		    steps{
-                sh 'cd ${jenkinsAppDir}'
-                sh 'pip3 install -r requirements.txt'
+                sh 'cd ${jenkinsAppDir}/ && pip3 install -r requirements.txt'
             }
         }
 
