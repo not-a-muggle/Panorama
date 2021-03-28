@@ -23,17 +23,17 @@ pipeline{
         stage('Install dependencies') {
         /* Application dependencies installation*/
             steps{
-                sh 'cd ${jenkinsAppDir}'
-                sh 'npm install'
+                sh 'cd ${jenkinsAppDir} && npm install'
                 echo "Successfully installed npm packages"
             }
 		    
 	    }
 
+
         stage('Test App') {
         /* Testing the application */
 		    steps{
-                sh 'npm test'
+                sh 'cd ${jenkinsAppDir} && npm run test'
             }
 	    }
 
