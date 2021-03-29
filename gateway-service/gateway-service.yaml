@@ -37,14 +37,28 @@ spec:
         ports:
         - containerPort: 3000
         env:
-         - name: auth-service
-           value: "http://auth-service:50051"
-         - name: image-service
-           value: "http://image-service:50054"
-         - name: session-log-service
-           value: "http://session-log-service:50055"
-         - name: session-service
-           value: "http://session-service:50052"
-         - name: user-service
-           value: "http://user-service:50053"
+         - name: authServerIP 
+           value: "http://auth-service"
+         - name: authServicePort
+           value: "50051"
+         - name: sessionServerIP 
+           value: "http://session-service"
+         - name: sessionServicePort
+           value: "50052"
+         - name: userServerIP
+           value: "http://user-service"
+         - name: userServicePort
+           value: "50053"
+         - name: imageServerIP
+           value: "http://image-service"
+         - name: imageServicePort 
+           value: "50054"
+         - name: sessionLogServerIP
+           value: "http://session-log-service"
+         - name: sessionLogServicePort 
+           value: "50055"
+         - name: gatewayServerIP 
+           value: "http://gateway-service"
+         - name: gatewayServicePort 
+           value: "3000"
       restartPolicy: Always
