@@ -33,6 +33,30 @@ spec:
         ports:
         - containerPort: 50051
         env:
+         - name: authServerIP 
+           value: "http://auth-service"
+         - name: authServicePort
+           value: "50051"
+         - name: sessionServerIP 
+           value: "http://session-service"
+         - name: sessionServicePort
+           value: "50052"
+         - name: userServerIP
+           value: "http://user-service"
+         - name: userServicePort
+           value: "50053"
+         - name: imageServerIP
+           value: "http://image-service"
+         - name: imageServicePort 
+           value: "50054"
+         - name: sessionLogServerIP
+           value: "http://session-log-service"
+         - name: sessionLogServicePort 
+           value: "50055"
+         - name: gatewayServerIP 
+           value: "http://gateway-service"
+         - name: gatewayServicePort 
+           value: "3000"
          - name: Mongo_uri_auth
-           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
       restartPolicy: Always
