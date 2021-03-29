@@ -32,7 +32,8 @@ export default function ImageList() {
     React.useEffect(() => {
         const username = localStorage.getItem("username");
         const jwtToken = localStorage.getItem("login_access_token");
-        axios.get(`http://localhost:3000/imageList?username=${username}`, { headers: { 'Authorization': "Bearer " + jwtToken } })
+        const baseURL = process.env.gatewayServerIP || 'http://localhost:3000'
+        axios.get(`${baseUrl}/imageList?username=${username}`, { headers: { 'Authorization': "Bearer " + jwtToken } })
             .then(res => {
 
                 setRows(res.data.map(row => {

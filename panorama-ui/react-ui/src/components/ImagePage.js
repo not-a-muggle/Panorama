@@ -11,8 +11,8 @@ export default function () {
     const username = localStorage.getItem("username");
     const jwtToken = localStorage.getItem("login_access_token");
     const imageId = id;
-
-    axios.get(`http://localhost:3000/image?username=${username}&imageId=${id}`, { headers: { 'Authorization': "Bearer " + jwtToken } })
+    const baseURL = process.env.gatewayServerIP || 'http://localhost:3000'
+    axios.get(`${baseURL}/image?username=${username}&imageId=${id}`, { headers: { 'Authorization': "Bearer " + jwtToken } })
       .then(res => {
         setImageData(res.data.imageData);
         setImageName(res.data.imageName);
