@@ -86,7 +86,7 @@ function SignUp(props) {
       }
 
       const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
-      axios.post(basesURL + '/signup', payload)
+      axios.post(baseURL + '/signup', payload)
         .then(function (response) {
           if (response.status === 201) {
             setState(prevState => ({
