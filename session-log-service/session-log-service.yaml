@@ -34,5 +34,5 @@ spec:
         - containerPort: 50055
         env:
          - name: MONGO_URI_SYSTEM
-           value: "mongodb+srv://User3:Password3@cluster0.0qdgg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+           value: "mongodb+srv://User3:Password3@cluster0.0qdgg.mongodb.net/panorama?retryWrites=true&w=majority"
       restartPolicy: Always

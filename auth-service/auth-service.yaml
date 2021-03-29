@@ -58,5 +58,5 @@ spec:
          - name: gatewayServicePort 
            value: "3000"
          - name: Mongo_uri_auth
-           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
       restartPolicy: Always
