@@ -22,8 +22,11 @@ spec:
         - containerPort: 80
         env:
          - name: gateway-service
-           value: http://gateway-service:3000
-      
+           value: "http://gateway-service:3000"
+         - name: gatewayServerIP 
+           value: "http://gateway-service"
+         - name: gatewayServicePort 
+           value: "3000"
       restartPolicy: Always
 ---
 apiVersion: v1
