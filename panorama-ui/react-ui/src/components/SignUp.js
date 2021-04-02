@@ -17,7 +17,8 @@ import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import Navbar from "../components/Navbar"
 
-
+process.env.gatewayServerIP = "http://gateway-service"
+process.env.gatewayServicePort = "3000"
 const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
 const api = axios.create({
   baseURL: baseURL + "/signup"
