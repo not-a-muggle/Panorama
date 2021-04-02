@@ -17,9 +17,9 @@ import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import Navbar from "../components/Navbar"
 
-process.env.gatewayServerIP = "http://gateway-service"
-process.env.gatewayServicePort = "3000"
-const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
+//process.env.gatewayServerIP = "http://gateway-service"
+//process.env.gatewayServicePort = "3000"
+//const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
 const api = axios.create({
   baseURL: baseURL + "/signup"
 })
@@ -86,7 +86,7 @@ function SignUp(props) {
         password: state.password,
       }
 
-      const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
+      const baseURL = "http://gateway-service" + ":" + "3000"
       axios.post(baseURL + '/signup', payload)
         .then(function (response) {
           if (response.status === 201) {
