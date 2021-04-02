@@ -23,7 +23,9 @@ FROM nginx:1.17.1-alpine
 WORKDIR /usr/share/nginx
 
 # remove default configurations of nginx
-RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
+RUN rm -rf /usr/share/nginx/html/* 
+
+RUN rm -rf /etc/nginx/conf.d/default.conf
 
 # replace default nginx file
 COPY nginx.conf /etc/nginx/nginx.conf 
