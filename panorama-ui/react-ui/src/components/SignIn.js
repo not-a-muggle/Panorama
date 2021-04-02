@@ -67,7 +67,8 @@ function SignIn(props) {
   const handleSubmitClick = (e) => {
     e.preventDefault();
     var basicAuth = 'Basic ' + new Buffer(state.email + ':' + state.password).toString('base64');
-    axios.post('http://localhost:3000/signin', {}, {
+    const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
+    axios.post(baseURL + 'signin', {}, {
       headers: { 'Authorization': basicAuth }
     })
       .then(function (response) {

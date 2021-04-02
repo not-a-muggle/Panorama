@@ -50,9 +50,9 @@ export default function IconLabelButtons() {
   }
 
   const fileUploadHandler = () => {
-    
+    const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_NAME);
-    axios.post("http://localhost:3000/image", { username: username, images: images }, { headers: { 'Authorization': "Bearer " + jwtToken } })
+    axios.post(baseURL + "/image", { username: username, images: images }, { headers: { 'Authorization': "Bearer " + jwtToken } })
       .then(res => {
         console.log(res)
       })

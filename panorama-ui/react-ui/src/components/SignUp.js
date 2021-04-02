@@ -1,11 +1,11 @@
-import React, {useState}  from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -13,12 +13,15 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../constants/apiConstants';
+import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import Navbar from "../components/Navbar"
 
+//process.env.gatewayServerIP = "http://gateway-service"
+//process.env.gatewayServicePort = "3000"
+const baseURL = "http://gateway-service" + ":" + "3000"
 const api = axios.create({
-  baseURL: 'http://localhost:3000/signup'
+  baseURL: baseURL + "/signup"
 })
 
 
@@ -56,66 +59,68 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp(props) {
-    const [state , setState] = useState({
-        firstname: "",
-        lastname: "",
-        birthday: "",
-        phonenumber: "",
-        email : "",
-        password : "",
-        successMessage: null
-    })
-    const handleChange = (e) => {
-        const {id , value} = e.target   
-        setState(prevState => ({
-            ...prevState,
-            [id] : value
-        }))
-    }
-    const sendDetailsToServer = () => {
-        if(state.email.length && state.password.length) {
-            const payload={
-                firstName: state.firstname,
-                lastName: state.lastname,
-                birthday: state.birthday,
-                phonenumber: state.phonenumber,
-                email:state.email,
-                password:state.password,
-            }
-            axios.post('http://localhost:3000/signup', payload)
-                .then(function (response) {
-                    if(response.status === 201){
-                        setState(prevState => ({
-                            ...prevState,
-                            'successMessage' : 'Registration successful. Redirecting to home page..'
-                        }))
-                        localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                        redirectToLogin();
-                        props.showError(null)
-                    } else{
-                        props.showError("Some error ocurred");
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });    
-        } else {
-            props.showError('Please enter valid username and password');   
-        }
-        
-    }
-    const redirectToHome = () => {
-        props.updateTitle('Home')
-        props.history.push('/home');
-    }
-    const redirectToLogin = () => {
-        props.history.push('/SignIn'); 
-    }
-    const handleSubmitClick = (e) => {
-        e.preventDefault();
-        sendDetailsToServer()    
+  const [state, setState] = useState({
+    firstname: "",
+    lastname: "",
+    birthday: "",
+    phonenumber: "",
+    email: "",
+    password: "",
+    successMessage: null
+  })
+  const handleChange = (e) => {
+    const { id, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [id]: value
+    }))
+  }
+  const sendDetailsToServer = () => {
+    if (state.email.length && state.password.length) {
+      const payload = {
+        firstName: state.firstname,
+        lastName: state.lastname,
+        birthday: state.birthday,
+        phonenumber: state.phonenumber,
+        email: state.email,
+        password: state.password,
+      }
 
+      const baseURL = "http://gateway-service" + ":" + "3000"
+      axios.post(baseURL + '/signup', payload, {headers:{origin:'http://149.165.157.30:30800'}})
+        .then(function (response) {
+          if (response.status === 201) {
+            setState(prevState => ({
+              ...prevState,
+              'successMessage': 'Registration successful. Redirecting to home page..'
+            }))
+            localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+            redirectToLogin();
+            props.showError(null)
+          } else {
+            props.showError("Some error ocurred");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      props.showError('Please enter valid username and password');
     }
+
+  }
+  const redirectToHome = () => {
+    props.updateTitle('Home')
+    props.history.push('/home');
+  }
+  const redirectToLogin = () => {
+    props.history.push('/SignIn');
+  }
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+    sendDetailsToServer()
+
+  }
 
   const classes = useStyles();
 
@@ -219,11 +224,11 @@ function SignUp(props) {
               />
             </Grid>
           </Grid>
-          <Button onClick= {handleSubmitClick}
+          <Button onClick={handleSubmitClick}
             type="submit"
             fullWidth
             variant="contained"
-            color= "secondary"
+            color="secondary"
             className={classes.submit}
           >
             Sign Up
