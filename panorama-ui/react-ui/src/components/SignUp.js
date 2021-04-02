@@ -19,7 +19,7 @@ import Navbar from "../components/Navbar"
 
 //process.env.gatewayServerIP = "http://gateway-service"
 //process.env.gatewayServicePort = "3000"
-//const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
+const baseURL = "http://gateway-service" + ":" + "3000"
 const api = axios.create({
   baseURL: baseURL + "/signup"
 })
