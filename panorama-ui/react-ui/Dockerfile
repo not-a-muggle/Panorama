@@ -34,3 +34,4 @@ COPY --from=build-step /app/build /usr/share/nginx/html
 
 EXPOSE 80
 
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
