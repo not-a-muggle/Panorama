@@ -28,8 +28,9 @@ RUN rm -rf /usr/share/nginx/html/* /etc/nginx/conf.d/default.conf
 # replace default nginx file
 COPY nginx.conf /etc/nginx/nginx.conf 
 
- 
+#copy files from build step
 
 COPY --from=build-step /app/build /usr/share/nginx/html
 
 EXPOSE 80
+
