@@ -87,7 +87,7 @@ function SignUp(props) {
       }
 
       const baseURL = "http://gateway-service" + ":" + "3000"
-      axios.post(baseURL + '/signup', payload, {headers:{origin:'http://149.165.157.30:30800'}})
+      axios.post(baseURL + '/signup', payload, {headers:{"Access-Control-Allow-Origin": "*"}})
         .then(function (response) {
           if (response.status === 201) {
             setState(prevState => ({
