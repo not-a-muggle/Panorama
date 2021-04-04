@@ -28,8 +28,6 @@ spec:
 
     spec:
       hostNetwork: true
-      nodeSelector:
-        worker : 1
       containers:
       - name: session-service
         imagePullPolicy: Always

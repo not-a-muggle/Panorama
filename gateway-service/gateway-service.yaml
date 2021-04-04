@@ -27,8 +27,6 @@ spec:
 
     spec:
       hostNetwork: true
-      nodeSelector:
-        worker : 1
       containers:
       - name: backend-gatewayservice
         imagePullPolicy: Always

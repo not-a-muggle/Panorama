@@ -27,8 +27,6 @@ spec:
 
     spec:
       hostNetwork: true
-      nodeSelector:
-        worker : 2
       containers:
       - name: auth-service
         imagePullPolicy: Always

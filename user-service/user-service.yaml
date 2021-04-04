@@ -27,8 +27,6 @@ spec:
 
     spec:
       hostNetwork: true
-      nodeSelector:
-        worker : 2
       containers:
       - name: user-service
         imagePullPolicy: Always
