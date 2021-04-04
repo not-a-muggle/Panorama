@@ -26,7 +26,15 @@ spec:
         app: gateway-service
 
     spec:
-      hostNetwork: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: worker
+                operator: In
+                values:
+                - 1  
       containers:
       - name: backend-gatewayservice
         imagePullPolicy: Always
@@ -37,6 +45,7 @@ spec:
             memory: 100Mi
         ports:
         - containerPort: 3000
+        
         env:
          - name: authServerIP 
            value: "http://auth-service"
