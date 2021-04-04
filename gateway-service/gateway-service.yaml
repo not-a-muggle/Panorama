@@ -62,5 +62,5 @@ spec:
          - name: gatewayServerIP 
            value: "http://149.165.156.181"
          - name: gatewayServicePort 
-           value: "30200"
+           value: "3000"
       restartPolicy: Always
