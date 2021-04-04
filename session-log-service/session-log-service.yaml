@@ -27,6 +27,15 @@ spec:
 
     spec:
       hostNetwork: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: worker
+                operator: In
+                values:
+                - "2"  
       containers:
       - name: session-log-service
         imagePullPolicy: Always

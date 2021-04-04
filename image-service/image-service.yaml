@@ -28,6 +28,15 @@ spec:
 
     spec:
       hostNetwork: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: worker
+                operator: In
+                values:
+                - "1"  
       containers:
       - name: image-service
         imagePullPolicy: Always
