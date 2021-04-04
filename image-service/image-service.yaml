@@ -27,6 +27,7 @@ spec:
         tier: backend
 
     spec:
+      hostNetwork: true
       containers:
       - name: image-service
         imagePullPolicy: Always

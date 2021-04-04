@@ -26,6 +26,7 @@ spec:
         app: session-log-service
 
     spec:
+      hostNetwork: true
       containers:
       - name: session-log-service
         imagePullPolicy: Always

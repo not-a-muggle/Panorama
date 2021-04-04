@@ -27,6 +27,7 @@ spec:
         app: session-service
 
     spec:
+      hostNetwork: true
       containers:
       - name: session-service
         imagePullPolicy: Always

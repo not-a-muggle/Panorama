@@ -26,6 +26,7 @@ spec:
         app: user-service
 
     spec:
+      hostNetwork: true
       containers:
       - name: user-service
         imagePullPolicy: Always
