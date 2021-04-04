@@ -42,11 +42,11 @@ spec:
         
         env:
          - name: authServerIP 
-           value: "http://149.165.157.30"
+           value: "http://149.165.156.181"
          - name: authServicePort
            value: "30100"
          - name: sessionServerIP 
-           value: "http://149.165.156.181"
+           value: "http://149.165.157.30"
          - name: sessionServicePort
            value: "30300"
          - name: userServerIP
@@ -54,7 +54,7 @@ spec:
          - name: userServicePort
            value: "30600"
          - name: imageServerIP
-           value: "http://149.165.156.181"
+           value: "http://149.165.157.30"
          - name: imageServicePort 
            value: "30900"
          - name: sessionLogServerIP
