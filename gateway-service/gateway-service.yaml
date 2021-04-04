@@ -34,7 +34,7 @@ spec:
               - key: worker
                 operator: In
                 values:
-                - 1  
+                - "1"  
       containers:
       - name: backend-gatewayservice
         imagePullPolicy: Always
