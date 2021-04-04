@@ -37,7 +37,7 @@ spec:
          - name: authServerIP 
            value: "http://149.165.157.30"
          - name: authServicePort
-           value: "30100"
+           value: "50051"
          - name: sessionServerIP 
            value: "http://149.165.156.181"
          - name: sessionServicePort
