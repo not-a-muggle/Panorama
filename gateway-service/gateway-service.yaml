@@ -49,27 +49,27 @@ spec:
         
         env:
          - name: authServerIP 
-           value: "http://auth-service"
+           value: "http://149.165.157.30"
          - name: authServicePort
            value: "30100"
          - name: sessionServerIP 
-           value: "http://session-service"
+           value: "http://149.165.156.181"
          - name: sessionServicePort
            value: "30300"
          - name: userServerIP
-           value: "http://user-service"
+           value: "http://149.165.157.30"
          - name: userServicePort
            value: "30600"
          - name: imageServerIP
-           value: "http://image-service"
+           value: "http://149.165.156.181"
          - name: imageServicePort 
            value: "30900"
          - name: sessionLogServerIP
-           value: "http://session-log-service"
+           value: "http://149.165.157.30"
          - name: sessionLogServicePort 
            value: "30400"
          - name: gatewayServerIP 
-           value: "http://gateway-service"
+           value: "http://149.165.156.181"
          - name: gatewayServicePort 
-           value: "3000"
+           value: "30200"
       restartPolicy: Always

@@ -24,9 +24,9 @@ spec:
          - name: gateway-service
            value: "http://gateway-service:3000"
          - name: gatewayServerIP 
-           value: "http://gateway-service"
+           value: "http://149.165.156.181"
          - name: gatewayServicePort 
-           value: "3000"
+           value: "30200"
       restartPolicy: Always
 ---
 apiVersion: v1
