@@ -12,7 +12,7 @@ COPY . /app
 
 # install node modules and run build
 
-RUN npm install && npm run build && npm start
+RUN npm install && npm run build 
 
 # installing nginx web server
 
