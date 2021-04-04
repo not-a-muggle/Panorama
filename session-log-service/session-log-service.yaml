@@ -27,6 +27,8 @@ spec:
 
     spec:
       hostNetwork: true
+      nodeSelector:
+        worker : 2
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

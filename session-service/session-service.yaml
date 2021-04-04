@@ -28,15 +28,8 @@ spec:
 
     spec:
       hostNetwork: true
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: worker
-                operator: In
-                values:
-                - "1"  
+      nodeSelector:
+        worker : 1
       containers:
       - name: session-service
         imagePullPolicy: Always

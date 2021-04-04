@@ -5,8 +5,8 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 3001
-    port: 3001
+  - targetPort: 3000
+    port: 3000
     nodePort: 30200 
  selector:
   app: gateway-service
@@ -27,15 +27,8 @@ spec:
 
     spec:
       hostNetwork: true
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: worker
-                operator: In
-                values:
-                - "1"  
+      nodeSelector:
+        worker : 1
       containers:
       - name: backend-gatewayservice
         imagePullPolicy: Always

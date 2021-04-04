@@ -5,8 +5,8 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50151
-    port: 50151
+  - targetPort: 50051
+    port: 50051
     nodePort: 30100 
  selector:
   app: auth-service
@@ -27,15 +27,8 @@ spec:
 
     spec:
       hostNetwork: true
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: worker
-                operator: In
-                values:
-                - "2"  
+      nodeSelector:
+        worker : 2
       containers:
       - name: auth-service
         imagePullPolicy: Always

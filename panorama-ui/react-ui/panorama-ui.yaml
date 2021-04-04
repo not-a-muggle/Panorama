@@ -14,6 +14,8 @@ spec:
       labels:
         app: react-ui
     spec:
+      nodeSelector:
+        worker : 2
       containers:
       - image: panoramaiubads/react-ui
         name: react-ui
@@ -38,8 +40,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 81
-    targetPort: 81
+  - port: 80
+    targetPort: 80
     nodePort: 30800
   selector:
     app: react-ui
