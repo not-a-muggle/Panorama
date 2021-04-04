@@ -5,8 +5,8 @@ metadata:
 spec:
  type: LoadBalancer
  ports:
-  - targetPort: 50051
-    port: 50051
+  - targetPort: 50151
+    port: 50151
     nodePort: 31100 
  selector:
   app: auth-service
