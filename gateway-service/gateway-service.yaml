@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 3001
     port: 3001
-    nodePort: 31200 
+    nodePort: 30200 
  selector:
   app: gateway-service
 ---
@@ -51,25 +51,25 @@ spec:
          - name: authServerIP 
            value: "http://149.165.157.30"
          - name: authServicePort
-           value: "31100"
+           value: "30100"
          - name: sessionServerIP 
            value: "http://149.165.156.181"
          - name: sessionServicePort
-           value: "31300"
+           value: "30300"
          - name: userServerIP
            value: "http://149.165.157.30"
          - name: userServicePort
-           value: "31600"
+           value: "30600"
          - name: imageServerIP
            value: "http://149.165.156.181"
          - name: imageServicePort 
-           value: "31900"
+           value: "30900"
          - name: sessionLogServerIP
            value: "http://149.165.157.30"
          - name: sessionLogServicePort 
-           value: "31400"
+           value: "30400"
          - name: gatewayServerIP 
            value: "http://149.165.156.181"
          - name: gatewayServicePort 
-           value: "31200"
+           value: "30200"
       restartPolicy: Always

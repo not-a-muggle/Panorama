@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 50151
     port: 50151
-    nodePort: 31100 
+    nodePort: 30100 
  selector:
   app: auth-service
 ---
@@ -46,27 +46,27 @@ spec:
          - name: authServerIP 
            value: "http://149.165.157.30"
          - name: authServicePort
-           value: "31100"
+           value: "30100"
          - name: sessionServerIP 
            value: "http://149.165.156.181"
          - name: sessionServicePort
-           value: "31300"
+           value: "30300"
          - name: userServerIP
            value: "http://149.165.157.30"
          - name: userServicePort
-           value: "31600"
+           value: "30600"
          - name: imageServerIP
            value: "http://149.165.156.181"
          - name: imageServicePort 
-           value: "31900"
+           value: "30900"
          - name: sessionLogServerIP
            value: "http://149.165.157.30"
          - name: sessionLogServicePort 
-           value: "31400"
+           value: "30400"
          - name: gatewayServerIP 
            value: "http://149.165.156.181"
          - name: gatewayServicePort 
-           value: "31200"
+           value: "30200"
          - name: Mongo_uri_auth
            value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
       restartPolicy: Always
