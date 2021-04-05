@@ -1,4 +1,4 @@
-# Stage 1 
+# Stage 1 - dev
 
 FROM node:10-alpine as build-step
 RUN mkdir /app
@@ -8,13 +8,8 @@ RUN npm install
 COPY . /app
 RUN npm run build
 
-# Stage 2
+# Stage 2 - prod
 
-FROM nginx:alpine
-WORKDIR /usr/share/nginx
-RUN rm -rf /usr/share/nginx/html/*
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM nginx:1.17.1-alpine
 COPY --from=build-step /app/build /usr/share/nginx/html
 EXPOSE 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
