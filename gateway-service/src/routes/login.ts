@@ -81,7 +81,7 @@ router.post('/signin', async (req: express.Request, res: express.Response) => {
             console.log("logging failed by the log service");
         }
     } catch (ex) {
-        console.log("Could not log data to session log service\n",ex);
+        console.log("Could not log data to session log service\n", ex);
     }
     res.status(200);
     res.send({ token: token, username: username });
@@ -107,9 +107,21 @@ router.post('/signup', async (req: express.Request, res: express.Response) => {
 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
+    let userCreationResponse;
+    let authCreationResponse: AuthCrudResult
     try {
-        const userCreationResponse = await UserService.Instance.createUser(user);
-        const authCreationResponse: AuthCrudResult = await AuthService.Instance.createUser(basicDetails);
+        userCreationResponse = await UserService.Instance.createUser(user);
+    } catch (ex) {
+        console.log("User Creation Failed\n Call to User Service Failed" + ex);
+        return res.sendStatus(400)//.send({ error: "User could not be created" });
+    }
+    try {
+        authCreationResponse = await AuthService.Instance.createUser(basicDetails);
+    } catch (ex) {
+        console.log("User Creation Failed\n Call to Auth Service Failed" + ex);
+        return res.sendStatus(400)//.send({ error: "User could not be created" });
+    }
+    try {
         console.log(authCreationResponse.success);
         console.log(userCreationResponse.success);
         if (!userCreationResponse.success || !authCreationResponse.success) {
