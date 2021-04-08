@@ -42,7 +42,7 @@ spec:
         
         env:
          - name: authServerIP 
-           value: "http://149.165.156.181"
+           value: "http://auth-service"
          - name: authServicePort
            value: "30100"
          - name: sessionServerIP 
