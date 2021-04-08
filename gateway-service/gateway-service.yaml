@@ -50,7 +50,7 @@ spec:
          - name: sessionServicePort
            value: "30300"
          - name: userServerIP
-           value: "http://149.165.157.30"
+           value: "http://user-service"
          - name: userServicePort
            value: "30600"
          - name: imageServerIP
