@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: user-service
 spec:
- type: LoadBalancer
+ type: ClusterIP
  ports:
   - targetPort: 50053
     port: 50053

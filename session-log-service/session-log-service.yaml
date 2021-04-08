@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: session-log-service
 spec:
- type: LoadBalancer
+ type: ClusterIP
  ports:
   - targetPort: 50055
     port: 50055

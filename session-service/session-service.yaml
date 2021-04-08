@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: session-service
 spec:
- type: LoadBalancer
+ type: ClusterIP
  ports:
   - targetPort: 50052
     port: 50052
