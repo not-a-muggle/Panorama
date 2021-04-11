@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 30600
     port: 30600
-    nodePort: 30600 
+    # nodePort: 30600 
  selector:
   app: user-service
 ---
