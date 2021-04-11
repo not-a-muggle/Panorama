@@ -2,7 +2,7 @@
     "mongoUri": "mongodb+srv://cluster0.1pzuq.mongodb.net/panorama",
     "mongoDatabase": "panorama",
     "serverIP" : "0.0.0.0",
-    "servicePort" : "50053",
+    "servicePort" : "30600",
     "protofile" : "user.proto", 
     "session-service" : {
         "serverIP" : "0.0.0.0",
