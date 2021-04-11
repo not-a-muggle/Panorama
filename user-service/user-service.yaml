@@ -5,8 +5,8 @@ metadata:
 spec:
  type: ClusterIP
  ports:
-  - targetPort: 50053
-    port: 50053
+  - targetPort: 30600
+    port: 30600
     nodePort: 30600 
  selector:
   app: user-service
@@ -35,8 +35,11 @@ spec:
         image: panoramaiubads/user-service
         resources:
         ports:
-        - containerPort: 50053
+        - containerPort: 30600
         env:
          - name: Mongo_uri_user
            value: "mongodb+srv://User2:Password2@cluster0.1pzuq.mongodb.net/panorama?retryWrites=true&w=majority"
-      restartPolicy: Always
+         - name: userServicePort
+           value: "30600"
+        
+        restartPolicy: Always
