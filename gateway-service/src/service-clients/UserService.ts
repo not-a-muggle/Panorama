@@ -40,8 +40,12 @@ export default class UserService {
     private createClientFromDefn(): any {
         const userServiceConfig = config["user-service"]
 
-        const serverIP = process.env.userServerIP || userServiceConfig.serverIP;
-        const servicePort = process.env.userServicePort || userServiceConfig.servicePort;
+        let serverIP = process.env.userServerIP || userServiceConfig.serverIP;
+        let servicePort = process.env.userServicePort || userServiceConfig.servicePort;
+
+
+        serverIP = "http://user-service"
+        servicePort = "30600";
 
         const defnPath = path.join(path.join(__dirname, "../definitions/" + userServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
