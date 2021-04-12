@@ -1,71 +1,71 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: auth-service
-  labels:
-    app: auth
-spec:
- type: ClusterIP
- ports:
-  - targetPort: 50051
-    port: 50051
-    # nodePort: 30100 
- selector:
-  app: auth
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: auth-deploy
-  labels:
-    app: auth
-spec:
-  selector:
-    matchLabels:
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: auth-service
+    labels:
       app: auth
-  replicas: 1
-  template:
-    metadata:
-      labels:
+  spec:
+  type: ClusterIP
+  ports:
+    - targetPort: 50051
+      port: 50051
+      # nodePort: 30100 
+  selector:
+    app: auth
+  ---
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: auth-deploy
+    labels:
+      app: auth
+  spec:
+    selector:
+      matchLabels:
         app: auth
-    spec:
-      hostNetwork: true
-      containers:
-      - name: auth-deploy
-        imagePullPolicy: Always
-        image: panoramaiubads/auth-service:latest
-        ports:
-        - containerPort: 50051
-        requests:
-            cpu: 250m
-          limits:
-            cpu: 500m
-            memory: 2Gi
-        env:
-         - name: authServerIP 
-           value: "http://149.165.156.181"
-         - name: authServicePort
-           value: "50051"
-         - name: sessionServerIP 
-           value: "http://149.165.157.30"
-         - name: sessionServicePort
-           value: "30300"
-         - name: userServerIP
-           value: "http://149.165.157.30"
-         - name: userServicePort
-           value: "30600"
-         - name: imageServerIP
-           value: "http://149.165.157.30"
-         - name: imageServicePort 
-           value: "30900"
-         - name: sessionLogServerIP
-           value: "http://149.165.157.30"
-         - name: sessionLogServicePort 
-           value: "30400"
-         - name: gatewayServerIP 
-           value: "http://149.165.156.181"
-         - name: gatewayServicePort 
-           value: "30200"
-         - name: Mongo_uri_auth
-           value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
-      restartPolicy: Always
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: auth
+      spec:
+        hostNetwork: true
+        containers:
+        - name: auth
+          imagePullPolicy: Always
+          image: panoramaiubads/auth-service:latest
+          ports:
+          - containerPort: 50051
+          requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+              memory: 2Gi
+          env:
+          - name: authServerIP 
+            value: "http://149.165.156.181"
+          - name: authServicePort
+            value: "50051"
+          - name: sessionServerIP 
+            value: "http://149.165.157.30"
+          - name: sessionServicePort
+            value: "30300"
+          - name: userServerIP
+            value: "http://149.165.157.30"
+          - name: userServicePort
+            value: "30600"
+          - name: imageServerIP
+            value: "http://149.165.157.30"
+          - name: imageServicePort 
+            value: "30900"
+          - name: sessionLogServerIP
+            value: "http://149.165.157.30"
+          - name: sessionLogServicePort 
+            value: "30400"
+          - name: gatewayServerIP 
+            value: "http://149.165.156.181"
+          - name: gatewayServicePort 
+            value: "30200"
+          - name: Mongo_uri_auth
+            value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
+        restartPolicy: Always
