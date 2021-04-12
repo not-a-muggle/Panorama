@@ -20,7 +20,7 @@ spec:
         image: panoramaiubads/auth-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 5003
+        - containerPort: 50051
         resources:
           requests:
             cpu: 250m
