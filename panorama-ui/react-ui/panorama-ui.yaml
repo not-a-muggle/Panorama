@@ -24,9 +24,9 @@ spec:
         - containerPort: 80
         env:
          - name: gatewayServerIP 
-           value: "http://149.165.156.181"
+           value: "http://gateway-service"
          - name: gatewayServicePort 
-           value: "30200"
+           value: "3000"
       restartPolicy: Always
 ---
 apiVersion: v1
