@@ -16,7 +16,7 @@ spec:
         updateTimestamp: "20210410205518106"
     spec:
       containers:
-      - name: gateway-service
+      - name: gatewaygit 
         image: panoramaiubads/gateway-service:latest
         imagePullPolicy: Always
         ports:
