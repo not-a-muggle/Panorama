@@ -1,39 +1,45 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: image-service
-spec:
- type: ClusterIP
- ports:
-  - targetPort: 50054
-    port: 50054
-    nodePort: 30900 
- selector:
-  app: image-service
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: image-service
+  name: image-deploy
+  labels:
+    app: image
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: image-service
-  replicas: 1
+      app: image
   template:
     metadata:
       labels:
-        app: image-service
-        tier: backend
-
+        app: image
+        updateTimestamp: "20210410205518106"
     spec:
-      hostNetwork: true
-      nodeSelector:
-        worker : "2"
       containers:
-      - name: image-service
+      - name: image
+        image: panoramaiubads/image-service:latest
         imagePullPolicy: Always
-        image: panoramaiubads/image-service
         ports:
-        - containerPort: 50054
+        - containerPort: 30900
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+            memory: 2Gi
       restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: image
+  name: image-service
+spec:
+  selector:
+    app: image
+  ports:
+    - protocol: TCP
+      port: 30900
+      targetPort: 30900
+  type: ClusterIP
