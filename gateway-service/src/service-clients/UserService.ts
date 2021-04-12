@@ -44,7 +44,7 @@ export default class UserService {
         let servicePort = process.env.userServicePort || userServiceConfig.servicePort;
 
 
-        serverIP = "user-service"
+        serverIP = "ipv4:172.30.141.81"
         servicePort = "30600";
 
         const defnPath = path.join(path.join(__dirname, "../definitions/" + userServiceConfig["protofile"]));
