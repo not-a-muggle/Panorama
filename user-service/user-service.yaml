@@ -3,11 +3,9 @@ kind: Service
 metadata:
   name: user-service
 spec:
- type: LoadBalancer
  ports:
   - targetPort: 50053
     port: 50053
-    nodePort: 30600 
  selector:
   app: user-service
 ---
