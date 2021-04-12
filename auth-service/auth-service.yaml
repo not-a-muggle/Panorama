@@ -9,28 +9,26 @@ spec:
     port: 50051
     # nodePort: 30100 
  selector:
-  app: auth-service
+  app: auth
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service
+  name: auth-deploy
 spec:
   selector:
     matchLabels:
-      app: auth-service
+      app: auth
   replicas: 1
   template:
     metadata:
       labels:
-        app: auth-service
+        app: auth
 
     spec:
       hostNetwork: true
-      nodeSelector:
-        worker : "1"
       containers:
-      - name: auth-service
+      - name: auth-deploy
         imagePullPolicy: Always
         image: panoramaiubads/auth-service
         ports:
