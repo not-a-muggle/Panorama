@@ -42,4 +42,4 @@ spec:
          - name: userServicePort
            value: "30600"
         
-        restartPolicy: Always
+      restartPolicy: Always

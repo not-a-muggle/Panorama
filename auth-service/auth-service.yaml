@@ -7,7 +7,7 @@ spec:
  ports:
   - targetPort: 50051
     port: 50051
-    nodePort: 30100 
+    # nodePort: 30100 
  selector:
   app: auth-service
 ---
