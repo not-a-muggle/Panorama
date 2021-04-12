@@ -14,7 +14,9 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-service
+  name: gateway-service-deploy
+  labels:
+    app: gateway-service
 spec:
   selector:
     matchLabels:
@@ -28,7 +30,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - name: backend-gatewayservice
+      - name: gateway-service
         imagePullPolicy: Always
         image: panoramaiubads/gateway-service:latest
         resources:
