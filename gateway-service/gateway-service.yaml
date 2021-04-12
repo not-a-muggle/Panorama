@@ -1,16 +1,3 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: gateway-service
-spec:
- type: LoadBalancer
- ports:
-  - targetPort: 3000
-    port: 3000
-    nodePort: 30200 
- selector:
-  app: gateway-service
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,27 +5,42 @@ metadata:
   labels:
     app: gateway-service
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: gateway-service
-  replicas: 1
   template:
     metadata:
       labels:
         app: gateway-service
-
+        updateTimestamp: "20210410205518106"
     spec:
-      hostNetwork: true
       containers:
       - name: gateway-service
-        imagePullPolicy: Always
         image: panoramaiubads/gateway-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5003
         resources:
           requests:
-            cpu: 100m
+            cpu: 250m
           limits:
             cpu: 500m
             memory: 2Gi
-        ports:
-        - containerPort: 3000
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gateway-service
+  name: gateway-svc
+spec:
+  selector:
+    app: gateway-service
+  ports:
+    - nodePort: 302000
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
