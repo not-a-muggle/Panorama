@@ -42,6 +42,7 @@ spec:
   selector:
     app: session-log
   ports:
+    - protocol: TCP
       port: 30400
       targetPort: 30400
   type: ClusterIP

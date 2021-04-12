@@ -42,6 +42,7 @@ spec:
   selector:
     app: user
   ports:
+    - protocol: TCP
       port: 30600
       targetPort: 30600
   type: ClusterIP

@@ -39,6 +39,7 @@ spec:
   selector:
     app: session
   ports:
+    - protocol: TCP
       port: 30300
       targetPort: 30300
   type: ClusterIP
