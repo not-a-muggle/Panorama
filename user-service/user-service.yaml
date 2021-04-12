@@ -1,45 +1,44 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: user-service
-spec:
- type: ClusterIP
- ports:
-  - targetPort: 30600
-    port: 30600
-    # nodePort: 30600 
- selector:
-  app: user-service
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: user-deploy
+  labels:
+    app: user
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: user-service
-  replicas: 1
+      app: user
   template:
     metadata:
       labels:
-        app: user-service
-
+        app: user
+        updateTimestamp: "20210410205518106"
     spec:
-      hostNetwork: true
-      nodeSelector:
-        worker : "2"
       containers:
-      - name: user-service
+      - name: user
+        image: panoramaiubads/user-service:latest
         imagePullPolicy: Always
-        image: panoramaiubads/user-service
-        resources:
         ports:
         - containerPort: 30600
-        env:
-         - name: Mongo_uri_user
-           value: "mongodb+srv://User2:Password2@cluster0.1pzuq.mongodb.net/panorama?retryWrites=true&w=majority"
-         - name: userServicePort
-           value: "30600"
-        
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+            memory: 2Gi
       restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: user
+  name: user-service
+spec:
+  selector:
+    app: user
+  ports:
+      port: 30600
+      targetPort: 30600
+  type: ClusterIP
