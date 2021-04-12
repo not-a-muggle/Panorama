@@ -1,64 +1,46 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: gateway-service
-spec:
- type: LoadBalancer
- ports:
-  - targetPort: 3000
-    port: 3000
-    nodePort: 30200 
- selector:
-  app: gateway-service
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-service
+  name: gateway-deploy
+  labels:
+    app: gateway
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: gateway-service
-  replicas: 1
+      app: gateway
   template:
     metadata:
       labels:
-        app: gateway-service
-
+        app: gateway
+        updateTimestamp: "20210410205518106"
     spec:
       containers:
-      - name: backend-gatewayservice
+      - name: gateway
+        image: panoramaiubads/gateway-service:latest
         imagePullPolicy: Always
-        image: panoramaiubads/gateway-service
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
         ports:
         - containerPort: 3000
-        env:
-         - name: authServerIP 
-           value: "http://auth-service"
-         - name: authServicePort
-           value: "50051"
-         - name: sessionServerIP 
-           value: "http://session-service"
-         - name: sessionServicePort
-           value: "50052"
-         - name: userServerIP
-           value: "http://user-service"
-         - name: userServicePort
-           value: "50053"
-         - name: imageServerIP
-           value: "http://image-service"
-         - name: imageServicePort 
-           value: "50054"
-         - name: sessionLogServerIP
-           value: "http://session-log-service"
-         - name: sessionLogServicePort 
-           value: "50055"
-         - name: gatewayServerIP 
-           value: "http://gateway-service"
-         - name: gatewayServicePort 
-           value: "3000"
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+            memory: 2Gi
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: gateway
+  name: gateway-service
+spec:
+  selector:
+    app: gateway
+  ports:
+    - nodePort: 30200
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
