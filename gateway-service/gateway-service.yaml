@@ -30,7 +30,7 @@ spec:
       containers:
       - name: backend-gatewayservice
         imagePullPolicy: Always
-        image: panoramaiubads/gateway-service
+        image: panoramaiubads/gateway-service:latest
         resources:
           requests:
             cpu: 100m
