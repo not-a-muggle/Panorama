@@ -14,8 +14,6 @@ spec:
       labels:
         app: react-ui
     spec:
-      nodeSelector:
-        worker : "1"
       containers:
       - image: panoramaiubads/react-ui
         name: react-ui
