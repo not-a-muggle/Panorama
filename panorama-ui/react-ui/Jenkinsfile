@@ -10,7 +10,7 @@ pipeline{
         appName = 'react-ui'
         jenkinsAppDir = 'panorama-ui/react-ui'
         githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/panorama-ui/react-ui/panorama-ui.yaml'
-        githuburl2 = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/panorama-ui/react-ui/ingress-service.yaml'
+#        githuburl2 = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/panorama-ui/react-ui/ingress-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
     }
     stages{
@@ -73,7 +73,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; wget ${githuburl2}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name} -f ${file_name2}"
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}"
                                     )
                             ])
                     ])
