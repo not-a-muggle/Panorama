@@ -15,7 +15,7 @@ images_pb2_grpc.add_ImageServiceServicer_to_server(
     images_pb2_grpc.ImageServiceServicer(), server)
 server.add_insecure_port('127.0.0.1:30300')
 server.start()
-print("Image Server Started on port 50054")
+print("Image Server Started on port 30300")
 server.wait_for_termination()
 # try:
 #     while True:
