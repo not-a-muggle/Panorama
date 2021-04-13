@@ -21,8 +21,11 @@ export default class SessionClient {
 
     private createClientFromDefn(): any {
         const sessionServiceConfig = config["session-service"]
-        const serverIP = process.env.sessionServerIP ? process.env.sessionServerIP : sessionServiceConfig["serverIP"];
-        const servicePort = process.env.sessionServicePort ? process.env.sessionServicePort : sessionServiceConfig["servicePort"];
+        // const serverIP = process.env.sessionServerIP ? process.env.sessionServerIP : sessionServiceConfig["serverIP"];
+        // const servicePort = process.env.sessionServicePort ? process.env.sessionServicePort : sessionServiceConfig["servicePort"];
+
+        const serverIP = "session-service";
+        const servicePort = "30500";
 
         const packageDefinition = protoLoader.loadSync(
             __dirname + "/definitions/" + sessionServiceConfig["protofile"],
