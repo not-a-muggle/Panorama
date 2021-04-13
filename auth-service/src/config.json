@@ -1,5 +1,5 @@
 {
-    "mongoUri": "mongodb+srv://cluster0.vpy8b.mongodb.net/panorama",
+    "mongoUri": "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority",
     "mongoDatabase": "panorama",
     "serverIP" : "0.0.0.0",
     "servicePort" : "30100",
