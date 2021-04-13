@@ -22,8 +22,8 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
              username: "xyz",
              images: [
                 {
-                    data: "isau8dhiu",
-                    name: "iamge-name"
+                    imageData: "isau8dhiu",
+                    imageName: "iamge-name"
                 }
              ]
          }
@@ -32,7 +32,7 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
 
     const username = req.body["username"];
     const imageStoreRequest: ImageStoreRequest[] = req.body["images"];
-
+    console.log(`Storing image for user ${username}`);
     let token;
 
 
