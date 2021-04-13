@@ -21,7 +21,7 @@ export default class AuthService {
 
         // hard coded for now
         serverIP = "auth-service"
-        servicePort = "30200";
+        servicePort = "30100";
         
         const defnPath = path.join(path.join(__dirname, "../definitions/" + authServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
