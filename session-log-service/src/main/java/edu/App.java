@@ -10,8 +10,8 @@ import java.io.IOException;
  */
 public class App {
     public static void main(String[] args) {
-        Server server = ServerBuilder.forPort(50055).addService(new LogServiceServer()).build();
-        System.out.println("Started Session Log Server at port 50055");
+        Server server = ServerBuilder.forPort(30400).addService(new LogServiceServer()).build();
+        System.out.println("Started Session Log Server at port 30400");
         try {
             server.start();
             server.awaitTermination();
