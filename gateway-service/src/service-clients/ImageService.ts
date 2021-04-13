@@ -26,8 +26,11 @@ export default class ImageService {
         const imageServiceConfig = config["image-service"]
 
 
-        const serverIP = process.env.imageServerIP || imageServiceConfig.serverIP;
-        const servicePort = process.env.imageServicePort || imageServiceConfig.servicePort;
+        let serverIP = process.env.imageServerIP || imageServiceConfig.serverIP;
+        let servicePort = process.env.imageServicePort || imageServiceConfig.servicePort;
+
+        serverIP = "image-service"
+        servicePort = "30300";
 
         const defnPath = path.join(path.join(__dirname, "../definitions/" + imageServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(

@@ -17,8 +17,12 @@ export default class SessionLogService {
     private createClientFromDefn(): any {
         const sessionServiceConfig = config["session-log-service"]
 
-        const serverIP = process.env.sessionLogServerIP || sessionServiceConfig.serverIP;
-        const servicePort = process.env.sessionLogServicePort || sessionServiceConfig.servicePort;
+        let serverIP = process.env.sessionLogServerIP || sessionServiceConfig.serverIP;
+        let servicePort = process.env.sessionLogServicePort || sessionServiceConfig.servicePort;
+
+        serverIP = "session-log-service"
+        servicePort = "30400";
+
 
         const defnPath = path.join(path.join(__dirname, "../definitions/" + sessionServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
