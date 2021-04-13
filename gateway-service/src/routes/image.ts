@@ -102,6 +102,13 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
     try {
         const responseResult: StoreResult[] = await ImageService.Instance.storeImages(images);
         let errorCount = 0;
+        
+        if(!responseResult || responseResult.length == 0) {
+            res.sendStatus(500);
+            console.log("Could not store images. Call to Image Service Failed");
+            return;
+        }
+        
         for (const result of responseResult) {
             if (!result.stored) {
                 errorCount++;
