@@ -53,16 +53,18 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
 
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
         // const isVerified = { verified: true };
+        
         if (!isVerified.verified) {
             res.sendStatus(401);
-            console.log("JWT token verification failed");
+            console.log("JWT token verification failed\n" + JSON.stringify(isVerified));
             return;
         }
 
     }
     catch (e) {
         res.sendStatus(401);
-        console.log("JWT token verification failed");
+        console.log("call to session service failed")
+        // console.log("JWT token verification failed\n" + JSON.stringify(isVerified));
         return;
     }
 
