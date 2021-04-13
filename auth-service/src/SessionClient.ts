@@ -53,7 +53,11 @@ export default class SessionClient {
                 if (err) {
                     reject(err);
                 }
-                resolve(response.token);
+                if(response){
+                    resolve(response.token);
+                }
+                reject("No Response From Session Service");
+                // resolve(response.token);
             });
         });
     }
