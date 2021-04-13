@@ -1,7 +1,7 @@
 import grpc
 from concurrent import futures
 import time
-
+import logging
 import images_pb2
 import images_pb2_grpc
 
@@ -16,6 +16,7 @@ images_pb2_grpc.add_ImageServiceServicer_to_server(
 server.add_insecure_port('127.0.0.1:30300')
 server.start()
 print("Image Server Started on port 30300")
+logging.info("server started on port 30300")
 server.wait_for_termination()
 # try:
 #     while True:
