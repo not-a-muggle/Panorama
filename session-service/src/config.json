@@ -3,6 +3,6 @@
     "issuer" : "https://panorama.indiana.edu",
     "secret" : "secret",
     "serverIP" : "0.0.0.0",
-    "servicePort" : "50052",
+    "servicePort" : "30500",
     "protofile" : "session.proto"
 }
