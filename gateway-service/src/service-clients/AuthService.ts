@@ -16,8 +16,12 @@ export default class AuthService {
     private createClientFromDefn(): any {
         const authServiceConfig = config["auth-service"]
 
-        const serverIP = process.env.authServerIP || authServiceConfig.serverIP;
-        const servicePort = process.env.authServicePort || authServiceConfig.servicePort;
+        let serverIP = process.env.authServerIP || authServiceConfig.serverIP;
+        let servicePort = process.env.authServicePort || authServiceConfig.servicePort;
+
+        // hard coded for now
+        serverIP = "auth-service"
+        servicePort = "30200";
         
         const defnPath = path.join(path.join(__dirname, "../definitions/" + authServiceConfig["protofile"]));
         const packageDefinition = protoLoader.loadSync(
