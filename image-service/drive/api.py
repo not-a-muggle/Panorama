@@ -39,20 +39,23 @@ class DriveAPI(object):
         if os.path.exists(pickle_path):
             with open(pickle_path, 'rb') as token:
                 creds = pickle.load(token)
+        else:
+            print("token does not exist")
 
         if not creds or not creds.valid:
 
             # if creds present, but expired and we have a refresh token, fetch a new token
             if creds and creds.expired and creds.refresh_token:
+                print("refereshing token")
                 creds.refresh(Request())
 
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
                     credintials_path, scopes=self.SCOPES)
-
+                print("refresh token not needed")
                 creds = flow.run_local_server(port=0)
 
-            with open(pickle_path, 'wb') as token:
+            with open(pickle_path, 'wb+') as token:
                 pickle.dump(creds, token)
 
         return creds
