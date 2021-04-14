@@ -84,7 +84,7 @@ export default class ImageService {
         });
 
         call.on('error', function (e) {
-            console.log("error occured while trying to store images");
+            console.log("error occured while trying to store images\n" + e);
         });
 
         call.on('end', function () {
