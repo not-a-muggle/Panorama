@@ -20,7 +20,7 @@ spec:
         image: panoramaiubads/auth-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 50051
+        - containerPort: 30100
         env:
          - name: Mongo_uri_auth
            value: "mongodb+srv://User1:Password1@cluster0.vpy8b.mongodb.net/panorama?retryWrites=true&w=majority"
@@ -43,6 +43,6 @@ spec:
     app: auth
   ports:
     - protocol: TCP
-      port: 50051
-      targetPort: 50051
+      port: 30100
+      targetPort: 30100
   type: ClusterIP

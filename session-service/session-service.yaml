@@ -20,7 +20,7 @@ spec:
         image: panoramaiubads/session-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 30300
+        - containerPort: 30500
         resources:
           requests:
             cpu: 250m
@@ -40,6 +40,6 @@ spec:
     app: session
   ports:
     - protocol: TCP
-      port: 30300
-      targetPort: 30300
+      port: 30500
+      targetPort: 30500
   type: ClusterIP

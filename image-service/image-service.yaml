@@ -20,7 +20,7 @@ spec:
         image: panoramaiubads/image-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 30900
+        - containerPort: 30300
         resources:
           requests:
             cpu: 250m
@@ -40,6 +40,6 @@ spec:
     app: image
   ports:
     - protocol: TCP
-      port: 30900
-      targetPort: 30900
+      port: 30300
+      targetPort: 30300
   type: ClusterIP
