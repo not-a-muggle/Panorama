@@ -242,7 +242,7 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
 
 
 router.get('/imageList', async (req: express.Request, res: express.Response) => {
-    const username = req.query["username"] as string;
+    const username = req.body["username"] as string;
     // console.log(username);
     // check if the user has a valid session
     let token: string;
