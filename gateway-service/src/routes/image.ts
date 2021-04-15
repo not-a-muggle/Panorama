@@ -257,6 +257,8 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
             return;
         }
 
+        console.log("Fetching Image List For User " + username);
+
         token = authHeader.substring(7, authHeader.length);
         const isVerified = await SessionService.Instance.verifyToken({ username: username, token: token });
         // const isVerified = { verified: true };
