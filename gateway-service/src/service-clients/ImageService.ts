@@ -70,7 +70,7 @@ export default class ImageService {
         const responses = [] as StoreResult[];
         const call: Duplex = this.client.storeImages(async (error: any, response: any) => {
             if (error) {
-                console.log("Error occured");
+                console.log("Error occured while storing images\n" + error);
                 return;
             }
         });
@@ -83,7 +83,7 @@ export default class ImageService {
             responses.push(resp);
         });
 
-        call.on('error', function (e) {
+        call.on('error', (e) => {
             console.log("error occured while trying to store images\n" + e);
         });
 
@@ -112,8 +112,6 @@ export default class ImageService {
 
         const responses = [] as ImageMetadata[];
         const call: Duplex = this.client.getImagesMetadata(imageListRequest);
-
-        console.log("here");
 
         // call.on('data', (resp: any) => {
         //     responses.push(resp);
@@ -152,22 +150,3 @@ const sleep = (milliseconds: number) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
-
-// async function test() {
-//     const images: Image[] = [{ imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" },
-//     { imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" },
-//     { imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" },
-//     { imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" },
-//     { imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" },
-//     { imageData: '12345', imageName: 'sampole.txt', userId: "vdembla@iu.edu" }]
-//     const imageService: ImageService = ImageService.Instance;
-//     const results = await imageService.storeImages(images);
-//     return results;
-// }
-
-// // test();
-// test().then((responses) => {
-//     console.log(responses)
-// }).catch((e) => {
-//     console.log("Error " + e)
-// });
