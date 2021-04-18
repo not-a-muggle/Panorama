@@ -17,4 +17,5 @@ RUN npm run build
 #COPY nginx.conf /etc/nginx/nginx.conf
 # COPY --from=build-step /app/build /usr/share/nginx/html
 EXPOSE 30800
-RUN npm run start
+CMD ["npm", "start"]
+# RUN npm run start
