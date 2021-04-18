@@ -5,6 +5,10 @@ RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 RUN chgrp -R 0 /app && chmod -R g+rwx /app
+RUN chown -R $USER:$GROUP /app/node_modules/.cache/.eslintcache
+RUN chmod 777 /app/node_modules/.cache/.eslintcache
+# RUN chown -R $USER:$GROUP ~/.config
+
 
 COPY package.json /app
 RUN npm install
