@@ -1,12 +1,15 @@
 # Stage 1 - dev
 
 FROM node:10-alpine as build-step
-RUN mkdir /app
+RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
+
+RUN chgrp -R 0 /app && chmod -R g+rwx /app
+
 COPY package.json /app
 RUN npm install
-COPY . /app
-RUN npm run build
+COPY --chown=node:node . /app
+# RUN npm run build
 
 # Stage 2 - prod
 
