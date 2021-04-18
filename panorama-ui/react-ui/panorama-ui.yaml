@@ -5,7 +5,7 @@ metadata:
     app: react-ui
   name: react-ui
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: react-ui
@@ -24,7 +24,7 @@ spec:
          - name: gatewayServerIP 
            value: "http://gateway-service"
          - name: gatewayServicePort 
-           value: "3000"
+           value: "30200"
       restartPolicy: Always
 ---
 apiVersion: v1
