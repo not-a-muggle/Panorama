@@ -10,10 +10,11 @@ RUN npm run build
 
 # Stage 2 - prod
 
-FROM nginx:alpine
+# FROM nginx:alpine
 #WORKDIR /usr/share/nginx
 #RUN rm -rf /usr/share/nginx/html/*
 #RUN rm /etc/nginx/conf.d/default.conf
 #COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build-step /app/build /usr/share/nginx/html
-EXPOSE 80
+# COPY --from=build-step /app/build /usr/share/nginx/html
+EXPOSE 30800
+RUN npm run start
