@@ -9,7 +9,7 @@ RUN chgrp -R 0 /app && chmod -R g+rwx /app
 COPY package.json /app
 RUN npm install
 COPY --chown=node:node . /app
-# RUN npm run build
+RUN npm run build
 
 # Stage 2 - prod
 
