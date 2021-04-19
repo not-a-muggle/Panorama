@@ -30,7 +30,7 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
     */
 
 
-    const username = req.body["username"];
+    const username = req.query["username"];
     const imageStoreRequest: ImageStoreRequest[] = req.body["images"];
     console.log(`Storing image for user ${username}`);
     let token;
@@ -242,7 +242,7 @@ router.get('/image', async (req: express.Request, res: express.Response) => {
 
 
 router.get('/imageList', async (req: express.Request, res: express.Response) => {
-    const username = req.body["username"] as string;
+    const username = req.query["username"] as string;
     // console.log(username);
     // check if the user has a valid session
     let token: string;
