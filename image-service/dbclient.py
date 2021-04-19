@@ -1,68 +1,50 @@
-import sqlite3
-import os
+from binascii import Error
+from pymongo import MongoClient, collection
 from drive.api import DriveAPI
 
 class DatabaseClient:
-    cur = None
-    conn = None
+    collection = None
 
     def __init__(self):
-        # check if the database file exists
-        if not os.path.exists(os.getcwd() + '/user.db'):
-            self.conn = sqlite3.connect('user.db',  check_same_thread=False)
-            self.cur = self.conn.cursor()
-            self.initializeDatabase()
-            return
-
-        self.conn = sqlite3.connect('user.db',  check_same_thread=False)
-        self.cur = self.conn.cursor()
-
-    def initializeDatabase(self):
-        # create user.db and push table
-        createTableQuery = '''CREATE TABLE USERFOLDER ( 
-                                id INTEGER PRIMARY KEY, 
-                                userid TEXT NOT NULL, 
-                                folderid TEXT NOT NULL);
-                            '''
-        try:
-            self.cur.execute(createTableQuery)
-            self.conn.commit()
-            # self.conn.close()
-        except sqlite3.Error as e:
-            print(e)
+        # initialize the collection
+        uri = "mongodb+srv://User:Password1@cluster0.ozyrn.mongodb.net/panorama?retryWrites=true&w=majority"
+        # mongodb+srv://User:panorama@123@cluster0.ozyrn.mongodb.net/panorama?retryWrites=true&w=majority
+        client = MongoClient(uri)
+        db = client.panorama
+        self.collection = db.get_collection("user_folder")
+        
 
     """ should be called on signup or if no folderID found on fetch"""
 
     def insertIntoUserFolder(self, userId, folderId):
-        insertQuery = "INSERT INTO USERFOLDER (userid, folderid) VALUES ( \"" + \
-            userId+"\", \""+folderId+"\")"
+        doc = { 'userid' : userId, 'folderid' : folderId}
         try:
-            self.cur.execute(insertQuery)
-            self.conn.commit()
-        except sqlite3.Error as e:
-            print("Unable to insert User " + str(e))
+            self.collection.insert_one(doc)
+        except Exception as e:
+            print("Unable to insert user into database")
+            raise e
 
     def fetchFolderIdForUser(self, userId):
-        selectQuery = "SELECT folderid from USERFOLDER WHERE userid=\""+userId+"\""
+        # selectQuery = "SELECT folderid from USERFOLDER WHERE userid=\""+userId+"\""
+        filterQuery = {'userid' : userId}
+        
         try:
-            self.cur.execute(selectQuery)
-            folderId = self.cur.fetchone()
-            # if no folder ID found, initialize folderID
-            if folderId is None:
+            queryResult = self.collection.find_one(filterQuery)
+            if queryResult is None:
                 driveAPI = DriveAPI()
                 newFolderId = driveAPI.createFolder(userId)
                 self.insertIntoUserFolder(userId=userId, folderId=newFolderId)
                 return newFolderId
             else:
-                return folderId[0]
-            
-        except sqlite3.Error as e:
-            print("Unable to fetch folderID " + str(e))
+                return queryResult["folderid"]
+
+        except Error as e:
+            print("Unable to fetch folderID")
             raise e
         except Exception as e:
             raise e
 
 # if __name__ == '__main__':
 #     db = DatabaseClient()
-#     db.insertIntoUser("1","1")
+#     db.insertIntoUserFolder("1","1")
 #     print(db.fetchFolderIdForUser("1"))
