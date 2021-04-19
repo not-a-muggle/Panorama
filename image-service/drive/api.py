@@ -7,7 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.http import MediaIoBaseUpload, MediaIoBaseDownload
 import base64
-
+import socket
 
 class DriveAPI(object):
     """DriveAPI for accessing Google Drive"""
@@ -15,7 +15,7 @@ class DriveAPI(object):
     SCOPES = ['https://www.googleapis.com/auth/drive.file']
 
     def __init__(self):
-
+        socket.setdefaulttimeout(600)
         self.creds = self.fetchCredentials()
         self.service = self.initService(self.creds)
 
