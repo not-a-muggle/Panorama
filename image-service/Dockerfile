@@ -7,7 +7,11 @@ RUN useradd -ms /bin/bash admin
 COPY . .
 RUN pip install --force-reinstall -r requirements.txt
 RUN chown admin:admin /image-service/drive/token.pickle
+RUN chown admin:admin /image-service/user.db
+
 RUN chmod 777 /image-service/drive/token.pickle
+RUN chmod 777 /image-service/user.db
+
 USER admin
 # RUN pip install -r requirements.txt
 CMD ["python", "-u" ,"server.py"]
