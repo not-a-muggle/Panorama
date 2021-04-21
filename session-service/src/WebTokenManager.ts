@@ -43,6 +43,7 @@ export default class WebTokenManager {
             return decrypted.username == username;
         } catch (ex) {
             console.log(ex);
+            return false;
         }
 
 
