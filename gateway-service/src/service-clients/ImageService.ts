@@ -127,6 +127,10 @@ export default class ImageService {
         //     // return responses;
         // });
 
+        call.on('error', (e) => {
+            console.log("error occured while trying to store images\n" + e);
+        });
+
 
         while (!call.readableEnded) {
             var length = responses.length;

@@ -293,8 +293,6 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
         response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100 });
 
 
-
-
     } catch (ex) {
         res.sendStatus(404);
         console.log("error occured while fetching the image list \n" + ex);
