@@ -52,7 +52,7 @@ async function updateUser(input, callback) {
 
 function main() {
     const serverIP = config.serverIP;
-    const servicePort = process.env.authServicePort ? process.env.authServicePort : config.servicePort;
+    const servicePort = 30100; //process.env.authServicePort ? process.env.authServicePort : config.servicePort;
     var server = new grpc.Server();
     server.addService(authProto.Auth.service, { basic: basic, create: createUser, modify: updateUser });
     server.bindAsync(serverIP + ':' + servicePort, grpc.ServerCredentials.createInsecure(), () => {
