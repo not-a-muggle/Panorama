@@ -28,17 +28,18 @@ export default class WebTokenManager {
         // read from configuration
         const expiration = config.expiration;
         const issuer = config.issuer;
-
+        console.log("Issued new token for " + username);
         return jsonwebtoken.sign({ username: username }, secret, { expiresIn: expiration, issuer: issuer });
     }
 
     public verifyToken(username: string, token: string): boolean {
         const secret = process.env.SECRET || config.secret;
-        console.log(token);
-        console.log("USERNAME:" + JSON.stringify(username));
+        console.log("Verifying token for " + username);
+        
         try {
             const decrypted: UserDetails = jsonwebtoken.verify(token, secret) as UserDetails;
-            console.log("DECRYPTED:" + JSON.stringify(decrypted));
+            console.log("DECRYPTED:" + JSON.stringify(decrypted.username));
+            console.log("USERNAME:" + JSON.stringify(username));
             
             return decrypted.username == username;
         } catch (ex) {
