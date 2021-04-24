@@ -75,7 +75,7 @@ pipeline{
                         continueOnError: false, failOnError: true,
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'ssh_kubemaster',
+                                configName: 'ssh_openshift',
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
