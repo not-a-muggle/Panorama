@@ -2,9 +2,6 @@
 
 FROM node:10-alpine as build-step
 
-
-
-
 # FROM node:14-alpine
 
 RUN mkdir -p /home/node/app &&\
@@ -14,13 +11,15 @@ WORKDIR /home/node/app
 RUN chgrp -R 0 /home/node/app &&\
  chmod -R g+rwX /home/node/app
 
-COPY package*.json /home/node/app/
+COPY package.json /home/node/app/
 USER 1000
 RUN npm install
 
 COPY --chown=node:node . /home/node/app
 EXPOSE 80
-CMD ["npm", "start"]
+
+RUN npm run build
+# CMD ["npm", "start"]
 
 
 # WORKDIR /app
@@ -36,6 +35,9 @@ CMD ["npm", "start"]
 # CMD ["npm", "start"]
 
 # Stage 2 - prod
-# FROM nginx:1.17.1-alpine
-# COPY --from=build-step /app/build /usr/share/nginx/html
+FROM nginx:1.17.1-alpine
+
+COPY --from=build-step /home/node/app/build /usr/share/nginx/html
+RUN chgrp -R 0 /usr/share/nginx/html &&\
+ chmod -R g+rwX /usr/share/nginx/html
 
