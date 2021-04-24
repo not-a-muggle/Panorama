@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { convertGridRowsPropToState, DataGrid } from '@material-ui/data-grid';
+import React, { useState } from 'react';
+import { DataGrid } from '@material-ui/data-grid';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 
-export default function ImageList({selectedRows, setSelectedRows}) {
+
+export default function ImageList({ selectedRows, setSelectedRows }) {
 
     const [rows, setRows] = useState([]);
-    
 
     React.useEffect(() => {
         const username = localStorage.getItem("username");
@@ -19,7 +19,10 @@ export default function ImageList({selectedRows, setSelectedRows}) {
 
                 setRows(res.data.map(row => {
                     row["id"] = row["imageId"];
-                    // row["isChecked"] = <input type="checkbox" data-imgid={row["id"]} />;
+                    // date parsing
+                    const creationDate = new Date(Date.parse(row["imageCreationDate"]));
+                    row["imageCreationDate"] = `${creationDate.toLocaleDateString()}  ${creationDate.toTimeString().substr(0, 8)}`;
+                    console.log(row["imageCreationDate"])
                     return row;
                 })
                 );
@@ -28,22 +31,32 @@ export default function ImageList({selectedRows, setSelectedRows}) {
 
     // select change for checkbox
     const onSelectChange = (e) => {
-        // console.log("onSelect Change Called " + JSON.stringify(e));
         const selectedRow = e.currentTarget.dataset.imgid;
-        if(!e.currentTarget.checked) {
+        if (!e.currentTarget.checked) {
             setSelectedRows([...selectedRows, selectedRow]);
         } else {
             const idx = selectedRows.indexOf(selectedRow);
-            setSelectedRows([...selectedRows.slice(0, idx), ...selectedRows.slice(idx+1)]);
+            setSelectedRows([...selectedRows.slice(0, idx), ...selectedRows.slice(idx + 1)]);
         }
-        
+
     }
-    console.log(JSON.stringify(selectedRows));
-    
+
+    const clickColumnHeader = (params) => {
+        console.log(params)
+        if (params.field != "isChecked") {
+            return;
+        }
+        if (selectedRows.length !== rows.length) {
+            setSelectedRows([...rows.map(x => x.id)]);
+        } else {
+            setSelectedRows([]);
+        }
+
+    }
 
     const columns = [
         {
-            field: 'isChecked', headerName: 'Select', renderCell: (params) => {
+            field: 'isChecked', headerName: 'Select All', flex: 3, renderCell: (params) => {
                 return (
                     <input type="checkbox" data-imgid={params.row.id} onClick={onSelectChange} onChange={onSelectChange} checked={selectedRows.indexOf(params.row.id) != -1} />
                 );
@@ -51,7 +64,7 @@ export default function ImageList({selectedRows, setSelectedRows}) {
         },
         {
 
-            field: 'imageName', headerName: 'Image Name', flex: 3, renderCell: (params) => {
+            field: 'imageName', headerName: 'Image Name', flex: 20, renderCell: (params) => {
                 return (
                     <Link to={`Image/${params.row.id}`}>
                         {params.value}
@@ -62,8 +75,8 @@ export default function ImageList({selectedRows, setSelectedRows}) {
         {
             field: 'imageCreationDate',
             headerName: 'Date Created',
-            type: 'date',
-            flex: 1,
+            type: 'string',
+            flex: 6,
             align: 'center',
             headerAlign: 'center'
         },
@@ -71,7 +84,7 @@ export default function ImageList({selectedRows, setSelectedRows}) {
 
     return (
         <div style={{ height: 1000, width: '100%', margin: '64px' }}>
-            <DataGrid rows={rows} columns={columns} pageSize={25} />
+            <DataGrid rows={rows} columns={columns} pageSize={25} onColumnHeaderClick={clickColumnHeader} />
         </div>
     );
 }
