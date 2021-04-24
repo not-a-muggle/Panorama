@@ -19,20 +19,6 @@ COPY --chown=node:node . /home/node/app
 EXPOSE 80
 
 RUN npm run build
-# CMD ["npm", "start"]
-
-
-# WORKDIR /app
-# RUN chgrp -R 0 /app && \
-#     chmod -R 777 /app
-# COPY . /app
-# RUN npm install
-# RUN chmod 777 /app/node_modules/.cache/.eslintcache
-# EXPOSE 80
-
-# RUN npm run build
-
-# CMD ["npm", "start"]
 
 # Stage 2 - prod
 FROM nginx:1.17.1-alpine
