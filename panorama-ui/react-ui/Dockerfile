@@ -1,11 +1,12 @@
 # Stage 1 - dev
 
 FROM node:10-alpine as build-step
+
 WORKDIR /app
-COPY . /app
-RUN npm install
 RUN chgrp -R 0 /app && \
     chmod -R g+rwX /app
+COPY . /app
+RUN npm install
 
 EXPOSE 80
 
