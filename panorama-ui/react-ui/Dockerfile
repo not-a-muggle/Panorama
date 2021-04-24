@@ -7,7 +7,7 @@ RUN chgrp -R 0 /app && \
     chmod -R 777 /app
 COPY . /app
 RUN npm install
-
+RUN chmod 777 /app/node_modules/.cache/.eslintcache
 EXPOSE 80
 
 RUN npm run build
