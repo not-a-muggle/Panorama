@@ -1,11 +1,10 @@
 import express from "express";
-import { time } from "node:console";
 import { Image, ImageLocation, ImageStoreRequest, StoreResult } from "../definitions/images";
 import { LogResult } from "../definitions/session-log";
 import ImageService from "../service-clients/ImageService";
 import SessionService from "../service-clients/SessionService";
 import SessionLogService from "../service-clients/SessionLogService";
-import Helper from "../util/Helper";
+
 
 
 const router: express.Router = express.Router();
@@ -30,7 +29,7 @@ router.post('/image', async (req: express.Request, res: express.Response) => {
     */
 
 
-    const username = req.query["username"];
+    const username = req.query["username"] as string;
     const imageStoreRequest: ImageStoreRequest[] = req.body["images"];
     console.log(`Storing image for user ${username}`);
     let token;
@@ -292,8 +291,6 @@ router.get('/imageList', async (req: express.Request, res: express.Response) => 
     let response;
     try {
         response = await ImageService.Instance.getImageMetadata({ userId: username, startIdx: 0, endIdx: 100 });
-
-
 
 
     } catch (ex) {
