@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: share-deploy
+  labels:
+    app: share
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: share
+  template:
+    metadata:
+      labels:
+        app: share
+        updateTimestamp: "20210410205518106"
+    spec:
+      containers:
+      - name: share
+        image: panoramaiubads/share-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 30900
+        env:
+         - name: MONGO_URI_SYSTEM
+           value: "mongodb+srv://User3:Password3@cluster0.0qdgg.mongodb.net/panorama?retryWrites=true&w=majority"
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+            memory: 2Gi
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: share
+  name: share-service
+spec:
+  selector:
+    app: share
+  ports:
+    - protocol: TCP
+      port: 30900
+      targetPort: 30900
+  type: ClusterIP
