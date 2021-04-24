@@ -4,7 +4,7 @@ FROM node:10-alpine as build-step
 
 WORKDIR /app
 RUN chgrp -R 0 /app && \
-    chmod -R g+rwX /app
+    chmod -R 777 /app
 COPY . /app
 RUN npm install
 
