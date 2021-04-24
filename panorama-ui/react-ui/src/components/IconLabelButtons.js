@@ -3,7 +3,9 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../constants/apiConstants';
 import axios from 'axios';
+import jsFileDownload from "js-file-download";
 
+import * as reactRouterDom from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -11,10 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IconLabelButtons() {
+export default function IconLabelButtons({ selectedRows, setSelectedRows }) {
   const [username, setUsernameState] = useState("");
   const [images, setImageState] = useState([]);
-
+  const history = reactRouterDom.useHistory();
   const fileSelectedHandler = async (event) => {
 
     const file = event.target.files;
@@ -53,10 +55,32 @@ export default function IconLabelButtons() {
     // const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
     const baseURL = "http://149.165.171.5:30200"
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_NAME);
-    axios.post(baseURL + "/image", { username: username, images: images }, { headers: { 'Authorization': "Bearer " + jwtToken } })
+    axios.post(baseURL + "/image", { username: username, images: images }, { headers: { 'Authorization': "Bearer " + jwtToken }, params: { username: username } })
       .then(res => {
-        console.log(res)
+        // console.log(res)
+        // refresh the page after image has been uploaded.
+        history.go(0)
+
       })
+  }
+
+  const fileDownloadHandler = () => {
+    // hardcode to take first image Id
+    if (selectedRows.length == 0) {
+      return;
+    }
+    const imgId = selectedRows[0];
+    const user = localStorage.getItem("username");
+    const baseURL = "http://149.165.171.5:30200"
+    const jwtToken = localStorage.getItem(ACCESS_TOKEN_NAME);
+    axios.get(baseURL + "/image", { headers: { 'Authorization': "Bearer " + jwtToken }, params: { username: user, imageId: imgId } })
+      .then(res => {
+        const imageData = res.data.imageData;
+        const imageName = res.data.imageName;
+        jsFileDownload(imageData, imageName);
+        setSelectedRows([]);
+      });
+
   }
   const classes = useStyles();
   return (
@@ -80,6 +104,7 @@ export default function IconLabelButtons() {
         variant="contained"
         color="secondary"
         className={classes.button}
+        onClick={fileDownloadHandler}
       >
         Download
       </Button>
