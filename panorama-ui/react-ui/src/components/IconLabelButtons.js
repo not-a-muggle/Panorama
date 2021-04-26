@@ -53,7 +53,8 @@ export default function IconLabelButtons({ selectedRows, setSelectedRows }) {
 
   const fileUploadHandler = () => {
     // const baseURL = process.env.gatewayServerIP + ":" + process.env.gatewayServicePort || 'http://localhost:3000'
-    const baseURL = "http://149.165.171.5:30200"
+    // const baseURL = "http://149.165.171.5:30200"
+    const baseURL = "/api"
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_NAME);
     axios.post(baseURL + "/image", { username: username, images: images }, { headers: { 'Authorization': "Bearer " + jwtToken }, params: { username: username } })
       .then(res => {
@@ -71,7 +72,8 @@ export default function IconLabelButtons({ selectedRows, setSelectedRows }) {
     }
     const imgId = selectedRows[0];
     const user = localStorage.getItem("username");
-    const baseURL = "http://149.165.171.5:30200"
+    // const baseURL = "http://149.165.171.5:30200"
+    const baseURL = "/api"
     const jwtToken = localStorage.getItem(ACCESS_TOKEN_NAME);
     axios.get(baseURL + "/image", { headers: { 'Authorization': "Bearer " + jwtToken }, params: { username: user, imageId: imgId } })
       .then(res => {

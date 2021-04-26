@@ -27,7 +27,6 @@ pipeline{
                 sh 'cd ${jenkinsAppDir}/ && npm install'
                 echo "Successfully installed npm packages"
             }
-		    
 	    }
 
         stage('Build Docker Image') {
@@ -78,7 +77,7 @@ pipeline{
                     ])
                 
                 }
-                                script{
+                script{
                     sshPublisher(
                         continueOnError: false, failOnError: true,
                         publishers: [
