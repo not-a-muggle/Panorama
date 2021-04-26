@@ -19,7 +19,7 @@ spec:
         name: react-ui
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 30800
         env:
          - name: gatewayServerIP 
            value: "http://gateway-service"
@@ -36,8 +36,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    targetPort: 80
+  - port: 30800
+    targetPort: 30800
     nodePort: 30800
   selector:
     app: react-ui
