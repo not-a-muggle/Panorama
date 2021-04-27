@@ -6,7 +6,8 @@ pipeline{
         dockerImage = ''
         file_name = 'auth-service.yaml'
         remote_dir_path = ''
-        appName = 'auth-service'
+        deployName = 'auth-deploy'
+        svcName = 'auth-service'
         jenkinsAppDir = 'auth-service'
         githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/auth-service/auth-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
@@ -79,7 +80,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name}"    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}}; kubectl delete svc ${svcName}  kubectl apply -f ${file_name}"    
                                     )
                             ])
                     ])
@@ -94,7 +95,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name}"    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}}; kubectl delete svc ${svcName}  kubectl apply -f ${file_name}"    
                                     )
                             ])
                     ])
