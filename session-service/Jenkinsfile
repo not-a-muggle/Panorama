@@ -8,7 +8,7 @@ pipeline{
         remote_dir_path = ''
         appName = 'session-service'
         jenkinsAppDir = 'session-service'
-        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/cicd/session-service/session-service.yaml'
+        githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/session-service/session-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
     }
     stages{
