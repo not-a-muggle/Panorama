@@ -77,6 +77,21 @@ pipeline{
                     ])
                 
                 }
+                                script{
+                    sshPublisher(
+                        continueOnError: false, failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ssh_openshift2',
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name}"
+                                    )
+                            ])
+                    ])
+                
+                }
             }
         }
     }   
