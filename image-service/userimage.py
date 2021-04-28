@@ -22,6 +22,8 @@ class UserImageAccessor:
         try:
             fileId = self.driveclient.createFile(
                 folderId, imageName, imageData, 'text/plain')
+            
+            self.database.insertIntoImages(userId, fileId)
             return fileId
         except Exception as e:
             print(e)
@@ -31,16 +33,21 @@ class UserImageAccessor:
         """Store list of images for the user to Google Drive
             allImages -> List of Dict of image name and image data
         """
-        fileIds = []
-        for image in allImages:
-            imageName = image["name"]
-            imageData = image["data"]
-            fileId = self.storeImage(userId, imageName, imageData)
-            if fileId is not None:
-                fileIds.append(fileId)
-                print("File added to drive with id ", fileId)
-        return fileIds
+        try:
+            fileIds = []
+            for image in allImages:
+                imageName = image["name"]
+                imageData = image["data"]
+                fileId = self.storeImage(userId, imageName, imageData)
 
+                if fileId is not None:
+                    fileIds.append(fileId)
+                    self.database.insertIntoImages(userId, fileId)
+                    print("File added to drive with id ", fileId)
+            return fileIds
+        except Exception as e:
+            return []
+        
     def getImages(self, userId, startIdx=0, endIdx=50):
         """Returns the image metadata of images
         """

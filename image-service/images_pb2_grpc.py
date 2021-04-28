@@ -90,6 +90,7 @@ class ImageServiceServicer(object):
         fileId = self.userImageAccessor.storeImage(
             userId, imageName, imageData)
         stored = fileId != None
+        
         return images__pb2.StoreResult(stored=stored)
 
 

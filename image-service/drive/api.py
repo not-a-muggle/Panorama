@@ -92,6 +92,7 @@ class DriveAPI(object):
         file = self.service.files().create(body=file_metadata,
                                            media_body=data,
                                            fields='id').execute()
+        
         return file.get('id')
 
     def createFolder(self, foldername):

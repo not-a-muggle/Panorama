@@ -44,6 +44,14 @@ class DatabaseClient:
         except Exception as e:
             raise e
 
+    def insertIntoImages(self, userId, imageId):
+        doc = { 'ownerId': userId, 'userId': userId, 'imageId': imageId}
+        try:
+            self.collection.insert_one(doc)
+        except Exception as e:
+            print("Unable to insert image record into database")
+            raise e
+
 # if __name__ == '__main__':
 #     db = DatabaseClient()
 #     db.insertIntoUserFolder("1","1")
