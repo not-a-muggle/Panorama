@@ -7,6 +7,8 @@ pipeline{
         file_name = 'image-service.yaml'
         remote_dir_path = ''
         appName = 'image-service'
+        deployName = 'image-deploy'
+        svcName= 'image-service'
         jenkinsAppDir = 'image-service'
         githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/image-service/image-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
@@ -78,7 +80,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name}"    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
                                     )
                             ])
                     ])
@@ -93,7 +95,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name}"    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
                                     )
                             ])
                     ])
