@@ -31,13 +31,13 @@ pipeline{
 		    
 	    }
 
-        stage('Test App') {
-        /* Testing the application */
-		    steps{
-                sh 'cd ${jenkinsAppDir} && npm run test'
-                echo "Successfully installed npm packages"
-            }
-	    }
+        // stage('Test App') {
+        // /* Testing the application */
+		//     steps{
+        //         sh 'cd ${jenkinsAppDir} && npm run test'
+        //         echo "Successfully installed npm packages"
+        //     }
+	    // }
 
         stage('Build Docker Image') {
         /* Build the docker image */
