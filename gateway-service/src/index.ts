@@ -8,6 +8,7 @@ import bodyParser from "body-parser";
 
 const loginRouter = require("./routes/login");
 const imageRouter = require("./routes/image");
+const shareRouter = require("./routes/share");
 const app = express();
 
 
@@ -19,6 +20,7 @@ app.use(cors({ origin: '*', credentials: true, methods: 'GET,PUT,POST,OPTIONS' }
 
 app.use('/', loginRouter);
 app.use('/', imageRouter);
+app.use('/', shareRouter);
 
 app.use(morgan("combined"));
 

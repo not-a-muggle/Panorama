@@ -10,7 +10,6 @@ import SessionLogService from "../service-clients/SessionLogService";
 
 const router: express.Router = express.Router();
 
-
 router.post('/signin', async (req: express.Request, res: express.Response) => {
     // call the auth service with the required details 
     // check the header for basic auth first
