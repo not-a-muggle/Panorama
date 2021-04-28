@@ -2,16 +2,16 @@ FROM python:3.8.8-buster
 
 WORKDIR /image-service
 EXPOSE 30300
-RUN useradd -ms /bin/bash admin
+# RUN useradd -ms /bin/bash admin
 
 COPY . .
 RUN pip install --force-reinstall -r requirements.txt
-RUN chown admin:admin /image-service/drive/token.pickle
-RUN chown admin:admin /image-service/user.db
+# RUN chown admin:admin /image-service/drive/token.pickle
+# RUN chown admin:admin /image-service/user.db
 
-RUN chmod 777 /image-service/drive/token.pickle
-RUN chmod 777 /image-service/user.db
+# RUN chmod 777 /image-service/drive/token.pickle
+# RUN chmod 777 /image-service/user.db
 
-USER admin
+# USER admin
 # RUN pip install -r requirements.txt
 CMD ["python", "-u" ,"server.py"]
