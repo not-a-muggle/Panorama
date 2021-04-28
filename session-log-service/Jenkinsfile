@@ -7,6 +7,8 @@ pipeline{
         file_name = 'session-log-service.yaml'
         remote_dir_path = ''
         appName = 'session-log-service'
+        deployName = 'session-log-deploy'
+        svcName = 'session-log-service'
         jenkinsAppDir = 'session-log-service'
         githuburl = 'https://raw.githubusercontent.com/airavata-courses/Panorama/kubernetes-update/session-log-service/session-log-service.yaml'
         kubeDir = '/home/ubuntu/deploy'
@@ -70,13 +72,13 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name} "    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
                                     )
                             ])
                     ])
                 
                 }
-                                script{
+                script{
                     sshPublisher(
                         continueOnError: false, failOnError: true,
                         publishers: [
@@ -85,7 +87,7 @@ pipeline{
                                 verbose: true,
                                 transfers: [
                                     sshTransfer(
-                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment,services -l app=${appName}; kubectl apply -f ${file_name} "    
+                                        execCommand: "cd ${kubeDir}; rm -rf ${file_name}*; wget ${githuburl}; kubectl delete deployment ${deployName}; kubectl delete svc ${svcName};  kubectl apply -f ${file_name}"
                                     )
                             ])
                     ])
