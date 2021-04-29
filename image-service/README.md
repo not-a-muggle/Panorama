@@ -10,7 +10,7 @@ Image Service uses sqlite3 for as a database to store metadata related to image 
 The serivce uses Google Drive as the cloud storage for the image data. We have created a new app associated with our project email
 project.panorama.iub@gmail.com on Google Cloud and using that project to access the files of a google drive.
 
-## Installation
+## Installation 
 
 ### Software Requirements
 
