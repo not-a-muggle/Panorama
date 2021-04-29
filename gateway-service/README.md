@@ -3,7 +3,7 @@
 The `gateway-service` is the only service that communicates with the UI. The UI would forward user requests to gateway and the gateway acts as a entry point to the micro-service architecture from the UI. The gateway will sequence and trigger all the necessary service requests required to fulfil the user request and collect and return the response to the UI.
 The gateway service is written in typescript and uses REST to communicate with the UI and gRPC to communicate with the micro-services.
 ## Installation
-### Software Requirements
+### Software Requirements  
 * Node 14.15.5
 * typescript
 * All node modules listed in `package.json`
