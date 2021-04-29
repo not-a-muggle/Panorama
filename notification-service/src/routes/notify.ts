@@ -1,5 +1,5 @@
 import express from "express";
-import ShareServiceCore from "../core/NotificationCore";
+import NotificationCore from "../core/NotificationCore";
 
 const router: express.Router = express.Router();
 
@@ -45,7 +45,7 @@ router.post('/notify', async (req: express.Request, res: express.Response) => {
     }
 
     // check if the images shared belong to the user in question
-    const serviceInstance: ShareServiceCore = new ShareServiceCore();
+    const serviceInstance: NotificationCore = new NotificationCore();
     try {
         const result: boolean = await serviceInstance.unshareImages(sharerId, shareeId, imageIds);
         res.sendStatus(200);
