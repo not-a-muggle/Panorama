@@ -34,18 +34,17 @@ public class DatabaseClient {
     }
 
     public void insertActivity(String userId, String sessionId, String activityDesc, String time) {
-        Document activity = new Document("userId", userId)
-                .append("sessionId", sessionId)
-                .append("activityDesc", activityDesc)
-                .append("time", time);
+        Document activity = new Document(Constant.USER_ID, userId)
+                .append(Constant.SESSION_ID, sessionId)
+                .append(Constant.ACTIVITY_DESC, activityDesc)
+                .append(Constant.TIME, time);
         sessionLogCollection.insertOne(activity);
     }
 
     public SessionLog.Activity[] fetchActivities(String userId, String sessionId) {
-        System.out.println("here");
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.put("userId", userId);
-        searchQuery.put("sessionId", sessionId);
+        searchQuery.put(Constant.USER_ID, userId);
+        searchQuery.put(Constant.SESSION_ID, sessionId);
         FindIterable<Document> cursor = sessionLogCollection.find(searchQuery);
 
         Iterator<Document> iterator = cursor.iterator();
@@ -53,8 +52,8 @@ public class DatabaseClient {
 
         while (iterator.hasNext()) {
             Document doc = iterator.next();
-            String activityDesc = doc.get("activityDesc").toString();
-            String time = doc.get("time").toString();
+            String activityDesc = doc.get(Constant.ACTIVITY_DESC).toString();
+            String time = doc.get(Constant.TIME).toString();
 
             SessionLog.Activity activity = SessionLog.Activity.newBuilder().
                     setTime(time).
@@ -74,7 +73,6 @@ public class DatabaseClient {
 
     private MongoClient connect() {
         String mongoUri =  System.getenv("MONGO_URI_SYSTEM") != null ? System.getenv("MONGO_URI_SYSTEM") : Constant.DB_URI;
-        //MongoClientURI uri = new MongoClientURI(mongoUri);
         MongoClient mongoClient = MongoClients.create(mongoUri);
         return mongoClient;
     }
