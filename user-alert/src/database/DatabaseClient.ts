@@ -7,8 +7,6 @@ export default class DatabaseClient {
     dbName: string = "panorama";
     private constructor() {
 
-        const uri = "mongodb+srv://User:Pass5@cluster0.otrrn.mongodb.net/panorama?retryWrites=true&w=majority"
-
         this.client = new mongodb.MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser: true });
     }
 
