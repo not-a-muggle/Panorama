@@ -1,0 +1,278 @@
+{
+	"info": {
+		"_postman_id": "8de8fc0c-57a9-4b90-98b0-23f05243314d",
+		"name": "Gateway Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "vishesh6",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "vishesh",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{gateway-url}}:30200/signin",
+					"protocol": "http",
+					"host": [
+						"{{gateway-url}}"
+					],
+					"port": "30200",
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Vishesh\",\r\n    \"lastName\": \"Dembla\",\r\n    \"email\": \"vishesh7\",\r\n    \"password\": \"vishesh\",\r\n    \"phonenumber\": \"8408865738\",\r\n    \"birthday\": \"11-15-1995\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{gateway-url}}/signup",
+					"protocol": "http",
+					"host": [
+						"{{gateway-url}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store Images",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpc2hlc2g2IiwiaWF0IjoxNjE5MDM0MjI5LCJleHAiOjE2MTkxMjA2MjksImlzcyI6Imh0dHBzOi8vcGFub3JhbWEuaW5kaWFuYS5lZHUifQ.RTwhnPjsmw5bUU0kSh9aag1kPbMma1hanNVWbBt5pS0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"vishesh6\",\r\n    \"images\": [\r\n        {\r\n            \"imageData\": \"data sent from the postman\",\r\n            \"imageName\": \"postman.txt\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{gateway-url}}/image?username=vishesh6",
+					"protocol": "http",
+					"host": [
+						"{{gateway-url}}"
+					],
+					"path": [
+						"image"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "vishesh6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpc2hlc2g2IiwiaWF0IjoxNjE5MDM0MjI5LCJleHAiOjE2MTkxMjA2MjksImlzcyI6Imh0dHBzOi8vcGFub3JhbWEuaW5kaWFuYS5lZHUifQ.RTwhnPjsmw5bUU0kSh9aag1kPbMma1hanNVWbBt5pS0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n     \"username\" : \"vishesh6\",\r\n     \"imageId\" : \"1-K7955IV33Mt2kg66s-W4Pc3SyXGXzkA\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{gateway-url}}/image?username=vishesh6&imageId=1-K7955IV33Mt2kg66s-W4Pc3SyXGXzkA",
+					"protocol": "http",
+					"host": [
+						"{{gateway-url}}"
+					],
+					"path": [
+						"image"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "vishesh6"
+						},
+						{
+							"key": "imageId",
+							"value": "1-K7955IV33Mt2kg66s-W4Pc3SyXGXzkA"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Image List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpc2hlc2g2IiwiaWF0IjoxNjE5Mjc4NzkxLCJleHAiOjE2MTkzNjUxOTEsImlzcyI6Imh0dHBzOi8vcGFub3JhbWEuaW5kaWFuYS5lZHUifQ.cDcfBD0eRfOUeU4YmnT72RtfdP5752ApCGzK7mqHhN8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " { \r\n     \"username\" : \"vishesh6\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{gateway-url}}/imageList?username=vishesh6",
+					"protocol": "http",
+					"host": [
+						"{{gateway-url}}"
+					],
+					"path": [
+						"imageList"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "vishesh6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Share",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"sharerId\": \"123\",\"shareeId\" :\"345\", \"imageIds\": [\"123\",\"124\",\"125\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:30900/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "30900",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unshare",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"sharerId\": \"123\",\"shareeId\" :\"345\", \"imageIds\": [\"123\",\"124\",\"125\"]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:30900/unshare",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "30900",
+					"path": [
+						"unshare"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "gateway-url",
+			"value": "149.165.171.5:30200"
+		}
+	]
+}
