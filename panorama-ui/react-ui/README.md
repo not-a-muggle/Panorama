@@ -1,17 +1,35 @@
-Panorama UI is built using React Component:
+## Tech Stack
 
-Steps to run the app
+1. React
+2. NGINX
 
-Navigate to package.json location
 
-Install node js on respective operating system
-https://nodejs.org/en/download/
+## Functionalities
 
-Install Node dependencies
-npm install
+Following web pages:
 
-Compile the code
-npm run compile
+1. Landing Page 
+2. Sign In
+3. Sign Up
+4. Forgot Password
+5. Update Password
+6. Album
+7. Upload Photos
+8. Download Photos
 
-Start the application
-npm run start
+## Installation
+### Software Requirements
+* Node 14.15.5
+* All node modules listed in `package.json`
+
+### Install Dependencies
+
+Navigate to the react-ui directory and execute the following command:
+
+> npm install
+
+### Start React Server
+
+> npm start
+
+
