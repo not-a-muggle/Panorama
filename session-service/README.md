@@ -2,7 +2,7 @@
 
 ## Functionalities
 
-The `session-service` is responsible for maintaining session related information about the system.
+The `session-service` is responsible for maintaining user session related information.
 
 ## Installation
 
@@ -10,7 +10,7 @@ The `session-service` is responsible for maintaining session related information
 
 * Node 14.15.5
 * typescript
-* All node modules listed in `package.json`
+
 ### Install required modules
 
 Navigate to the auth service directory and execute the following command:
