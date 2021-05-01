@@ -42,7 +42,6 @@ public class DatabaseClient {
     }
 
     public SessionLog.Activity[] fetchActivities(String userId, String sessionId) {
-        System.out.println("here");
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("userId", userId);
         searchQuery.put("sessionId", sessionId);
@@ -74,7 +73,6 @@ public class DatabaseClient {
 
     private MongoClient connect() {
         String mongoUri =  System.getenv("MONGO_URI_SYSTEM") != null ? System.getenv("MONGO_URI_SYSTEM") : Constant.DB_URI;
-        //MongoClientURI uri = new MongoClientURI(mongoUri);
         MongoClient mongoClient = MongoClients.create(mongoUri);
         return mongoClient;
     }

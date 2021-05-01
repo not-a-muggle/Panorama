@@ -18,8 +18,3 @@ You can do this using the script provided with the `package.json` which is execu
 ### Execution
 After this all you need to do is start the gRPC server. A script is provided for the same in the package file. This is the command to start the server.
 > npm run start
-
-## Implementation Details
-The implementation of login is complete from the gateway. The Gateway service cannot be completed without all the callee microservices being completed and is essential for the integration of the microservices. Hence, the service would be done once all the microservices are done.
-The gateway uses Express to define a REST API and has clients to communicate with gRPC based servers that are provided different services.
-The service as such doesn't require any database of its own, but has a configuration file under `src/config.json`. The file contains the configuration details of the auth service and the session service as of now.
