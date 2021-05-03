@@ -1,6 +1,6 @@
 
 # Auth Service
-WORLD
+HELLO
 DEMO
 
 ## Functionalities
